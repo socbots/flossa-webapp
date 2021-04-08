@@ -1,13 +1,17 @@
 # alf_frontend
 Interaction app for alf robot
 
-## Must run on Chrome with --autoplay-policy=no-user-gesture-required flag.
+## Must run on Chrome with flag --autoplay-policy=no-user-gesture-required 
 
 ## Files
 
 ### alfApp.js
 - Main logic 
 ### speech.js
-- contains code for tts & stt
+- Contains code for tts & stt
 ### tree.js
-- code for the interaction tree
+- Code for the interaction tree
+### Alf_frontend.txt
+- Developer thoughts and musings
+### index.html
+- index.html
