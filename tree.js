@@ -1,5 +1,6 @@
 // CLASSES 
 
+// This class is the node for our tree structure. It should never be a leaf node, and should allways have 2 child nodes.
 class Question {
   constructor(question, leftAnswer, rightAnswer) {
     this.question = question;
@@ -20,6 +21,8 @@ class Question {
   }
 }
 
+// The RobotFunction class is used as the leaf nodes of our tree structure
+// This means that when we encounter a RoboFunction the dialogue has ended.
 class RobotFunction {
   constructor(text) {
     this._text = text;
@@ -34,13 +37,16 @@ class RobotFunction {
 
 // CREATE QUESTIONS TREE
 
+// This was a bit hard to populate and make it look nice/easy to understand. Use miro interaction tree to make it easier to follow
+// We create the children and then the next line before an empty line we set the children to their parent node.
 function createTree() {
-  // Root Node
+  // greeting == Root Node
   let greeting = new Question("Hej! Vill du tala med mig", "nej", "jo");
+
   let greetingFollow = new Question("Hur Känner du dig inför besöket?", "spänd", "lugn");
   greeting.setNodes(new RobotFunction("Ha en trevlig dag"), greetingFollow);
 
-  let flossing = new Question("Vill du ha hygienråd?", "nej", "jo");
+  let flossing = new Question("Vill du ha hygienråd?", "jo", "nej");
   let relax = new Question("Kan jag hjälpa dig slappna av", "jo", "nej");
   greetingFollow.setNodes(relax, flossing);
 

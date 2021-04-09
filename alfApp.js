@@ -1,5 +1,7 @@
 
+// This function starts and moves the dialog onwards 
 function startDialogue(node, notUnderstod = false) {
+  console.log(currentNode);
   currentNode = node;
   setQuestion(node, notUnderstod);
   // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
@@ -9,8 +11,12 @@ function startDialogue(node, notUnderstod = false) {
   }
 }
 
+// 
 function setQuestion(node, notUnderstod = false) {
   const question = document.getElementById("question");
+
+  // If the user input was not understod add "jag förstod inte..." and a 1sec break between the question.
+  // node?._text || node.question means that if the node is of the type RobotFunction it will have a ._text variable else it is a Question and has a .question variable.
   const text = notUnderstod ?
     '<speak> Jag förstod inte vad du menade? <break time="1s"/>' + (node?._text || node.question)+'</speak>' :
     '<speak>'+(node?._text || node.question)+'</speak>';
@@ -20,12 +26,8 @@ function setQuestion(node, notUnderstod = false) {
 
 function checkInput() {
   const result = document.getElementById("result").innerHTML;
-  const alfTalkbox = document.getElementById("alf_talkbox");
   isRec = false
-  if (alfTalkbox.innerHTML.length > 10) {
-    alfTalkbox.innerHTML = "";
-  }
-  console.log(currentNode);
+  // Test the user input against the left and right answers in our node.
   if (currentNode.rightAnswer.includes(result)) {
     console.log("Going right");
     startDialogue(currentNode.rightNode);
@@ -34,15 +36,20 @@ function checkInput() {
     console.log("Going left");
     startDialogue(currentNode.leftNode);
   }
+  // If we cant find a match for the input our user gives we startDialog with the current node and set the notUnderstod parameter to true
   else {
-    startDialogue(currentNode, true);
+    startDialogue(currentNode, notUnderstod = true);
   }
 }
 
+// We save the rootNode incase we want to reset the dialogue at some point
+// createTree() is from the tree.js file
 const rootNode = createTree();
 let currentNode = rootNode;
+// these create functions are from the speech.js file
 let rec = createRecognitionObject();
-let isRec = false;
 const textToSpeech = createSpeechFunction();
+// I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
+let isRec = false;
 
 startDialogue(currentNode);

@@ -18,6 +18,7 @@ function createRecognitionObject() {
   recognition.continuous = true;
   recognition.interimResults = true;
   recognition.maxAlternatives = 1;
+
   let result = document.getElementById("result")
 
   // Whenever a result is returned from the webspeechAPI
@@ -35,8 +36,8 @@ function createRecognitionObject() {
 
 // SPEECH SYNTHESIS
 
-  // This function returns a function called textToSpeech eventhough the function is never resolved or called while it being created.
-  // textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" from them being in the same scope when created
+  // This function returns a function called textToSpeech that we can save to a variable and call when needed.
+  // textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" 
   // If this seems like funky code read more about closures
 function createSpeechFunction() {
 
