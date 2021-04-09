@@ -15,6 +15,7 @@ function startDialogue(node, notUnderstod = false) {
 function setQuestion(node, notUnderstod = false) {
   const question = document.getElementById("question");
 
+  // The TTS API uses SSML so the text should be within <speak> tags
   // If the user input was not understod add "jag förstod inte..." and a 1sec break between the question.
   // node?._text || node.question means that if the node is of the type RobotFunction it will have a ._text variable else it is a Question and has a .question variable.
   const text = notUnderstod ?

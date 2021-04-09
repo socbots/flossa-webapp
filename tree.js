@@ -9,12 +9,6 @@ class Question {
     this.leftNode = null;
     this.rightNode = null;
   }
-  setLeftNode(node) {
-    this.leftNode = node;
-  }
-  setRightNode(node) {
-    this.rightNode = node;
-  }
   setNodes(left, right) {
     this.leftNode = left;
     this.rightNode = right;
@@ -64,7 +58,7 @@ function createTree() {
   guidance.setNodes(new RobotFunction("Ha en trevlig dag"), guidanceFollow);
 
   guidanceFollow.setNodes(new RobotFunction("Ha en trevlig dag"), new RobotFunction("Ha en trevlig dag"));
-  console.log(greeting);
+
   return greeting;
 }
 

@@ -8,7 +8,7 @@ function createRecognitionObject() {
 
   // Not sure how,why,when the grammar works need to read more documentation
   const speechRecognitionList = new SpeechGrammarList();
-  const words = ['nej', 'jo', 'joo', 'spänd', 'lugn'];
+  const words = ['nej', 'jo', 'spänd', 'lugn'];
   const grammar = '#JSGF V1.0; grammar words; public <words> =  ' + words.join(" | ") + ';';
   speechRecognitionList.addFromString(grammar, 1);
 
@@ -37,8 +37,8 @@ function createRecognitionObject() {
 // SPEECH SYNTHESIS
 
   // This function returns a function called textToSpeech that we can save to a variable and call when needed.
-  // textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" 
-  // If this seems like funky code read more about closures
+  // textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" i.e. Closure
+
 function createSpeechFunction() {
 
   const context = new AudioContext();
