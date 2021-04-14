@@ -1,3 +1,55 @@
 .questions{
   display: none;
 }
+#speak{
+  display: none;
+}
+.flex_center{
+
+  flex-grow: 3;
+}
+body{
+  margin:0;
+  font-family: monospace;
+}
+
+#talkbox{
+  background-color:#7D288C;
+  color:whitesmoke;
+  display: flex;
+  font-size: x-large;
+  justify-content: center;
+  flex-direction: column;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+#robot{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-grow: 2;
+
+}
+#human{
+  display: flex;
+  justify-content: center;
+  flex-grow: 3;
+}
+#result_div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10em;
+  width: 17em;;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  color:black;
+}
+#result{
+  flex-direction: column;
+
+}
+
