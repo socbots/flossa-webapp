@@ -41,17 +41,22 @@ function createRecognitionObject() {
 
 function createSpeechFunction() {
 
+  let speaking = false
   const context = new AudioContext();
 
   let textToSpeech = (text) => {
-    let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text
+    if (!speaking){
+    let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text+"&lang=sv-SE"
     fetch(url)
       .then(response => response.arrayBuffer())
       .then(buffer => context.decodeAudioData(buffer))
       .then(audio => playAudio(audio))
   }
+}
 
   function playAudio(audioBuffer) {
+    speaking = true;
+    setTimeout(()=>{speaking = false},3000);
     const source = context.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(context.destination);
