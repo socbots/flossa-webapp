@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,28 +8,32 @@
   <link rel="stylesheet" href="style.css">
   <title>Alf App</title>
 </head>
+
 <body>
 
-<div id="talkbox" >
+  <div id="talkbox">
 
-</>
-<div id="robot" >
-  <h1>ALF-BOT</h1>
-<h2 id="question">
+    </>
+    <div id="robot">
+      <h1>ALF-BOT</h1>
+      <h2 id="question">
 
-</h2>
-</div>
-<div id="human">
-  <div id="result_div" >
-<h2 id="result">
+      </h2>
+    </div>
+    <div id="human">
+      <div id="answers">
+        <button id="left_answer" class="answer_button">^</button>
+        <button id="right_answer"  class="answer_button">^</button>
+      </div>
+      <div id="result_div">
+        <h2 id="result"></h2>
+      </div>
+    </div>
 
-</h2>
-</div>
-</div>
-</div>
-<button id="speak">speak</button>
+  </div>
+  <button id="speak">speak</button>
 
-<!-- 
+  <!-- 
 <p>
   <button id="start">Start</button>
 </p>
@@ -63,10 +68,11 @@
   </select>
 </form>
 -->
-<script src="speech.js"></script>
-<script src="tree.js"></script>
+  <script src="speech.js"></script>
+  <script src="tree.js"></script>
   <script src="alfApp.js"></script>
   <!-- <script src="speechApi.js"></script>
   <script src="main.js"></script> -->
 </body>
+
 </html>
