@@ -25,21 +25,26 @@ function createRecognitionObject() {
   recognition.onresult = (e) => {
     result.innerHTML = e.results[0][0].transcript;
     checkInput(e)
-     // recognition.stop();
+    // recognition.stop();
     // If it is the final result stop recognition
     if (e.results[0].isFinal) {
-      checkInput(e,true)
+      checkInput(e, true)
     }
   };
   //// If recognition stops
-  recognition.onend = () => {console.log("end"); setTimeout(()=>{isRec = false; startDialogue(nextNode)},1000)}
+  recognition.onend = () => {
+    console.log("end"); setTimeout(() => {
+      isRec = false;
+      startDialogue()
+    }, 1000)
+  }
   return recognition;
 }
 
 // SPEECH SYNTHESIS
 
-  // This function returns a function called textToSpeech that we can save to a variable and call when needed.
-  // textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" i.e. Closure
+// This function returns a function called textToSpeech that we can save to a variable and call when needed.
+// textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" i.e. Closure
 
 function createSpeechFunction() {
 
@@ -47,14 +52,14 @@ function createSpeechFunction() {
   const context = new AudioContext();
 
   let textToSpeech = (text) => {
-    if (!isSpeaking){
-    let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text+"&lang=sv-SE"
-    fetch(url)
-      .then(response => response.arrayBuffer())
-      .then(buffer => context.decodeAudioData(buffer))
-      .then(audio => playAudio(audio))
+    if (!isSpeaking) {
+      let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE"
+      fetch(url)
+        .then(response => response.arrayBuffer())
+        .then(buffer => context.decodeAudioData(buffer))
+        .then(audio => playAudio(audio))
+    }
   }
-}
 
   function playAudio(audioBuffer) {
     isSpeaking = true;
@@ -62,9 +67,9 @@ function createSpeechFunction() {
     source.buffer = audioBuffer;
     source.connect(context.destination);
     source.start();
-    source.onended = () =>{isSpeaking = false}
+    source.onended = () => { isSpeaking = false }
     console.log(source)
-    
+
   }
   return textToSpeech;
 }

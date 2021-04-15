@@ -4,6 +4,13 @@ ALF FRONT END
 
 chrome://settings/content/sound allow URL seems to be another option instead of setting autoplay flag.
 
+Ändrade lite på flödet i koden så den blev vettigare. Nu behövs den dock städas upp lite.
+
+Face detection med pico.js. Koden är ganska direkt kopierad av pico.js exemplet på sidan: https://nenadmarkus.com/p/picojs-intro/demo/
+Video streamen skrivs till en canvas som sedan läses in som en bild till pixelvärden. Låter lite intense får se hur de fungerar på ALF
+
+SpeechRecognition objektet har en .abort()  funktion som fungerar bättre än .stop(). Det tar längre för stop och den skickar den sista frasen än en gång, vi behöver inte få den sista frasen om vi redan fått en match.
+
 
 10.4 2021
 
