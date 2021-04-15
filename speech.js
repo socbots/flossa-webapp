@@ -41,11 +41,11 @@ function createRecognitionObject() {
 
 function createSpeechFunction() {
 
-  let speaking = false
+  let isSpeaking = false
   const context = new AudioContext();
 
   let textToSpeech = (text) => {
-    if (!speaking){
+    if (!isSpeaking){
     let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text+"&lang=sv-SE"
     fetch(url)
       .then(response => response.arrayBuffer())
@@ -55,12 +55,14 @@ function createSpeechFunction() {
 }
 
   function playAudio(audioBuffer) {
-    speaking = true;
-    setTimeout(()=>{speaking = false},3000);
+    isSpeaking = true;
     const source = context.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(context.destination);
     source.start();
+    source.onended = () =>{isSpeaking = false}
+    console.log(source)
+    
   }
   return textToSpeech;
 }

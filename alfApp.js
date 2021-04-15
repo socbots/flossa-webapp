@@ -26,6 +26,7 @@ function setQuestion(node, notUnderstod = false) {
 }
 
 function checkInput() {
+  console.log("Checking input");
   const result = document.getElementById("result").innerHTML;
   isRec = false
   // Test the user input against the left and right answers in our node.

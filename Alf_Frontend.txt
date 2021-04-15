@@ -1,5 +1,10 @@
 ALF FRONT END 
 
+15.4.2021
+
+chrome://settings/content/sound allow URL seems to be another option instead of setting autoplay flag.
+
+
 10.4 2021
 
 Custom tabs eller Trusted Web Activity
@@ -20,9 +25,10 @@ Länken i kommandot bubblewrap init --manifest=https://my-twa.com/manifest.json 
 
 testar https://tomitm.github.io/appmanifest/ web app manifest generator
 problem med lokala manifest filer 
+
 hitta en fungerande "https://muteswan.app/manifest.webmanifest"
 
-
+Fick inte bubblewrap att kompilera.
 
 8.4.2021
 
