@@ -24,13 +24,15 @@ function createRecognitionObject() {
   // Whenever a result is returned from the webspeechAPI
   recognition.onresult = (e) => {
     result.innerHTML = e.results[0][0].transcript;
+    checkInput(e)
+     // recognition.stop();
     // If it is the final result stop recognition
     if (e.results[0].isFinal) {
-      recognition.stop();
+      checkInput(e,true)
     }
   };
-  // If recognition stops
-  recognition.onend = () => { checkInput(); }
+  //// If recognition stops
+  recognition.onend = () => {console.log("end"); setTimeout(()=>{isRec = false; startDialogue(nextNode)},1000)}
   return recognition;
 }
 

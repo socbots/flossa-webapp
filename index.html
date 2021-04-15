@@ -11,16 +11,20 @@
 
 <body>
 
+
   <div id="talkbox">
 
     </>
-    <div id="robot">
+    <div id="talk">
       <h1>ALF-BOT</h1>
       <h2 id="question">
 
       </h2>
+      <iframe id="video" width="0" height="0" frameborder="0" src="">
+</iframe>
+
     </div>
-    <div id="human">
+    <div id="robot">
       <div id="answers">
         <button id="left_answer" class="answer_button">^</button>
         <button id="right_answer"  class="answer_button">^</button>
@@ -31,6 +35,9 @@
     </div>
 
   </div>
+  <p><input type="button" value="Start real-time face detection" onclick="button_callback()"></p>
+
+  <p><canvas id="face_detection" width=640 height=480></canvas></p>
   <button id="speak">speak</button>
 
   <!-- 
@@ -68,6 +75,9 @@
   </select>
 </form>
 -->
+<script src="camvas.js"></script>
+		<script src="pico.js"></script>
+    <script src="face.js"></script>
   <script src="speech.js"></script>
   <script src="tree.js"></script>
   <script src="alfApp.js"></script>

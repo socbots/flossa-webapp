@@ -1,23 +1,49 @@
 
 // This function starts and moves the dialog onwards 
 function startDialogue(node, notUnderstod = false) {
-  console.log(currentNode);
+  // This if should not happen anymore
+  // But i'm gonna leave it as precautions anyway
+  if (isRec){
+    console.log("Hep")
+    setTimeout(()=>startDialogue(node,notUnderstod),1000)
+  }
+  else {
   currentNode = node;
   setQuestion(currentNode, notUnderstod);
+  hideResult();
+
   // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
   if (!node?._text && !isRec) {
     isRec = true
     rec.start();
   }
+  else if (node?._video){
+    console.log("video found")
+    setVideo(node._video)
+  }
+  
+  }
+}
+
+function setVideo(url){
+  videoPlayer = document.getElementById("video");
+  console.log(videoPlayer);
+  videoPlayer.src = url;
+  videoPlayer.width = 360;
+  videoPlayer.height = 240;
+
+  
 }
 
 function hideResult(){
-  setTimeout(()=>{document.getElementById("result").innerHTML = ""},2000)
+  //document.getElementById("result").innerHTML = ""
+  setTimeout(()=>{document.getElementById("result").innerHTML = ""},2500)
 }
 
 function setAnswers(node){
   const leftAnswer = document.getElementById("left_answer");
   const rightAnswer = document.getElementById("right_answer");
+  console.log(node)
   if (node?._text){
 
     leftAnswer.innerHTML = "^";
@@ -29,9 +55,6 @@ function setAnswers(node){
 }
 }
 
-function makesEyesLarger(){
-  
-}
 
 // 
 function setQuestion(node, notUnderstod = false) {
@@ -51,35 +74,52 @@ function setQuestion(node, notUnderstod = false) {
   textToSpeech(text);
 }
 
-function checkInput() {
+function checkInput(res,isFinal = false) {
   console.log("Checking input");
-  const result = document.getElementById("result").innerHTML;
-  isRec = false
+  let result = res.results[0][0].transcript;
   // Test the user input against the left and right answers in our node.
   if (currentNode.rightAnswer.includes(result) && result) {
-    console.log(result)
     console.log("Going right");
-    startDialogue(currentNode.rightNode);
+    rec.stop();
+    nextNode = currentNode.rightNode;
+ //   isRec = false
+    //startDialogue(currentNode.rightNode);
+
   }
   else if (currentNode.leftAnswer.includes(result) && result) {
     console.log("Going left");
-    startDialogue(currentNode.leftNode);
+  //  isRec = false
+    rec.stop();
+    nextNode = currentNode.leftNode;
+   // startDialogue(currentNode.leftNode);
   }
   // If we cant find a match for the input our user gives we startDialog with the current node and set the notUnderstod parameter to true
-  else {
-    startDialogue(currentNode, notUnderstod = true);
-    hideResult();
+  else if (isFinal){
+    console.log("true final")
+    nextNode = currentNode;
+    //startDialogue(currentNode, notUnderstod = true);
   }
+}
+
+function setButtonListeners(){
+  const answers =Array.from(document.getElementsByClassName("answer_button"));
+  console.log(answers)
+  answers.forEach((btn)=>{
+    btn.addEventListener("click",()=>{
+
+    })
+  })
 }
 
 // We save the rootNode incase we want to reset the dialogue at some point
 // createTree() is from the tree.js file
 const rootNode = createTree();
 let currentNode = rootNode;
+let nextNode = null;
 // these create functions are from the speech.js file
 let rec = createRecognitionObject();
 const textToSpeech = createSpeechFunction();
 // I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
 let isRec = false;
-
+setButtonListeners();
 startDialogue(currentNode);

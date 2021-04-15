@@ -18,15 +18,11 @@ class Question {
 // The RobotFunction class is used as the leaf nodes of our tree structure
 // This means that when we encounter a RoboFunction the dialogue has ended.
 class RobotFunction {
-  constructor(text) {
+  constructor(text, video = undefined) {
     this._text = text;
+    this._video = video
   }
-  set text(input) {
-    this._text = input;
-  }
-  get text() {
-    return this._text;
-  }
+
 }
 
 // CREATE QUESTIONS TREE
@@ -38,20 +34,20 @@ function createTree() {
   let greeting = new Question("Hej! Vill du tala med mig", "nej", "jo");
 
   let greetingFollow = new Question("Hur Känner du dig inför besöket?", "spänd", "lugn");
-  greeting.setNodes(new RobotFunction("Ha en trevlig dag"), greetingFollow);
+  greeting.setNodes(new RobotFunction("Ha en trevlig dag!", video = "https://www.youtube.com/embed/dQw4w9WgXcQ"), greetingFollow);
 
   let flossing = new Question("Vill du ha hygienråd?", "jo", "nej");
   let relax = new Question("Kan jag hjälpa dig slappna av", "jo", "nej");
   greetingFollow.setNodes(relax, flossing);
 
-  let relaxEnd = new RobotFunction("Här är en video för att hjälpa dig slappna av: <a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' >Video</a>")
+  let relaxEnd = new RobotFunction("Här är en video för att hjälpa dig slappna av!", video = 'https://www.youtube.com/embed/dQw4w9WgXcQ')
   relax.setNodes(relaxEnd, flossing);
 
   let flossingFollow = new Question("Använder du tandtråd?", "nej", "jo");
   let guidance = new Question("Hjälp med att hitta rätt?", "nej", "jo");
   flossing.setNodes(flossingFollow, guidance);
 
-  let flossingSometimes = new RobotFunction("Här är en länk till info om tandhygien: <a href='https://www.tandlakare.se/tandhygien/' >Video</a>")
+  let flossingSometimes = new RobotFunction("Här är en video om tandhygien", video = 'https://www.youtube.com/embed/vYbVHPLZrRo')
   flossingFollow.setNodes(flossingSometimes, flossingSometimes);
 
   let guidanceFollow = new Question("Välj din tandläkare");
