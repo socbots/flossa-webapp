@@ -24,10 +24,10 @@ function createRecognitionObject() {
 
   let result = document.getElementById("result")
 
-
+  let answerFound = false;
   function checkInput(res, isFinal = false) {
     let result = res.results[0][0].transcript;
-    console.log("Checking input " + result);
+    console.log("input " + result);
 
     // Test the user input against the left and right answers in our node.
     if (currentNode.rightAnswer.includes(result) && result) {
@@ -36,14 +36,14 @@ function createRecognitionObject() {
       rec.abort();
       isRec = false;
       currentNode = currentNode.rightNode;
-      notUnderstod = false;
+      answerFound = true;
 
 
     }
     else if (currentNode.leftAnswer.includes(result) && result) {
       console.log("Going left");
       rec.abort();
-      notUnderstod = false;
+      answerFound = true;
       isRec = false;
       currentNode = currentNode.leftNode;
 
@@ -52,16 +52,28 @@ function createRecognitionObject() {
     else if (isFinal) {
       console.log("true final");
       // quickfix: I don't like this global variable but it works
-      notUnderstod = true;
+      if (!answerFound) {
+        notUnderstod = true;
+      }
       rec.abort();
 
     }
   }
 
+  let timeoffset = false;
+  let timer;
+  recognition.onstart = () => {
+    if (!timer) {
+      console.log("set timer");
+      timer = setTimeout(() => {
+        timeoffset = true;
+        timer = undefined
+      }, 15000);
+    }
+  }
+
   // Whenever a result is returned from the webspeechAPI
   recognition.onresult = (e) => {
-    console.log("result");
-    console.log(e);
     result.innerHTML = e.results[0][0].transcript;
     checkInput(e)
     // recognition.stop();
@@ -72,10 +84,19 @@ function createRecognitionObject() {
   };
   //// If recognition stops
   recognition.onend = () => {
-    console.log("end"); setTimeout(() => {
+    setTimeout(() => {
       isRec = false;
-      startDialogue()
-    }, 1000)
+      if (answerFound) {
+        startDialogue()
+      }
+      else if (timer) {
+        startRecording();
+      }
+      else {
+        notUnderstod = true;
+        startDialogue();
+      }
+    }, 100)
   }
   return recognition;
 }
@@ -91,6 +112,7 @@ function createSpeechFunction() {
   const context = new AudioContext();
 
   let textToSpeech = (text) => {
+    console.log(text)
     if (!isSpeaking) {
       let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE"
       fetch(url)
@@ -107,9 +129,10 @@ function createSpeechFunction() {
     source.connect(context.destination);
     source.start();
     source.onended = () => {
-      console.log("speaking")
       isSpeaking = false;
-      startRecording();
+      if (currentNode.leftAnswer != undefined) {
+        startRecording();
+      }
     }
 
   }
@@ -120,7 +143,6 @@ function createSpeechFunction() {
 
 function startRecording() {
   if (!(currentNode._text || undefined) && !isRec) {
-    console.log("starting rec");
     rec.start();
     isRec = true
   }

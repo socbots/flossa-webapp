@@ -58,4 +58,8 @@ function createTree() {
   return greeting;
 }
 
+function getAbortNode(){
+  return new RobotFunction("Ha en trevlig dag")
+}
+
 //const rootNode = createTree();

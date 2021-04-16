@@ -1,5 +1,9 @@
 ALF FRONT END 
 
+16.4.2021
+
+Testing på Alf, de gick åt 2 timmar att hitta mikrofonens mute knapp,
+
 15.4.2021
 
 chrome://settings/content/sound allow URL seems to be another option instead of setting autoplay flag.

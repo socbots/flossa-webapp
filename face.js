@@ -1,4 +1,6 @@
 var initialized = false;
+let detected = false;
+
 		function button_callback() {
 			/*
 				(0) check whether we're already running face detection
@@ -20,6 +22,7 @@ fetch(cascadeurl).then(function(response) {
 })
 
 
+
 var ctx = document.getElementsByTagName('canvas')[0].getContext('2d');
 function rgba_to_grayscale(rgba, nrows, ncols) {
   var gray = new Uint8Array(nrows*ncols);
@@ -33,8 +36,12 @@ function rgba_to_grayscale(rgba, nrows, ncols) {
 /*
 				(3) this function is called each time a video frame becomes available
 			*/
+
+			let counter = 0;
+			const framerateDropRate = 5;
 			var processfn = function(video, dt) {
 				// render the video frame to the canvas element and extract RGBA pixel data
+				if (counter % framerateDropRate == 0){
 				ctx.drawImage(video, 0, 0);
 				var rgba = ctx.getImageData(0, 0, 640, 480).data;
 				// prepare input to `run_cascade`
@@ -56,9 +63,15 @@ function rgba_to_grayscale(rgba, nrows, ncols) {
 				dets = pico.run_cascade(image, facefinder_classify_region, params);
 				dets = update_memory(dets);
 				dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
-        if (dets.length > 0){
-          console.log("face detected")
+
+				confidenceRates = dets.map((x)=>{ return x[3]})
+        if (confidenceRates.some((x)=> x > 50 ) ){
+					console.log("detcted")
+          detected = true;
         }
+				else {
+					detected = false;
+				}
 				// draw detections
 
 				for(i=0; i<dets.length; ++i)
@@ -74,9 +87,11 @@ function rgba_to_grayscale(rgba, nrows, ncols) {
           ctx.stroke();
         }
       }
-
+			counter += 1
+		}
 
       var mycamvas = new camvas(ctx, processfn);
 
       initialized = true;
+			
     }

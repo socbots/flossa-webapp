@@ -1,7 +1,6 @@
 
 // This function starts and moves the dialog onwards 
 function startDialogue(notUnderstod = false) {
-
   setQuestion(currentNode, notUnderstod);
   hideResult();
   // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
@@ -13,7 +12,6 @@ function startDialogue(notUnderstod = false) {
 
 function setVideo(url) {
   videoPlayer = document.getElementById("video");
-  console.log(videoPlayer);
   videoPlayer.src = url;
   videoPlayer.width = 360;
   videoPlayer.height = 240;
@@ -21,7 +19,6 @@ function setVideo(url) {
 
 function hideResult() {
   document.getElementById("result").innerHTML = ""
-  //setTimeout(() => { document.getElementById("result").innerHTML = "" }, 2500)
 }
 
 function setAnswers(node) {
@@ -59,12 +56,36 @@ function setQuestion(node) {
 
 function setButtonListeners() {
   const answers = Array.from(document.getElementsByClassName("answer_button"));
-  console.log(answers)
   answers.forEach((btn) => {
     btn.addEventListener("click", () => {
 
     })
   })
+}
+
+let detectedCounter =0;
+function isDetected(state){
+  if(state ){
+    detectedCounter = 0;
+    if (!dialogRunning){
+      currentNode = rootNode;
+      startDialogue(currentNode);
+    dialogRunning = true;
+
+      console.log("is see you")
+    }
+  }
+  else {
+    detectedCounter += 1;
+    if (detectedCounter > 20 && dialogRunning){
+      currentNode = getAbortNode()
+      startDialogue();
+      dialogRunning = false;
+      console.log("bye bye")
+
+
+    }
+  }
 }
 
 // Test to trigger microphone and audio request from browser
@@ -74,8 +95,10 @@ navigator.mediaDevices.getUserMedia({ audio: true })
 const rootNode = createTree();
 let currentNode = rootNode;
 let notUnderstod = false;
+let dialogRunning = false;
 
 // these create functions are from the speech.js file
+button_callback();
 
   let textToSpeech = createSpeechFunction();
  // let textToSpeech
@@ -86,6 +109,7 @@ document.getElementById("speak").addEventListener("click",() => {
 // I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
 //let notUnderstod = false;
 setButtonListeners();
-startDialogue(currentNode);
-
+setInterval(() => {
+  isDetected(detected);
+}, 200);
 
