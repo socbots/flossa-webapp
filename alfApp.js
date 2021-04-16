@@ -8,11 +8,11 @@ function startDialogue(notUnderstod = false) {
   hideResult();
 
   // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
-  if (!currentNode?._text && !isRec) {
+  if ((currentNode._text || undefined) && !isRec) {
     isRec = true
     rec.start();
   }
-  else if (currentNode?._video) {
+  else if (currentNode._video || undefined) {
     console.log("video found")
     setVideo(currentNode._video)
   }
@@ -39,7 +39,7 @@ function setAnswers(node) {
   const leftAnswer = document.getElementById("left_answer");
   const rightAnswer = document.getElementById("right_answer");
   console.log(node)
-  if (node?._text) {
+  if (node._text || undefined ) {
 
     leftAnswer.innerHTML = "^";
     rightAnswer.innerHTML = "^";
@@ -59,8 +59,8 @@ function setQuestion(node) {
   // If the user input was not understod add "jag förstod inte..." and a 1sec break between the question.
   // node?._text || node.question means that if the node is of the type RobotFunction it will have a ._text variable else it is a Question and has a .question variable.
   const text = notUnderstod ?
-    '<speak> Jag förstod inte vad du menade? <break time="1s"/>' + (node?._text || node.question) + '</speak>' :
-    '<speak>' + (node?._text || node.question) + '</speak>';
+    '<speak> Jag förstod inte vad du menade? <break time="1s"/>' + ((node._text || undefined) || node.question) + '</speak>' :
+    '<speak>' + ((node._text || undefined) || node.question) + '</speak>';
 
   const point = text.search("<break");
   const textNewline = text.slice(0, point) + "<br>" + text.slice(point)
