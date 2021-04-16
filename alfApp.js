@@ -2,23 +2,14 @@
 // This function starts and moves the dialog onwards 
 function startDialogue(notUnderstod = false) {
 
-
-  //currentNode = node;
   setQuestion(currentNode, notUnderstod);
   hideResult();
-
   // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
-  if ((currentNode._text || undefined) && !isRec) {
-    isRec = true
-    rec.start();
-  }
-  else if (currentNode._video || undefined) {
+  if (currentNode._video || undefined) {
     console.log("video found")
     setVideo(currentNode._video)
   }
-
 }
-
 
 function setVideo(url) {
   videoPlayer = document.getElementById("video");
@@ -26,21 +17,17 @@ function setVideo(url) {
   videoPlayer.src = url;
   videoPlayer.width = 360;
   videoPlayer.height = 240;
-
-
 }
 
 function hideResult() {
-  //document.getElementById("result").innerHTML = ""
-  setTimeout(() => { document.getElementById("result").innerHTML = "" }, 2500)
+  document.getElementById("result").innerHTML = ""
+  //setTimeout(() => { document.getElementById("result").innerHTML = "" }, 2500)
 }
 
 function setAnswers(node) {
   const leftAnswer = document.getElementById("left_answer");
   const rightAnswer = document.getElementById("right_answer");
-  console.log(node)
   if (node._text || undefined ) {
-
     leftAnswer.innerHTML = "^";
     rightAnswer.innerHTML = "^";
   }
@@ -49,7 +36,6 @@ function setAnswers(node) {
     rightAnswer.innerHTML = node.rightAnswer;
   }
 }
-
 
 // 
 function setQuestion(node) {
@@ -67,39 +53,9 @@ function setQuestion(node) {
 
   question.innerHTML = point < 0 ? text : textNewline;
   textToSpeech(text);
-  notUnderstod = false;
 }
 
-function checkInput(res, isFinal = false) {
-  console.log("Checking input");
-  let result = res.results[0][0].transcript;
-  // Test the user input against the left and right answers in our node.
-  if (currentNode.rightAnswer.includes(result) && result) {
-    console.log("Going right");
-    // rec.abort() terminates
-    rec.abort();
-    currentNode = currentNode.rightNode;
-    //   isRec = false
-    //startDialogue(currentNode.rightNode);
 
-  }
-  else if (currentNode.leftAnswer.includes(result) && result) {
-    console.log("Going left");
-    //  isRec = false
-    rec.abort();
-
-    currentNode = currentNode.leftNode;
-    // startDialogue(currentNode.leftNode);
-  }
-  // If we cant find a match for the input our user gives we startDialog with the current node and set the notUnderstod parameter to true
-  else if (isFinal) {
-    console.log("true final");
-    // quickfix: I don't like this global variable but it works
-    notUnderstod = true;
-    rec.abort();
-
-  }
-}
 
 function setButtonListeners() {
   const answers = Array.from(document.getElementsByClassName("answer_button"));
@@ -111,15 +67,25 @@ function setButtonListeners() {
   })
 }
 
+// Test to trigger microphone and audio request from browser
+navigator.mediaDevices.getUserMedia({ audio: true })
 // We save the rootNode incase we want to reset the dialogue at some point
 // createTree() is from the tree.js file
 const rootNode = createTree();
 let currentNode = rootNode;
-// these create functions are from the speech.js file
-let rec = createRecognitionObject();
-const textToSpeech = createSpeechFunction();
-// I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
-let isRec = false;
 let notUnderstod = false;
+
+// these create functions are from the speech.js file
+
+  let textToSpeech = createSpeechFunction();
+ // let textToSpeech
+document.getElementById("speak").addEventListener("click",() => {
+  console.log("button clicked")
+});
+
+// I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
+//let notUnderstod = false;
 setButtonListeners();
 startDialogue(currentNode);
+
+

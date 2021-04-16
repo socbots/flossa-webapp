@@ -2,7 +2,7 @@
   display: none;
 }
 #speak{
-  display: none;
+  display: block;
 }
 .flex_center{
 
