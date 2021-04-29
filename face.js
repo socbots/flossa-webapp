@@ -38,7 +38,7 @@ function rgba_to_grayscale(rgba, nrows, ncols) {
 			*/
 
 			let counter = 0;
-			const framerateDropRate = 5;
+			const framerateDropRate = 15;
 			var processfn = function(video, dt) {
 				// render the video frame to the canvas element and extract RGBA pixel data
 				if (counter % framerateDropRate == 0){
@@ -61,11 +61,17 @@ function rgba_to_grayscale(rgba, nrows, ncols) {
 				// dets is an array that contains (r, c, s, q) quadruplets
 				// (representing row, column, scale and detection score)
 				dets = pico.run_cascade(image, facefinder_classify_region, params);
-				dets = update_memory(dets);
-				dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
 
+				// I disabled the cluster_detection and update_memory to try to get some better performance on ALF
+
+			//	dets = update_memory(dets);
+				//dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
 				confidenceRates = dets.map((x)=>{ return x[3]})
-        if (confidenceRates.some((x)=> x > 50 ) ){
+				let max = Math.max.apply(null,confidenceRates);
+
+				// Use this if if cluster  detection is enabled
+//        if (confidenceRates.some((x)=> x > 50 ) ){
+					if(max > 5){
 					console.log("detcted")
           detected = true;
         }
@@ -74,18 +80,18 @@ function rgba_to_grayscale(rgba, nrows, ncols) {
 				}
 				// draw detections
 
-				for(i=0; i<dets.length; ++i)
-        // check the detection score
-        // if it's above the threshold, draw it
-        // (the constant 50.0 is empirical: other cascades might require a different one)
-        if(dets[i][3]>50.0)
-        {
-          ctx.beginPath();
-          ctx.arc(dets[i][1], dets[i][0], dets[i][2]/2, 0, 2*Math.PI, false);
-          ctx.lineWidth = 3;
-          ctx.strokeStyle = 'red';
-          ctx.stroke();
-        }
+			//	for(i=0; i<dets.length; ++i)
+      //  // check the detection score
+      //  // if it's above the threshold, draw it
+      //  // (the constant 50.0 is empirical: other cascades might require a different one)
+      //  if(dets[i][3]>50.0)
+      //  {
+      //    ctx.beginPath();
+      //    ctx.arc(dets[i][1], dets[i][0], dets[i][2]/2, 0, 2*Math.PI, false);
+      //    ctx.lineWidth = 3;
+      //    ctx.strokeStyle = 'red';
+      //    ctx.stroke();
+      //  }
       }
 			counter += 1
 		}

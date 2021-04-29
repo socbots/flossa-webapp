@@ -1,25 +1,27 @@
 
 // This function starts and moves the dialog onwards 
-function startDialogue(notUnderstod = false) {
-  setQuestion(currentNode, notUnderstod);
-  hideResult();
-  // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
+function startDialogue(notUnderstod = false,setQuestions = true) {
+  if (setQuestions){
+    setQuestion(currentNode, notUnderstod);
+  }// If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
   if (currentNode._video || undefined) {
     console.log("video found")
     setVideo(currentNode._video)
+    videoRunning = true;
+    document.getElementById("talkbox").style.paddingTop = "300px";
+    //window.scrollto(0,100)
+    window.scrollTo(0,1);
   }
 }
 
 function setVideo(url) {
   videoPlayer = document.getElementById("video");
   videoPlayer.src = url;
-  videoPlayer.width = 360;
-  videoPlayer.height = 240;
+  videoPlayer.width = 1000;
+  videoPlayer.height = 700;
 }
 
-function hideResult() {
-  document.getElementById("result").innerHTML = ""
-}
+
 
 function setAnswers(node) {
   const leftAnswer = document.getElementById("left_answer");
@@ -54,39 +56,32 @@ function setQuestion(node) {
 
 
 
-function setButtonListeners() {
-  const answers = Array.from(document.getElementsByClassName("answer_button"));
-  answers.forEach((btn) => {
-    btn.addEventListener("click", () => {
 
-    })
-  })
-}
 
 let detectedCounter =0;
 function isDetected(state){
-  if(state ){
+  if(state && !videoRunning){
     detectedCounter = 0;
     if (!dialogRunning){
+      notUnderstod = false;
       currentNode = rootNode;
       startDialogue(currentNode);
-    dialogRunning = true;
-
+      dialogRunning = true;
       console.log("is see you")
     }
   }
   else {
     detectedCounter += 1;
-    if (detectedCounter > 20 && dialogRunning){
+    if (detectedCounter > 50 && dialogRunning){
       currentNode = getAbortNode()
+      notUnderstod = false;
       startDialogue();
       dialogRunning = false;
       console.log("bye bye")
-
-
     }
   }
 }
+window.scrollTo(0,1);
 
 // Test to trigger microphone and audio request from browser
 navigator.mediaDevices.getUserMedia({ audio: true })
@@ -98,18 +93,18 @@ let notUnderstod = false;
 let dialogRunning = false;
 
 // these create functions are from the speech.js file
-button_callback();
+//button_callback();
 
   let textToSpeech = createSpeechFunction();
- // let textToSpeech
-document.getElementById("speak").addEventListener("click",() => {
-  console.log("button clicked")
-});
+
+  let videoRunning = false;
+
+document.getElementById("speak").addEventListener("click",()=>{isDetected(true)})
 
 // I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
 //let notUnderstod = false;
-setButtonListeners();
-setInterval(() => {
-  isDetected(detected);
-}, 200);
+//setButtonListeners();
+//setInterval(() => { isDetected(detected); }, 500);
 
+//fetch("https://193.167.34.217/robotfunction")
+//  .then((d)=> console.log(d))

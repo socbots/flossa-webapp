@@ -5,10 +5,7 @@ function createRecognitionObject() {
   var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
   var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
   var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
-  // var SpeechRecognition = SpeechRecognition 
-  // var SpeechGrammarList = SpeechGrammarList 
-  // var SpeechRecognitionEvent = SpeechRecognitionEvent 
-  //
+
   // Not sure how,why,when the grammar works need to read more documentation
   const speechRecognitionList = new SpeechGrammarList();
   const words = ['nej', 'jo', 'spänd', 'lugn'];
@@ -17,18 +14,32 @@ function createRecognitionObject() {
 
   recognition = new SpeechRecognition();
   recognition.grammars = speechRecognitionList;
-  recognition.lang = "sv-SE"
-  recognition.continuous = false;
+  recognition.lang = "sv-SE";
+  // this must be true 
+  recognition.continuous = true;
   recognition.interimResults = true;
   recognition.maxAlternatives = 1;
 
   let result = document.getElementById("result")
 
   let answerFound = false;
-  function checkInput(res, isFinal = false) {
-    let result = res.results[0][0].transcript;
-    console.log("input " + result);
 
+  function setButtonListeners() {
+    const leftbtn = document.getElementById("left_answer");
+    const rightbtn = document.getElementById("right_answer");
+
+   leftbtn.addEventListener("click", ()=>{ checkInput(leftbtn.innerHTML,true)})
+  rightbtn.addEventListener("click", ()=>{checkInput(rightbtn.innerHTML,true)})
+  }
+
+  setButtonListeners();
+
+  function checkInput(result, isFinal = false) {
+    console.log("input " + result);
+    if ( typeof currentNode == "undefined"){
+      console.log("initializing button clickers")
+    }
+    else {
     // Test the user input against the left and right answers in our node.
     if (currentNode.rightAnswer.includes(result) && result) {
       console.log("Going right");
@@ -37,8 +48,6 @@ function createRecognitionObject() {
       isRec = false;
       currentNode = currentNode.rightNode;
       answerFound = true;
-
-
     }
     else if (currentNode.leftAnswer.includes(result) && result) {
       console.log("Going left");
@@ -56,7 +65,7 @@ function createRecognitionObject() {
         notUnderstod = true;
       }
       rec.abort();
-
+    }
     }
   }
 
@@ -74,29 +83,35 @@ function createRecognitionObject() {
 
   // Whenever a result is returned from the webspeechAPI
   recognition.onresult = (e) => {
+    console.log(e);
     result.innerHTML = e.results[0][0].transcript;
-    checkInput(e)
+    checkInput(e.results[0][0].transcript)
     // recognition.stop();
     // If it is the final result stop recognition
     if (e.results[0].isFinal) {
-      checkInput(e, true)
+      checkInput(e.results[0][0].transcript, true)
     }
   };
   //// If recognition stops
   recognition.onend = () => {
+    console.log("recocnition onend")
     setTimeout(() => {
       isRec = false;
       if (answerFound) {
-        startDialogue()
+        console.log("Found")
+        startDialogue();
+        answerFound = false;
       }
       else if (timer) {
+        console.log("timer going")
         startRecording();
       }
       else {
+        console.log("else")
         notUnderstod = true;
         startDialogue();
       }
-    }, 100)
+    }, 50)
   }
   return recognition;
 }
@@ -108,18 +123,21 @@ function createRecognitionObject() {
 
 function createSpeechFunction() {
 
-  let isSpeaking = false
+  let isSpeaking = false;
   const context = new AudioContext();
 
   let textToSpeech = (text) => {
-    console.log(text)
+    console.log(text);
     if (!isSpeaking) {
-      let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE"
+      let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE&rate=1.4"
       fetch(url)
         .then(response => response.arrayBuffer())
         .then(buffer => context.decodeAudioData(buffer))
         .then(audio => playAudio(audio))
     }
+  }
+  function hideResult() {
+    document.getElementById("result").innerHTML = ""
   }
 
   function playAudio(audioBuffer) {
@@ -127,24 +145,29 @@ function createSpeechFunction() {
     const source = context.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(context.destination);
+    source.detune.value = -400;
     source.start();
+    console.log(source);
     source.onended = () => {
       isSpeaking = false;
       if (currentNode.leftAnswer != undefined) {
         startRecording();
+        hideResult();
       }
     }
-
   }
+  // make dummy request to wake up server
+  textToSpeech(" ");
 
   return textToSpeech;
 }
 
-
 function startRecording() {
   if (!(currentNode._text || undefined) && !isRec) {
+    console.log("recording")
     rec.start();
-    isRec = true
+    isRec = true;
+    notUnderstod = false;
   }
 }
 
