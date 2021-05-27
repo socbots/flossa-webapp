@@ -1,100 +1,37 @@
-.questions{
-  display: none;
-}
-#speak{
-  display: block;
-}
-#face_detection{
-}
-
-.flex_center{
-
-  flex-grow: 3;
-}
-body{
-  margin:0;
-  font-family: monospace;
-}
-
-#talkbox{
-  background-color:#7D288C;
-  color:whitesmoke;
-  display: flex;
-  font-size: x-large;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  padding-top: 100px;
-  padding-bottom: 100px;
-}
-
-#talk{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  flex-grow: 2;
-
-}
-#robot{
-  display: flex;
-  flex-grow: 3;
-  flex-direction: column;
-  align-items: center;
-  width: 40%;
-  border: #000000 6px solid;
-  box-shadow: 0px 4px 5px 5px #101000;
-  margin-bottom: 8em;
-  margin-top:2em;
-  border-radius: 60px;
-  height: 110%;
-}
-#result_div{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 6em;
-  width: 11em;;
-  background-color: whitesmoke;
-  border-radius: 10px;
-  color:black;
-  box-shadow: 1px 1px 3px 3px #000000;
-}
-#result{
-  flex-direction: column;
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
   
-
-}
-#answers{
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-evenly;
-  margin-bottom: 6em;
-  margin-top: 5em;
-}
-
-.answer_button{
-  padding: 1em;
-  background-color: #f5e6d7;
-  color: #7D288C;
-  font-size: xxx-large;
-  border-radius: 40px;
-
-}
-#left_answer{
-  box-shadow: 1px 1px 3px 3px #f536d7;
-}
-#right_answer{
-  box-shadow: -1px 1px 3px 3px #f536d7;
-}
-#question{
-  text-align: center
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
   
-}
-
-#face_detection{
-  display: none;
-}
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
