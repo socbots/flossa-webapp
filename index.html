@@ -7,86 +7,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <title>Alf App</title>
+  <script src="speech.js" defer></script>
+  <script src="tree.js" defer></script>
+  <script src="alfApp.js" defer></script>
 </head>
 
 <body>
 
 
-  <div id="talkbox">
-
-    </>
-    <div id="talk">
-      <h1>ALF-BOT</h1>
-      <h2 id="question">
-
-      </h2>
-      <iframe id="video" width="0" height="0" frameborder="0" src="">
-</iframe>
-<button id="speak">speak</button>
-
+  <div id="main">
+    <div id="question" class="text">
+      Hälsa på mig för att börja tala
+      <button id="speak" class="answerButton">Tala</button>
     </div>
-    <div id="robot">
-      <div id="answers">
-        <button id="left_answer" class="answer_button">^</button>
-        <button id="right_answer"  class="answer_button">^</button>
-      </div>
-      <div id="result_div">
-        <h2 id="result"></h2>
-      </div>
+    <div id="result" class="text"></div>
+    <div id="answers">
+        <div id="left_answer" class="answerButton">Answer 1</div>
+        <div id="right_answer" class="answerButton">Answer 2</div>
     </div>
-
-
-
-    <p><input type="button" value="Start real-time face detection" onclick="button_callback()"></p>
-
   </div>
 
-
-  <p><canvas id="face_detection" width=640 height=480></canvas></p>
-
-  <!-- 
-<p>
-  <button id="start">Start</button>
-</p>
-
-<p>
-  <button id="record">Rec</button>
- <button id="stopR">Stop</button>
-</p>
-
-
-<h1>Speech synthesiser</h1>
-<input type="text" name="" id="textinput">
-
-<button id="speak">speak</button>
-
-<p>Enter some text in the input below and press return to hear it. change voices using the dropdown menu.</p>
-
-<form>
-  <input type="text" class="txt">
-  <div>
-    <label for="rate">Rate</label><input type="range" min="0.5" max="2" value="1" step="0.1" id="rate">
-    <div class="rate-value">1</div>
-    <div class="clearfix"></div>
   </div>
-  <div>
-    <label for="pitch">Pitch</label><input type="range" min="0" max="2" value="1" step="0.1" id="pitch">
-    <div class="pitch-value">1</div>
-    <div class="clearfix"></div>
-  </div>
-  <select>
-
-  </select>
-</form>
--->
-<script src="camvas.js" defer></script>
-		<script src="pico.js" defer></script>
-    <script src="face.js" defer></script>
-  <script src="speech.js" defer></script>
-  <script src="tree.js" defer></script>
-  <script src="alfApp.js" defer></script>
-  <!-- <script src="speechApi.js"></script>
-  <script src="main.js"></script> -->
 </body>
 
 </html>

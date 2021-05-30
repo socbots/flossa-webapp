@@ -1,24 +1,32 @@
-.questions{
+:root {
+  --button-color: #09d3ac;
+  --duration: 0.17s;
+  --text: white;
+  }
+
+.questions {
   display: none;
 }
-#speak{
+
+#speak {
   display: block;
 }
-#face_detection{
-}
 
-.flex_center{
+#face_detection {}
 
+.flex_center {
   flex-grow: 3;
 }
-body{
-  margin:0;
-  font-family: monospace;
+
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: var(--text)
 }
 
-#talkbox{
-  background-color:#7D288C;
-  color:whitesmoke;
+#talkbox {
+  background-color: #7D288C;
+  color: whitesmoke;
   display: flex;
   font-size: x-large;
   justify-content: center;
@@ -30,15 +38,81 @@ body{
   padding-bottom: 100px;
 }
 
-#talk{
+#main {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 40vh 10vh 50vh;
+  place-items: center;
+  background: black;
+}
+
+#question {
+  grid-area: 1 / 1 / span 1 / span 4;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#result {
+  grid-area: 2 / 2 / span 1 / span 2;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#answers {
+  grid-area: 3 / 2 / span 1 / span 2;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.text {
+  font-size: xx-large;
+}
+
+.answerButton {
+  color: var(--text);
+  appearance: none;
+  background-color: var(--button-color);
+  border: 2px solid var(--button-color);
+  border-radius: 7px;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  padding: 0.5rem 2.0rem;
+  margin: 0.2rem 0.2rem;
+  min-width: 10rem;
+  text-align: center;
+  transition: color var(--duration) cubic-bezier(.08,.52,.52,1),background-color var(--duration) cubic-bezier(.08,.52,.52,1)
+}
+
+.answerButton:hover {
+  text-decoration: none;
+  outline: 0;
+  color: var(--button-color);
+  background: var(--text);
+}
+
+
+
+
+#talk {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   flex-grow: 2;
-
 }
-#robot{
+
+#robot {
   display: flex;
   flex-grow: 3;
   flex-direction: column;
@@ -47,27 +121,50 @@ body{
   border: #000000 6px solid;
   box-shadow: 0px 4px 5px 5px #101000;
   margin-bottom: 8em;
-  margin-top:2em;
+  margin-top: 2em;
   border-radius: 60px;
   height: 110%;
 }
-#result_div{
+
+#result_div {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 6em;
-  width: 11em;;
+  width: 11em;
+  ;
   background-color: whitesmoke;
   border-radius: 10px;
-  color:black;
+  color: black;
   box-shadow: 1px 1px 3px 3px #000000;
 }
-#result{
-  flex-direction: column;
-  
 
+@keyframes squash {
+  0% {
+    transform: scaleY(1.0);
+  }
+  50% {
+    transform: scaleY(1.8);
+  }
+  100% {
+    transform: scaleY(1.0);
+  }
 }
-#answers{
+
+.blargh {
+  -webkit-animation-name: squash;
+  -webkit-animation-duration: 200ms;
+  -webkit-animation-timing-function: ease;
+  /* ease is the default */
+  -webkit-animation-delay: 0s;
+  /* 0 is the default */
+  -webkit-animation-iteration-count: infinite;
+  /* 1 is the default */
+  -webkit-animation-direction: alternate;
+  /* normal is the default */
+}
+
+#answers {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -76,25 +173,47 @@ body{
   margin-top: 5em;
 }
 
-.answer_button{
+.answer_button {
   padding: 1em;
-  background-color: #f5e6d7;
+  background-color: #ffffff;
   color: #7D288C;
   font-size: xxx-large;
   border-radius: 40px;
-
-}
-#left_answer{
-  box-shadow: 1px 1px 3px 3px #f536d7;
-}
-#right_answer{
-  box-shadow: -1px 1px 3px 3px #f536d7;
-}
-#question{
-  text-align: center
-  
 }
 
-#face_detection{
+#eyeLeft {
+  animation-name: spinClockwise;
+  animation-duration: 5000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+#eyeRight {
+  animation-name: spinAntiClockwise;
+  animation-duration: 5000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+
+#face_detection {
   display: none;
+}
+
+@keyframes spinClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinAntiClockwise {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }
