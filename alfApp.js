@@ -9,7 +9,6 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
     console.log("video found")
     setVideo(currentNode._video)
     videoRunning = true;
-    document.getElementById("talkbox").style.paddingTop = "300px";
     window.scrollTo(0, 1);
   }
   if (currentNode._movement || undefined) {
@@ -21,12 +20,13 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
 function setVideo(url) {
   videoPlayer = document.getElementById("video");
   videoPlayer.src = url;
-  videoPlayer.width = 1000;
-  videoPlayer.height = 700;
+  videoPlayer.style.width = "100%";
+  videoPlayer.style.height = "100%";
+  videoPlayer.style.display = "block";
 }
 
 function setGesture(movement) {
-  url = "http://0.0.0.0:5000/move"
+  url = "https://alfsse.herokuapp.com/move"
   //url = "http://192.168.1.38:5000/move"
   fetch(url, {
     method: 'POST',

@@ -1,8 +1,8 @@
 :root {
   --button-color: #09d3ac;
   --duration: 0.17s;
-  --text: white;
-  }
+  --text-color: white;
+}
 
 .questions {
   display: none;
@@ -21,7 +21,7 @@
 body {
   margin: 0;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  color: var(--text)
+  color: var(--text-color)
 }
 
 #talkbox {
@@ -41,7 +41,7 @@ body {
 #main {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 40vh 10vh 50vh;
+  grid-template-rows: 20vh 10vh 70vh;
   place-items: center;
   background: black;
 }
@@ -55,15 +55,26 @@ body {
   align-items: center;
   flex-direction: column;
 }
-#result {
+
+#resultContainer {
   grid-area: 2 / 2 / span 1 / span 2;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
 }
-#answers {
+
+#result {
+  border-bottom: #ffffff 2px solid;
+  min-width: 20%;
+  min-height: 1em;
+  padding: 0 0.5em 0.1em;
+  text-align: center;
+}
+
+.answers {
   grid-area: 3 / 2 / span 1 / span 2;
   height: 100%;
   width: 100%;
@@ -72,13 +83,16 @@ body {
   align-items: center;
 }
 
+#video {
+  display: none;
+}
 
 .text {
   font-size: xx-large;
 }
 
 .answerButton {
-  color: var(--text);
+  color: var(--text-color);
   appearance: none;
   background-color: var(--button-color);
   border: 2px solid var(--button-color);
@@ -91,18 +105,15 @@ body {
   margin: 0.2rem 0.2rem;
   min-width: 10rem;
   text-align: center;
-  transition: color var(--duration) cubic-bezier(.08,.52,.52,1),background-color var(--duration) cubic-bezier(.08,.52,.52,1)
+  transition: color var(--duration) cubic-bezier(.08, .52, .52, 1), background-color var(--duration) cubic-bezier(.08, .52, .52, 1)
 }
 
 .answerButton:hover {
   text-decoration: none;
   outline: 0;
   color: var(--button-color);
-  background: var(--text);
+  background: var(--text-color);
 }
-
-
-
 
 #talk {
   display: flex;
@@ -194,7 +205,6 @@ body {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
-
 
 #face_detection {
   display: none;
