@@ -26,12 +26,11 @@
 /* Modal Content/Box */
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: #000000;
     margin: 15% auto;
     /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    width: fit-content;
     /* Could be more or less, depending on screen size */
 }
 
@@ -43,30 +42,34 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 .close {
-    color: #aaa;
+    color: rgb(255, 0, 0);
     float: right;
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: bolder;
+    padding-left: 0.3em;
+    margin-top: -0.3em;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     cursor: pointer;
 }
 
 
-/* Buttons */
+/* Hides some buttons on start */
 
-.button-container {
-    width: 25%;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 10px solid greenyellow;
+#answer-container {
+    display: none;
+}
+
+#canvasBtn {
+    display: none;
 }
 
 
@@ -74,15 +77,36 @@
 
 button,
 input[type=button] {
-    width: 100%;
+    display: inline-block;
+    padding: 0.8em 1.8em;
+    margin: 0 0.4em 0.4em 0;
+    border: 0.16em solid rgba(255, 255, 255, 0);
+    border-radius: 2em;
+    font-weight: bolder;
+    font-size: x-large;
+    color: #FFFFFF;
+    background-color: #84f14e;
     text-align: center;
-    padding-top: 50%;
-    padding-bottom: 50%;
-    background-color: hotpink;
 }
 
 button:hover,
 input[type=button]:hover {
     cursor: pointer;
     background-color: teal;
+}
+
+
+/* Styling for the question */
+
+.speak-container {
+    display: none;
+    padding: 0.8em 1.8em;
+    margin: 0 0.4em 0.4em 0;
+    border: 0.16em solid rgba(255, 255, 255, 0);
+    border-radius: 2em;
+    font-weight: bolder;
+    font-size: x-large;
+    color: #000000;
+    background-color: #1d97bd;
+    text-align: center;
 }

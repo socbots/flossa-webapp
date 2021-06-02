@@ -20,7 +20,7 @@
             </div>
         </div>
         <div>
-            <div class="answer-container">
+            <div id="answer-container">
                 <div class="button-container">
                     <button id="left_answer" class="answer-button"></button>
                 </div>
@@ -34,24 +34,31 @@
             </div>
         </div>
         <div class="button-container">
-            <input type="button" class="round-button" value="Start real-time face detection" onclick="button_callback()">
+            <input id="face-detection-button" type="button" class="round-button" value="Face detection" onclick="button_callback()">
         </div>
         <!-- Trigger/Open The Modal -->
         <div class="button-container">
-            <input type="button" id="canvasBtn" value="show">
+            <input type="button" id="canvasBtn" value="Show face">
         </div>
-        <iframe id="video" width="0" height="0" frameborder="0" src=""></iframe>
     </div>
 
 
+    <!-- The Modal -->
+    <div id="iframeModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" id="iframeClose">&times;</span>
+            <iframe id="video" width="0" height="0" frameborder="0" src=""></iframe>
+        </div>
 
+    </div>
 
 
     <!-- The Modal -->
     <div id="canvasModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" id="canvasClose">&times;</span>
             <canvas id="face_detection" width=640 height=480></canvas>
         </div>
 
