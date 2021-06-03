@@ -1,0 +1,132 @@
+    /* https://www.w3schools.com/howto/howto_css_modals.asp
+ * The Modal (background) */
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+
+/* Modal Content/Box */
+
+.modal-content {
+    background-color: #000000;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    width: fit-content;
+    /* Could be more or less, depending on screen size */
+}
+
+
+/* The Close Button */
+
+.interface {
+    width: 50em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 10em;
+    border: darkslategray solid 10px;
+    border-radius: 2em;
+}
+
+.close {
+    color: rgb(255, 0, 0);
+    float: right;
+    font-size: 32px;
+    font-weight: bolder;
+    padding-left: 0.3em;
+    margin-top: -0.3em;
+}
+
+<<<<<<< HEAD #talkbox {
+    background-color: #1100ff;
+    color: whitesmoke;
+    display: flex;
+    font-size: x-large;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    =======.close:hover,
+    .close:focus {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        cursor: pointer;
+        >>>>>>>main
+    }
+    /* Hides some buttons on start */
+    #answer-container {
+        display: none;
+    }
+    #canvasBtn {
+        display: none;
+    }
+    /* !important rule to force face-detection buttons for increased visibility */
+    .face-interface {
+        margin-top: 1em !important;
+        background-color: darkviolet !important;
+    }
+    .face-interface:hover {
+        background-color: deeppink !important;
+    }
+    /* Removes default styling on buttons and input[type=button] */
+    button,
+    input[type=button] {
+        display: inline-block;
+        width: 100%;
+        padding: 0.8em 1.8em;
+        margin: 0 0.4em 0.4em 0;
+        border: 0.16em solid rgba(255, 255, 255, 0);
+        border-radius: 2em;
+        font-weight: bolder;
+        font-size: x-large;
+        color: #FFFFFF;
+        background-color: #84f14e;
+        text-align: center;
+    }
+    button:hover,
+    input[type=button]:hover {
+        cursor: pointer;
+        background-color: teal;
+    }
+    .result-box {
+        pointer-events: none !important;
+        background-color: darkslategray !important;
+        min-height: 3em;
+    }
+    /* Styling for the question */
+    .speak-container {
+        display: none;
+        padding: 0.8em 1.8em;
+        margin: 0 0.4em 0.4em 0;
+        border: 0.16em solid rgba(255, 255, 255, 0);
+        border-radius: 2em;
+        font-weight: bolder;
+        font-size: x-large;
+        color: #000000;
+        background-color: #1d97bd;
+        text-align: center;
+    }
