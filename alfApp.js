@@ -34,12 +34,12 @@ function iframeModal() {
     iframeModal.style.display = "block";
     // When the user clicks on <span> (x), close the modal
     span.addEventListener('click', function() {
-        iframeModal.style.display = "none";
+        location.reload();
     });
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == iframeModal) {
+            location.reload();
         }
     }
 }
