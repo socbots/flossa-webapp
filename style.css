@@ -78,6 +78,7 @@
 button,
 input[type=button] {
     display: inline-block;
+    width: 100%;
     padding: 0.8em 1.8em;
     margin: 0 0.4em 0.4em 0;
     border: 0.16em solid rgba(255, 255, 255, 0);
