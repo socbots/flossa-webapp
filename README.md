@@ -15,3 +15,15 @@ Interaction app for alf robot
 - Developer thoughts and musings
 ### index.html
 - index.html
+
+## Preview
+
+### Start
+![start](./images/readme/start.png)
+### Face detection buttons
+![face-detection](./images/readme/face_detection.png)
+### Question interface
+![question](./images/readme/question.png)
+### video modal
+![video](./images/readme/video.png)
+
