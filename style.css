@@ -1,100 +1,135 @@
-.questions{
-  display: none;
-}
-#speak{
-  display: block;
-}
-#face_detection{
+/* https://www.w3schools.com/howto/howto_css_modals.asp
+ * The Modal (background) */
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
 }
 
-.flex_center{
 
-  flex-grow: 3;
-}
-body{
-  margin:0;
-  font-family: monospace;
-}
+/* Modal Content/Box */
 
-#talkbox{
-  background-color:#7D288C;
-  color:whitesmoke;
-  display: flex;
-  font-size: x-large;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  padding-top: 100px;
-  padding-bottom: 100px;
+.modal-content {
+    background-color: #000000;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    width: fit-content;
+    /* Could be more or less, depending on screen size */
 }
 
-#talk{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  flex-grow: 2;
 
-}
-#robot{
-  display: flex;
-  flex-grow: 3;
-  flex-direction: column;
-  align-items: center;
-  width: 40%;
-  border: #000000 6px solid;
-  box-shadow: 0px 4px 5px 5px #101000;
-  margin-bottom: 8em;
-  margin-top:2em;
-  border-radius: 60px;
-  height: 110%;
-}
-#result_div{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 6em;
-  width: 11em;;
-  background-color: whitesmoke;
-  border-radius: 10px;
-  color:black;
-  box-shadow: 1px 1px 3px 3px #000000;
-}
-#result{
-  flex-direction: column;
-  
+/* The Close Button */
 
-}
-#answers{
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-evenly;
-  margin-bottom: 6em;
-  margin-top: 5em;
+.interface {
+    width: 50em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 10em;
+    border: darkslategray solid 10px;
+    border-radius: 2em;
 }
 
-.answer_button{
-  padding: 1em;
-  background-color: #f5e6d7;
-  color: #7D288C;
-  font-size: xxx-large;
-  border-radius: 40px;
-
-}
-#left_answer{
-  box-shadow: 1px 1px 3px 3px #f536d7;
-}
-#right_answer{
-  box-shadow: -1px 1px 3px 3px #f536d7;
-}
-#question{
-  text-align: center
-  
+.close {
+    color: rgb(255, 0, 0);
+    float: right;
+    font-size: 32px;
+    font-weight: bolder;
+    padding-left: 0.3em;
+    margin-top: -0.3em;
 }
 
-#face_detection{
-  display: none;
+.close:hover,
+.close:focus {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* Hides some buttons on start */
+
+#answer-container {
+    display: none;
+}
+
+#canvasBtn {
+    display: none;
+}
+
+
+/* !important rule to force face-detection buttons for increased visibility */
+
+.face-interface {
+    margin-top: 1em !important;
+    background-color: darkviolet !important;
+}
+
+.face-interface:hover {
+    background-color: deeppink !important;
+}
+
+
+/* Removes default styling on buttons and input[type=button] */
+
+button,
+input[type=button] {
+    display: inline-block;
+    width: 100%;
+    padding: 0.8em 1.8em;
+    margin: 0 0.4em 0.4em 0;
+    border: 0.16em solid rgba(255, 255, 255, 0);
+    border-radius: 2em;
+    font-weight: bolder;
+    font-size: x-large;
+    color: #FFFFFF;
+    background-color: #84f14e;
+    text-align: center;
+}
+
+button:hover,
+input[type=button]:hover {
+    cursor: pointer;
+    background-color: teal;
+}
+
+.result-box {
+    pointer-events: none !important;
+    background-color: darkslategray !important;
+    min-height: 3em;
+}
+
+
+/* Styling for the question */
+
+.speak-container {
+    display: none;
+    padding: 0.8em 1.8em;
+    margin: 0 0.4em 0.4em 0;
+    border: 0.16em solid rgba(255, 255, 255, 0);
+    border-radius: 2em;
+    font-weight: bolder;
+    font-size: x-large;
+    color: #000000;
+    background-color: #1d97bd;
+    text-align: center;
 }
