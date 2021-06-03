@@ -17,7 +17,7 @@ body{
 }
 
 #talkbox{
-  background-color:#1100ff;
+  background-color:#7D288C;
   color:whitesmoke;
   display: flex;
   font-size: x-large;
@@ -85,10 +85,10 @@ body{
 
 }
 #left_answer{
-  box-shadow: 1px 1px 3px 3px #1100ff;
+  box-shadow: 1px 1px 3px 3px #f536d7;
 }
 #right_answer{
-  box-shadow: -1px 1px 3px 3px #1100ff;
+  box-shadow: -1px 1px 3px 3px #f536d7;
 }
 #question{
   text-align: center
