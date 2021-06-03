@@ -112,6 +112,12 @@ input[type=button]:hover {
     background-color: teal;
 }
 
+.result-box {
+    pointer-events: none !important;
+    background-color: darkslategray !important;
+    min-height: 3em;
+}
+
 
 /* Styling for the question */
 
