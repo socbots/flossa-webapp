@@ -26,8 +26,12 @@ try {
 } catch (e) {
   alert("Web Audio API not supported.");
 }
+
+
 function handleSuccess(stream) {
+
   let mediaRecorder = new MediaRecorder(stream);
+
   const audioTracks = stream.getAudioTracks();
   window.stream = stream;
   console.log("Got stream with constraints:", constraints);
@@ -35,7 +39,7 @@ function handleSuccess(stream) {
   stream.oninactive = function () {
     console.log("Stream ended");
   };
-  let blob;
+  var blob;
   //audio.srcObject = stream;
   const soundMeter = (window.soundMeter = new SoundMeter(window.audioContext));
   soundMeter.connectToSource(stream, function (e) {
@@ -46,7 +50,7 @@ function handleSuccess(stream) {
     meterRefresh = setInterval(() => {
       console.log(soundMeter.slow.toFixed(4));
 
-      if (soundMeter.slow.toFixed(4) > 0.003) {
+      if (soundMeter.slow.toFixed(4) > 0.002) {
         console.log("Starting");
         console.log(mediaRecorder.state);
         if (mediaRecorder.state == "inactive") {
@@ -58,32 +62,33 @@ function handleSuccess(stream) {
           };
         }
       } else if (
-        mediaRecorder.state == "recording" && soundMeter.slow.toFixed(4 < 0.003)
+        mediaRecorder.state == "recording" &&
+        soundMeter.slow.toFixed(4 < 0.003)
       ) {
         console.log("Stopping");
         mediaRecorder.stop();
       }
     }, 1000);
     mediaRecorder.onstop = () => {
-      blob = new Blob(recordedChunks, { type: "audio/webm" });
+      blob = new Blob(recordedChunks, { type: "audio/ogg" });
       console.log(blob);
       var a = document.createElement("a");
       document.body.appendChild(a);
       a.style = "display:none";
-      
+
       reader.readAsDataURL(blob);
       //reader.readAsArrayBuffer(blob);
       let url = URL.createObjectURL(blob);
       a.href = url;
-      a.download = "test.wav";
+      a.download = "test.ogg";
       a.click();
 
       let formData = new FormData();
-      formData.set("file", blob, "this.wav");
+      formData.set("file", blob, "this.ogg");
       console.log(formData.get("file"));
       fetch("https://alf-tts-api.herokuapp.com/stt", {
         method: "POST",
-        body: formData
+        body: formData,
       })
         .then((response) => response.text())
         .then((result) => {
