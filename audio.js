@@ -10,6 +10,7 @@
 
 // Put variables in global scope to make them available to the browser console.
 const audio = document.querySelector("audio");
+let rest = document.getElementById("result");
 
 var recordedChunks = [];
 let meterRefresh = null;
@@ -26,15 +27,12 @@ try {
   alert("Web Audio API not supported.");
 }
 
-
 function handleSuccess(stream) {
-
   var options = {
-      mimeType : 'audio/wav'
-  }
+    mimeType: "audio/webm;codecs=opus",
+  };
   const mediaRecorder = new MediaRecorder(stream, options);
 
-  
   const audioTracks = stream.getAudioTracks();
   window.stream = stream;
   console.log("Got stream with constraints:", constraints);
@@ -53,7 +51,7 @@ function handleSuccess(stream) {
     meterRefresh = setInterval(() => {
       console.log(soundMeter.slow.toFixed(4));
 
-      if (soundMeter.slow.toFixed(4) > 0.002) {
+      if (soundMeter.slow.toFixed(4) > 0.0015) {
         console.log("Starting");
         console.log(mediaRecorder.state);
         if (mediaRecorder.state == "inactive") {
@@ -66,14 +64,14 @@ function handleSuccess(stream) {
         }
       } else if (
         mediaRecorder.state == "recording" &&
-        soundMeter.slow.toFixed(4 < 0.003)
+        soundMeter.slow.toFixed(4 < 0.004)
       ) {
         console.log("Stopping");
         mediaRecorder.stop();
       }
-    }, 1000);
+    }, 100);
     mediaRecorder.onstop = () => {
-      blob = new Blob(recordedChunks, { type: "audio/wav" });
+      blob = new Blob(recordedChunks, { type: "audio/webm" });
       console.log(blob);
       var a = document.createElement("a");
       document.body.appendChild(a);
@@ -83,11 +81,11 @@ function handleSuccess(stream) {
       //reader.readAsArrayBuffer(blob);
       let url = URL.createObjectURL(blob);
       a.href = url;
-      a.download = "test.wav";
-      a.click();
+      a.download = "test.ogg";
+      //a.click();
 
       let formData = new FormData();
-      formData.set("file", blob, "this.wav");
+      formData.set("file", blob, "this.ogg");
       console.log(formData.get("file"));
       fetch("https://alf-tts-api.herokuapp.com/stt", {
         method: "POST",
@@ -96,6 +94,7 @@ function handleSuccess(stream) {
         .then((response) => response.text())
         .then((result) => {
           console.log("Success", result);
+          rest.textContent = result;
         })
         .catch((error) => {
           console.error("Error", error);
