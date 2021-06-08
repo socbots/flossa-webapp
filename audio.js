@@ -17,7 +17,6 @@ const reader = new FileReader();
 
 const constraints = (window.constraints = {
   audio: true,
-  video: false,
 });
 
 try {
@@ -30,8 +29,12 @@ try {
 
 function handleSuccess(stream) {
 
-  let mediaRecorder = new MediaRecorder(stream);
+  var options = {
+      mimeType : 'audio/wav'
+  }
+  const mediaRecorder = new MediaRecorder(stream, options);
 
+  
   const audioTracks = stream.getAudioTracks();
   window.stream = stream;
   console.log("Got stream with constraints:", constraints);
@@ -70,7 +73,7 @@ function handleSuccess(stream) {
       }
     }, 1000);
     mediaRecorder.onstop = () => {
-      blob = new Blob(recordedChunks, { type: "audio/ogg" });
+      blob = new Blob(recordedChunks, { type: "audio/wav" });
       console.log(blob);
       var a = document.createElement("a");
       document.body.appendChild(a);
@@ -80,11 +83,11 @@ function handleSuccess(stream) {
       //reader.readAsArrayBuffer(blob);
       let url = URL.createObjectURL(blob);
       a.href = url;
-      a.download = "test.ogg";
+      a.download = "test.wav";
       a.click();
 
       let formData = new FormData();
-      formData.set("file", blob, "this.ogg");
+      formData.set("file", blob, "this.wav");
       console.log(formData.get("file"));
       fetch("https://alf-tts-api.herokuapp.com/stt", {
         method: "POST",
