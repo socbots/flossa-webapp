@@ -63,7 +63,7 @@ function handleSuccess(stream) {
                 if (index < soundMeterValues.length - soundMeterValuesToSum) return accumulator;
                 return accumulator + currentValue;
             }, 0);
-            console.log(currentSoundLevel);
+            /* console.log(currentSoundLevel); */
 
 
             if (soundMeter.instant.toFixed(4) > previousSoundLevel + 0.01) {
