@@ -52,9 +52,9 @@ function handleSuccess(stream) {
       console.log(soundMeter.slow.toFixed(4));
 
       if (soundMeter.slow.toFixed(4) > 0.0015) {
-        console.log("Starting");
         console.log(mediaRecorder.state);
         if (mediaRecorder.state == "inactive") {
+          console.log("Starting");
           mediaRecorder.start();
         }
         if (mediaRecorder.state == "recording") {
@@ -63,13 +63,12 @@ function handleSuccess(stream) {
           };
         }
       } else if (
-        mediaRecorder.state == "recording" &&
-        soundMeter.slow.toFixed(4 < 0.004)
-      ) {
+        mediaRecorder.state == "recording")
+      {
         console.log("Stopping");
         mediaRecorder.stop();
       }
-    }, 100);
+    }, 75);
     mediaRecorder.onstop = () => {
       blob = new Blob(recordedChunks, { type: "audio/webm" });
       console.log(blob);
