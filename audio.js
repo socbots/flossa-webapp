@@ -70,6 +70,9 @@ function handleSuccess(stream) {
                     console.log("Starting@ " + currentSoundLevel);
                     startSoundLevel = currentSoundLevel;
                     mediaRecorder.start();
+                    mediaRecorder.ondataavailable = (data) => {
+                        recordedChunks.push(data.data);
+                    }
                 }
                 if (mediaRecorder.state == "recording") {
                     mediaRecorder.ondataavailable = (data) => {
@@ -113,37 +116,42 @@ function handleSuccess(stream) {
                 a.download = "test.ogg";
                 //a.click();
 
+                const alfttsurl = "https://alf-tts-api.herokuapp.com/stt";
                 let formData = new FormData();
                 formData.set("file", blob, "this.ogg");
                 console.log(formData.get("file"));
-                fetch("https://alf-tts-api.herokuapp.com/stt", {
+                fetch(alfttsurl, {
                         method: "POST",
                         body: formData,
                     })
                     .then((response) => response.text())
                     .then((result) => {
-                        console.log("Success", result);
+                        console.log("Success from " + alfttsurl);
                         if (result) {
+                            console.log("Result from success: " + result);
                             rest.textContent = result;
                             checkInput(result);
                             setTimeout(() => {
                                 isRec = false;
+                                console.log("isRec == " + isRec);
+                                console.log("answerFound state == " + answerFound);
+                                console.log("notUndersod state == " + notUnderstod);
+                                console.log("Timer typeof == " + typeof(timer));
                                 if (answerFound) {
-                                    console.log("Found")
-                                    startDialogue();
-                                    answerFound = false;
+                                    console.log("answerFound, going to next node")
+                                    startDialogue(notUnderstod = false);
                                 } else if (timer) {
-                                    console.log("timer going")
+                                    console.log("Timer is on, startrecording()")
                                     startRecording();
                                 } else {
-                                    console.log("else")
-                                    notUnderstod = true;
-                                    startDialogue();
+                                    console.log("notUnderstod true, asking again")
+                                    startDialogue(notUnderstod = true);
                                 }
-                            }, 50)
+                            }, 1000)
 
                         } else {
-                            notUnderstod = true;
+                            console.log("No result from success")
+                            startDialogue(notUnderstod = true);
                         }
                     })
                     .catch((error) => {

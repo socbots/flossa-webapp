@@ -2,7 +2,7 @@
 
 function createRecognitionObject() {
 
-    console.log("This is Chrome only webspeechAPI!")
+    console.log("createRecognitionObject is Chrome only webspeechAPI!, currently commented out")
 
     /* var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
     var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
@@ -129,12 +129,12 @@ function createSpeechFunction() {
     const context = new AudioContext();
 
     let textToSpeech = (text) => {
-        console.log(text);
+        //console.log(text);
         if (!isSpeaking) {
             let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE&rate=1.4"
             fetch(url)
                 .then(response => response.arrayBuffer())
-                .then(buffer => context.decodeAudioData(buffer))
+                .then(buffer => context.decodeAudioData(buffer)) // Being called on startup, needs more logic?
                 .then(audio => playAudio(audio))
         }
     }
@@ -167,15 +167,14 @@ function createSpeechFunction() {
 
 function startRecording() {
     if (!(currentNode._text || undefined) && !isRec) {
-        console.log("recording")
-            /* rec.start(); */
+        console.log("Startrecording setting isRec == " + isRec);
         isRec = true;
         if (!timer) {
-            console.log("set timer");
+            console.log("Setting timer, 15000");
             timer = setTimeout(() => {
                 timeoffset = true;
                 timer = undefined
-            }, 15000);
+            }, 500);
         }
         notUnderstod = false;
     }
@@ -185,4 +184,4 @@ let isRec = false;
 let timeroffset = false;
 let timer;
 
-let rec = createRecognitionObject();
+/* let rec = createRecognitionObject(); // Should remove */

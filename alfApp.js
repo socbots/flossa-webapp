@@ -4,13 +4,13 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
         setQuestion(currentNode, notUnderstod);
     } // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
     if (currentNode._video || undefined) {
-        console.log("video found")
+        //console.log("video found")
         setVideo(currentNode._video)
         videoRunning = true;
         window.scrollTo(0, 1);
     }
     if (currentNode._movement || undefined) {
-        console.log("movement found")
+        //console.log("movement found")
         setGesture(currentNode._movement)
     }
 }
@@ -63,6 +63,7 @@ function setGesture(movement) {
 }
 
 function setAnswers(node) {
+    answerFound = false; // Perhaps bake this into node?
     const leftAnswer = document.getElementById("left_answer");
     const rightAnswer = document.getElementById("right_answer");
     if (node._text || undefined) {
@@ -138,6 +139,20 @@ let textToSpeech = createSpeechFunction();
 let videoRunning = false;
 
 document.getElementById("speak").addEventListener("click", () => { isDetected(true) })
+
+const TODO = [
+    "Currenlty there is a constant audio listner but it only records when a function in a function sets a a boolean to true?????? Totally doesn't need a fix",
+    "First miliseconds of audio seems to be dropping after WebRTC swap, fix with better soundmeter tunning, grammar logic (se next TODO) or perhaps documented fix somewhere online?",
+    "Audio grammar from webspeechapi needs a new solution, new logic here or a change in the server to create grammar object before connecting to google",
+    "inputCheck needs logic to check only for desiered words, currently checks the whole spoken sentence due to the removal of webspeechapi grammar",
+    "All text is placeholder",
+    "All videos are placeholder?",
+
+]
+
+TODO.forEach(element => {
+    console.log("TODO: " + element);
+});
 
 // I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
 //let notUnderstod = false;
