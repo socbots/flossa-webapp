@@ -99,7 +99,7 @@ function handleSuccess(stream) {
 
 
         mediaRecorder.onstop = () => {
-            if (isRec == true && notUnderstod == false) {
+            if (isRec == true) {
                 blob = new Blob(recordedChunks, { type: "audio/webm" });
                 console.log(blob);
                 var a = document.createElement("a");

@@ -170,10 +170,19 @@ function startRecording() {
         console.log("recording")
             /* rec.start(); */
         isRec = true;
+        if (!timer) {
+            console.log("set timer");
+            timer = setTimeout(() => {
+                timeoffset = true;
+                timer = undefined
+            }, 15000);
+        }
         notUnderstod = false;
     }
 }
 
 let isRec = false;
+let timeroffset = false;
+let timer;
 
 let rec = createRecognitionObject();

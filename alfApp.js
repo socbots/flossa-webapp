@@ -7,8 +7,6 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
         console.log("video found")
         setVideo(currentNode._video)
         videoRunning = true;
-        document.getElementById("talkbox").style.paddingTop = "300px";
-        //window.scrollto(0,100)
         window.scrollTo(0, 1);
     }
     if (currentNode._movement || undefined) {
