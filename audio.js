@@ -11,7 +11,6 @@
 // Put variables in global scope to make them available to the browser console.
 const audio = document.querySelector("audio");
 let rest = document.getElementById("result");
-let sorry = document.getElementById("sorry");
 
 var recordedChunks = [];
 let meterRefresh = null;
@@ -86,46 +85,74 @@ function handleSuccess(stream) {
             }
             previousSoundLevel = currentSoundLevel;
         }, 75);
+
+        mediaRecorder.onresult = (e) => {
+            console.log(e);
+            result.innerHTML = e.results[0][0].transcript;
+            checkInput(e.results[0][0].transcript)
+                // recognition.stop();
+                // If it is the final result stop recognition
+            if (e.results[0].isFinal) {
+                checkInput(e.results[0][0].transcript, true)
+            }
+        };
+
+
         mediaRecorder.onstop = () => {
-            blob = new Blob(recordedChunks, { type: "audio/webm" });
-            console.log(blob);
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display:none";
+            if (isRec == true && notUnderstod == false) {
+                blob = new Blob(recordedChunks, { type: "audio/webm" });
+                console.log(blob);
+                var a = document.createElement("a");
+                document.body.appendChild(a);
+                a.style = "display:none";
 
-            reader.readAsDataURL(blob);
-            //reader.readAsArrayBuffer(blob);
-            let url = URL.createObjectURL(blob);
-            a.href = url;
-            a.download = "test.ogg";
-            //a.click();
+                reader.readAsDataURL(blob);
+                //reader.readAsArrayBuffer(blob);
+                let url = URL.createObjectURL(blob);
+                a.href = url;
+                a.download = "test.ogg";
+                //a.click();
 
-            let formData = new FormData();
-            formData.set("file", blob, "this.ogg");
-            console.log(formData.get("file"));
-            fetch("https://alf-tts-api.herokuapp.com/stt", {
-                    method: "POST",
-                    body: formData,
-                })
-                .then((response) => response.text())
-                .then((result) => {
-                    console.log("Success", result);
-                    if (result) {
-                        rest.textContent = result;
-                        sorry.style.display = "none";
-                    } else {
-                        sorry.style.display = "inline-block";
-                        sorry.style.color = "#FF0000";
-                        setTimeout(function() { sorry.style.color = "#FFFFFF"; }, 1500);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error", error);
-                });
-            recordedChunks = [];
+                let formData = new FormData();
+                formData.set("file", blob, "this.ogg");
+                console.log(formData.get("file"));
+                fetch("https://alf-tts-api.herokuapp.com/stt", {
+                        method: "POST",
+                        body: formData,
+                    })
+                    .then((response) => response.text())
+                    .then((result) => {
+                        console.log("Success", result);
+                        if (result) {
+                            rest.textContent = result;
+                            checkInput(result);
+                            setTimeout(() => {
+                                isRec = false;
+                                if (answerFound) {
+                                    console.log("Found")
+                                    startDialogue();
+                                    answerFound = false;
+                                } else if (timer) {
+                                    console.log("timer going")
+                                    startRecording();
+                                } else {
+                                    console.log("else")
+                                    notUnderstod = true;
+                                    startDialogue();
+                                }
+                            }, 50)
+
+                        } else {
+                            notUnderstod = true;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error", error);
+                    });
+                recordedChunks = [];
+            }
         };
     });
-
     console.log("data-available");
 }
 
@@ -135,9 +162,49 @@ function handleError(error) {
         error.message +
         " " +
         error.name;
-    document.getElementById("errorMsg").innerText = errorMessage;
-    console.log(errorMessage);
+    console.log("navigator audio stream error: " + errorMessage);
 }
+
+
+function setButtonListeners() {
+    const leftbtn = document.getElementById("left_answer");
+    const rightbtn = document.getElementById("right_answer");
+
+    leftbtn.addEventListener("click", () => { checkInput(leftbtn.innerHTML, true) })
+    rightbtn.addEventListener("click", () => { checkInput(rightbtn.innerHTML, true) })
+}
+
+function checkInput(result, isFinal = false) {
+    console.log("checkInput result == " + result);
+    if (typeof currentNode == "undefined") {
+        console.log("initializing button clickers")
+    } else {
+        // Test the user input against the left and right answers in our node.
+        if (currentNode.rightAnswer.includes(result) && result) {
+            console.log("Going right");
+            // rec.abort() terminates
+            isRec = false;
+            currentNode = currentNode.rightNode;
+            answerFound = true;
+        } else if (currentNode.leftAnswer.includes(result) && result) {
+            console.log("Going left");
+            answerFound = true;
+            isRec = false;
+            currentNode = currentNode.leftNode;
+
+        }
+        // If we cant find a match for the input our user gives we startDialog with the current node and set the notUnderstod parameter to true
+        else if (isFinal) {
+            console.log("true final");
+            // quickfix: I don't like this global variable but it works
+            if (!answerFound) {
+                notUnderstod = true;
+            }
+        }
+    }
+}
+
+let answerFound = false;
 
 navigator.mediaDevices
     .getUserMedia(constraints)

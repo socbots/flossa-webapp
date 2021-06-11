@@ -45,22 +45,22 @@ function iframeModal() {
 }
 
 function setGesture(movement) {
-    url = "http://193.167.34.217:5000/move"
-        //url = "http://192.168.1.38:5000/move"
-    fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({
-                gesture: movement.gesture,
-                bodyPart: movement.bodyPart,
-                direction: movement.direction,
-                distance: movement.distance
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-        .then(res => res.json())
-        .then(console.log)
+    /*     url = "http://193.167.34.217:5000/move"
+            //url = "http://192.168.1.38:5000/move"
+        fetch(url, {
+                method: 'POST',
+                body: JSON.stringify({
+                    gesture: movement.gesture,
+                    bodyPart: movement.bodyPart,
+                    direction: movement.direction,
+                    distance: movement.distance
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            })
+            .then(res => res.json())
+            .then(console.log) */
     console.log(movement)
 }
 
