@@ -129,8 +129,14 @@ function handleSuccess(stream) {
 
                 const alfttsurl = "https://alf-tts-api.herokuapp.com/stt";
                 let formData = new FormData();
+                const leftAnswer = document.getElementById("left_answer").innerHTML;
+                const rightAnswer = document.getElementById("right_answer").innerHTML;
+
                 formData.set("file", blob, "this.ogg");
+                formData.set("grammar", [leftAnswer, rightAnswer]);
                 console.log(formData.get("file"));
+                console.log("grammar=", formData.get("grammar"));
+                
                 fetch(alfttsurl, {
                         method: "POST",
                         body: formData,
