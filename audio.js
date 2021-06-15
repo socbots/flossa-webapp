@@ -12,6 +12,16 @@
 const audio = document.querySelector("audio");
 let rest = document.getElementById("result");
 
+function setButtonListeners() {
+    const leftbtn = document.getElementById("left_answer");
+    const rightbtn = document.getElementById("right_answer");
+
+    leftbtn.addEventListener("click", () => { checkInput(leftbtn.innerHTML, true) })
+    rightbtn.addEventListener("click", () => { checkInput(rightbtn.innerHTML, true) })
+}
+
+setButtonListeners();
+
 var recordedChunks = [];
 let meterRefresh = null;
 const reader = new FileReader();
@@ -102,6 +112,7 @@ function handleSuccess(stream) {
 
 
         mediaRecorder.onstop = () => {
+
             if (isRec == true) {
                 blob = new Blob(recordedChunks, { type: "audio/webm" });
                 console.log(blob);
@@ -173,40 +184,39 @@ function handleError(error) {
     console.log("navigator audio stream error: " + errorMessage);
 }
 
-
-function setButtonListeners() {
-    const leftbtn = document.getElementById("left_answer");
-    const rightbtn = document.getElementById("right_answer");
-
-    leftbtn.addEventListener("click", () => { checkInput(leftbtn.innerHTML, true) })
-    rightbtn.addEventListener("click", () => { checkInput(rightbtn.innerHTML, true) })
-}
-
 function checkInput(result, isFinal = false) {
+    result = result.toLowerCase();
     console.log("checkInput result == " + result);
+    let results = result.split(" ");
+    for (const r of results) {
+        console.log("result: " + r);
+    }
     if (typeof currentNode == "undefined") {
         console.log("initializing button clickers")
     } else {
-        // Test the user input against the left and right answers in our node.
-        if (currentNode.rightAnswer.includes(result) && result) {
-            console.log("Going right");
-            // rec.abort() terminates
-            isRec = false;
-            currentNode = currentNode.rightNode;
-            answerFound = true;
-        } else if (currentNode.leftAnswer.includes(result) && result) {
-            console.log("Going left");
-            answerFound = true;
-            isRec = false;
-            currentNode = currentNode.leftNode;
-
-        }
         // If we cant find a match for the input our user gives we startDialog with the current node and set the notUnderstod parameter to true
-        else if (isFinal) {
+        if (isFinal) {
             console.log("true final");
             // quickfix: I don't like this global variable but it works
             if (!answerFound) {
                 notUnderstod = true;
+            }
+        }
+        for (const r of results) {
+            // Test the user input against the left and right answers in our node.
+            if (currentNode.rightAnswer.includes(r) && r) {
+                console.log("Going right");
+                // rec.abort() terminates
+                isRec = false;
+                currentNode = currentNode.rightNode;
+                answerFound = true;
+                break;
+            } else if (currentNode.leftAnswer.includes(r) && r) {
+                console.log("Going left");
+                answerFound = true;
+                isRec = false;
+                currentNode = currentNode.leftNode;
+                break;
             }
         }
     }

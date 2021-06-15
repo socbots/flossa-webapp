@@ -147,6 +147,7 @@ const TODO = [
     "inputCheck needs logic to check only for desiered words, currently checks the whole spoken sentence due to the removal of webspeechapi grammar",
     "All text is placeholder",
     "All videos are placeholder?",
+    "Gesture API calls are commented out for development"
 
 ]
 
