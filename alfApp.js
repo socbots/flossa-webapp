@@ -4,15 +4,13 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
         setQuestion(currentNode, notUnderstod);
     } // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
     if (currentNode._video || undefined) {
-        console.log("video found")
+        //console.log("video found")
         setVideo(currentNode._video)
         videoRunning = true;
-        document.getElementById("talkbox").style.paddingTop = "300px";
-        //window.scrollto(0,100)
         window.scrollTo(0, 1);
     }
     if (currentNode._movement || undefined) {
-        console.log("movement found")
+        //console.log("movement found")
         setGesture(currentNode._movement)
     }
 }
@@ -65,6 +63,7 @@ function setGesture(movement) {
 }
 
 function setAnswers(node) {
+    answerFound = false; // Perhaps bake this into node?
     const leftAnswer = document.getElementById("left_answer");
     const rightAnswer = document.getElementById("right_answer");
     if (node._text || undefined) {
@@ -140,6 +139,16 @@ let textToSpeech = createSpeechFunction();
 let videoRunning = false;
 
 document.getElementById("speak").addEventListener("click", () => { isDetected(true) })
+
+const TODO = [
+    "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
+    "Text is placeholder",
+    "Videos are placeholder",
+]
+
+TODO.forEach(element => {
+    console.log("TODO: " + element);
+});
 
 // I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
 //let notUnderstod = false;
