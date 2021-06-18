@@ -43,22 +43,22 @@ function iframeModal() {
 }
 
 function setGesture(movement) {
-    /*     url = "http://193.167.34.217:5000/move"
-            //url = "http://192.168.1.38:5000/move"
-        fetch(url, {
-                method: 'POST',
-                body: JSON.stringify({
-                    gesture: movement.gesture,
-                    bodyPart: movement.bodyPart,
-                    direction: movement.direction,
-                    distance: movement.distance
-                }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8'
-                }
-            })
-            .then(res => res.json())
-            .then(console.log) */
+    url = "http://193.167.34.217:5000/move"
+        //url = "http://192.168.1.38:5000/move"
+    fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                gesture: movement.gesture,
+                bodyPart: movement.bodyPart,
+                direction: movement.direction,
+                distance: movement.distance
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+        .then(res => res.json())
+        .then(console.log)
     console.log(movement)
 }
 
@@ -141,14 +141,9 @@ let videoRunning = false;
 document.getElementById("speak").addEventListener("click", () => { isDetected(true) })
 
 const TODO = [
-    "Currenlty there is a constant audio listner but it only records when a function in a function sets a a boolean to true?????? Totally doesn't need a fix",
-    "First miliseconds of audio seems to be dropping after WebRTC swap, fix with better soundmeter tunning, grammar logic (se next TODO) or perhaps documented fix somewhere online?",
-    "Audio grammar from webspeechapi needs a new solution, new logic here or a change in the server to create grammar object before connecting to google",
-    "inputCheck needs logic to check only for desiered words, currently checks the whole spoken sentence due to the removal of webspeechapi grammar",
-    "All text is placeholder",
-    "All videos are placeholder?",
-    "Gesture API calls are commented out for development"
-
+    "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
+    "Text is placeholder",
+    "Videos are placeholder",
 ]
 
 TODO.forEach(element => {
