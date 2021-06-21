@@ -13,11 +13,13 @@ const audio = document.querySelector("audio");
 let rest = document.getElementById("result");
 
 function setButtonListeners() {
-    const leftbtn = document.getElementById("left_answer");
-    const rightbtn = document.getElementById("right_answer");
+    const nodeAbtn = document.getElementById("node-A");
+    const nodeBbtn = document.getElementById("node-B");
+    const nodeCbtn = document.getElementById("node-C");
 
-    leftbtn.addEventListener("click", () => { checkInput(leftbtn.innerHTML, true) })
-    rightbtn.addEventListener("click", () => { checkInput(rightbtn.innerHTML, true) })
+    nodeAbtn.addEventListener("click", () => { checkInput(nodeAbtn.innerHTML, true) })
+    nodeBbtn.addEventListener("click", () => { checkInput(nodeBbtn.innerHTML, true) })
+    nodeCbtn.addEventListener("click", () => { checkInput(nodeCbtn.innerHTML, true) })
 }
 
 setButtonListeners();
@@ -129,14 +131,15 @@ function handleSuccess(stream) {
 
                 const alfttsurl = "https://alf-tts-api.herokuapp.com/stt";
                 let formData = new FormData();
-                const leftAnswer = document.getElementById("left_answer").innerHTML;
-                const rightAnswer = document.getElementById("right_answer").innerHTML;
+                const nodeAAnswer = document.getElementById("node-A").innerHTML;
+                const nodeBAnswer = document.getElementById("node-B").innerHTML;
+                const nodeCAnswer = document.getElementById("node-C").innerHTML;
 
                 formData.set("file", blob, "this.ogg");
-                formData.set("grammar", [leftAnswer, rightAnswer]);
+                formData.set("grammar", [nodeAAnswer, nodeBAnswer, nodeCAnswer]);
                 console.log(formData.get("file"));
                 console.log("grammar=", formData.get("grammar"));
-                
+
                 fetch(alfttsurl, {
                         method: "POST",
                         body: formData,
@@ -156,15 +159,14 @@ function handleSuccess(stream) {
                                 console.log("Timer typeof == " + typeof(timer));
                                 if (answerFound) {
                                     console.log("answerFound, going to next node")
-                                    startDialogue(notUnderstod = false);
                                 } else if (timer) {
                                     console.log("Timer is on, startrecording()")
                                     startRecording();
                                 } else {
                                     console.log("notUnderstod true, asking again")
-                                    startDialogue(notUnderstod = true);
+                                    startDialogue(notUnderstod = true)
                                 }
-                            }, 1000)
+                            }, 15000)
 
                         } else {
                             console.log("No result from success")
@@ -191,9 +193,16 @@ function handleError(error) {
 }
 
 function checkInput(result, isFinal = false) {
-    result = result.toLowerCase();
-    console.log("checkInput result == " + result);
+
+    // Get answers
+    const nodeAAnswer = document.getElementById("node-A").innerHTML;
+    const nodeBAnswer = document.getElementById("node-B").innerHTML;
+    const nodeCAnswer = document.getElementById("node-C").innerHTML;
+
+
+    result = result.toLowerCase(); //set to lower case
     let results = result.split(" ");
+    console.log("checkInput result word by word:");
     for (const r of results) {
         console.log("result: " + r);
     }
@@ -201,29 +210,38 @@ function checkInput(result, isFinal = false) {
         console.log("initializing button clickers")
     } else {
         // If we cant find a match for the input our user gives we startDialog with the current node and set the notUnderstod parameter to true
-        if (isFinal) {
-            console.log("true final");
-            // quickfix: I don't like this global variable but it works
-            if (!answerFound) {
-                notUnderstod = true;
-            }
-        }
         for (const r of results) {
-            // Test the user input against the left and right answers in our node.
-            if (currentNode.rightAnswer.includes(r) && r) {
-                console.log("Going right");
+            // Test the user input against nodes if answers in our nodes.
+            if (nodeAAnswer.includes(r) && r) {
+                console.log("Going nodeA");
                 // rec.abort() terminates
                 isRec = false;
-                currentNode = currentNode.rightNode;
                 answerFound = true;
+                currentNode = currentNode.nodeA;
+                startDialogue(notUnderstod = false);
                 break;
-            } else if (currentNode.leftAnswer.includes(r) && r) {
-                console.log("Going left");
-                answerFound = true;
+            } else if (nodeBAnswer.includes(r) && r) {
+                console.log("Going nodeB");
                 isRec = false;
-                currentNode = currentNode.leftNode;
+                answerFound = true;
+                currentNode = currentNode.nodeB;
+                startDialogue(notUnderstod = false);
+                break;
+            } else if (nodeCAnswer.includes(r) && r) {
+                console.log("Going nodeC");
+                isRec = false;
+                answerFound = true;
+                currentNode = currentNode.nodeC;
+                startDialogue(notUnderstod = false);
                 break;
             }
+        }
+        // What does these even do?
+        if (isFinal) {
+            console.log("isFinal");
+            // quickfix: I don't like this global variable but it works
+        } else if (answerFound == false) {
+            console.log("answerFound state == " + answerFound);
         }
     }
 }
