@@ -73,9 +73,25 @@ function setAnswers(node) {
         nodeBAnswer.innerHTML = "B";
         nodeCAnswer.innerHTML = "C";
     } else {
-        nodeAAnswer.innerHTML = node.nodeAAnswer;
+        checkNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
+        checkNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
+        checkNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
+        // le old
+        /* nodeAAnswer.innerHTML = node.nodeAAnswer;
         nodeBAnswer.innerHTML = node.nodeBAnswer;
-        nodeCAnswer.innerHTML = node.nodeCAnswer;
+        nodeCAnswer.innerHTML = node.nodeCAnswer; */
+    }
+}
+
+function checkNodeAnswer(element, node, nodeAnswer) {
+    /* Checks if the node exists to show it, else it hides the answer button */
+    console.log("nodeanswer: " + nodeAnswer);
+    if (node != undefined) {
+        element.style.display = "block";
+        element.innerHTML = nodeAnswer;
+    } else {
+        element.style.display = "none";
+        element.innerHTML = ""; // Seems okay to keep it empty for checkInput
     }
 }
 

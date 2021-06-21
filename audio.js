@@ -199,7 +199,6 @@ function checkInput(result, isFinal = false) {
     const nodeBAnswer = document.getElementById("node-B").innerHTML;
     const nodeCAnswer = document.getElementById("node-C").innerHTML;
 
-
     result = result.toLowerCase(); //set to lower case
     let results = result.split(" ");
     console.log("checkInput result word by word:");

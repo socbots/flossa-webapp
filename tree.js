@@ -2,7 +2,7 @@
 
 // This class is the node for our tree structure. It should never be a leaf node, and should allways have 2 child nodes.
 class Question {
-    constructor(question, nodeAAnswer, nodeBAnswer, nodeCAnswer, movement = undefined) {
+    constructor(question, nodeAAnswer = undefined, nodeBAnswer = undefined, nodeCAnswer = undefined, movement = undefined) {
         this.question = question;
         this.nodeAAnswer = nodeAAnswer;
         this.nodeBAnswer = nodeBAnswer;
@@ -11,7 +11,7 @@ class Question {
         this.rightNode = null;
         this._movement = movement;
     }
-    setNodes(nodeA, nodeB, nodeC) {
+    setNodes(nodeA, nodeB = undefined, nodeC = undefined) {
         this.nodeA = nodeA;
         this.nodeB = nodeB;
         this.nodeC = nodeC;
@@ -61,12 +61,12 @@ const mening5 = "Kommer du ihåg hur ofta jag rekommenderade att du ska använda
 // We create the children and then the next line before an empty line we set the children to their parent node.
 function createTree() {
     // greeting == Root Node
-    let greeting = new Question(mening1, "nej", "ja", "kanske", movement = wave_left);
+    let greeting = new Question(mening1, "nej", "ja", movement = wave_left);
 
 
 
     let greetingFollow = new Question(mening4, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
-    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", video = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"), greetingFollow, greetingFollow);
+    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", video = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"), greetingFollow);
 
     let flossing = new Question("Vill du ha hygienråd?", "jo", "nej", movement = { bodyPart: "head", direction: "up", distance: 4 });
     let relax = new Question("Kan jag hjälpa dig slappna av", "jo", "nej");
