@@ -153,7 +153,7 @@ function createSpeechFunction() {
         console.log(source);
         source.onended = () => {
             isSpeaking = false;
-            if (currentNode.leftAnswer != undefined) {
+            if (currentNode.nodeAAnswer != undefined) {
                 startRecording();
                 hideResult();
             }

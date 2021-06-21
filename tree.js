@@ -2,91 +2,96 @@
 
 // This class is the node for our tree structure. It should never be a leaf node, and should allways have 2 child nodes.
 class Question {
-  constructor(question, leftAnswer, rightAnswer, movement = undefined) {
-    this.question = question;
-    this.leftAnswer = leftAnswer;
-    this.rightAnswer = rightAnswer;
-    this.leftNode = null;
-    this.rightNode = null;
-    this._movement = movement;
-  }
-  setNodes(left, right) {
-    this.leftNode = left;
-    this.rightNode = right;
-  }
- setMovement(bodyPart=null, gesture=null, direction=null, distance=null){
-    this._movement = 
-      {
-        bodyPart: bodyPart,
-        gesture: gesture,
-        direction: direction,
-        distance: distance,
-      }
-  }
+    constructor(question, nodeAAnswer, nodeBAnswer, nodeCAnswer, movement = undefined) {
+        this.question = question;
+        this.nodeAAnswer = nodeAAnswer;
+        this.nodeBAnswer = nodeBAnswer;
+        this.nodeCAnswer = nodeCAnswer;
+        this.leftNode = null;
+        this.rightNode = null;
+        this._movement = movement;
+    }
+    setNodes(nodeA, nodeB, nodeC) {
+        this.nodeA = nodeA;
+        this.nodeB = nodeB;
+        this.nodeC = nodeC;
+    }
+    setMovement(bodyPart = null, gesture = null, direction = null, distance = null) {
+        this._movement = {
+            bodyPart: bodyPart,
+            gesture: gesture,
+            direction: direction,
+            distance: distance,
+        }
+    }
 }
 
 // The RobotFunction class is used as the leaf nodes of our tree structure
 // This means that when we encounter a RoboFunction the dialogue has ended.
 class RobotFunction {
-  constructor(text, video = undefined, movement = undefined) {
-    this._text = text;
-    this._video = video
-    this._movement = movement;
-  }
-setMovement(bodyPart=null, gesture=null, direction=null, distance=null){
-    this._movement = 
-      {
-        bodyPart: bodyPart,
-        gesture: gesture,
-        direction: direction,
-        distance: distance,
-      }
-  }
+    constructor(text, video = undefined, movement = undefined) {
+        this._text = text;
+        this._video = video
+        this._movement = movement;
+    }
+    setMovement(bodyPart = null, gesture = null, direction = null, distance = null) {
+        this._movement = {
+            bodyPart: bodyPart,
+            gesture: gesture,
+            direction: direction,
+            distance: distance,
+        }
+    }
 }
 
-const wave_left= {
-  bodyPart: "left_hand",
-  gesture: "wave"
+const wave_left = {
+    bodyPart: "left_hand",
+    gesture: "wave"
 }
 
+const mening1 = "Hej! Vill du lära dig hur du använder tandtråd på bästa sätt? Du kan svara genom tal eller med att trycka på min skärm."
+const mening2 = "Fint. Det är omöjligt att göra rent mellan tänderna med en vanlig tandborste. Tandköttsinflammationer och kariesangrepp startar ofta där. Därför rekommenderas du att använda tandtråden en gång varje dag innan? du borstar tänderna. Ta en rejäl bit tandtråd och linda den runt fingrarna."
+const mening3 = "Låt tandtråden försiktigt följa den ena tandytan ner i tandköttsfickan. Dra den sakta uppåt igen. För sedan ner tråden längs med den andra tandytan och upp igen. Gör så mellan alla tänder, också de längst bak."
+const mening4 = "Nu har jag en fråga till dig. Ibland börjar de blöda när du använder tandtråd. Vad tror du det kan bero på. Säg: fel teknik, tecken på tandköttsinflammation, eller båda. Du kan också svara genom att trycka på min skärm."
+const mening5 = "Kommer du ihåg hur ofta jag rekommenderade att du ska använda tandtråd. Säg: varje dag, varannan dag eller tredje dag. Du kan också svara genom att trycka på min skärm."
 
 // CREATE QUESTIONS TREE
 
 // This was a bit hard to populate and make it look nice/easy to understand. Use miro interaction tree to make it easier to follow
 // We create the children and then the next line before an empty line we set the children to their parent node.
 function createTree() {
-  // greeting == Root Node
-  let greeting = new Question("Hej! Vill du tala med mig", "nej", "jo", movement = wave_left);
+    // greeting == Root Node
+    let greeting = new Question(mening1, "nej", "ja", "kanske", movement = wave_left);
 
 
 
-  let greetingFollow = new Question("Hur Känner du dig inför besöket?", "spänd", "lugn");
-  greeting.setNodes(new RobotFunction("Ha en trevlig dag!", video = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"), greetingFollow);
+    let greetingFollow = new Question(mening4, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
+    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", video = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"), greetingFollow, greetingFollow);
 
-  let flossing = new Question("Vill du ha hygienråd?", "jo", "nej", movement = {bodyPart:"head", direction:"up", distance:4});
-  let relax = new Question("Kan jag hjälpa dig slappna av", "jo", "nej");
-  greetingFollow.setNodes(relax, flossing);
+    let flossing = new Question("Vill du ha hygienråd?", "jo", "nej", movement = { bodyPart: "head", direction: "up", distance: 4 });
+    let relax = new Question("Kan jag hjälpa dig slappna av", "jo", "nej");
+    greetingFollow.setNodes(relax, flossing, flossing);
 
-  let relaxEnd = new RobotFunction("Här är en video för att hjälpa dig slappna av!", video = 'https://www.youtube.com/embed/dQw4w9WgXcQ', movement = {gesture:"getSchwifty"})
-  relax.setNodes(relaxEnd, flossing);
+    let relaxEnd = new RobotFunction("Här är en video för att hjälpa dig slappna av!", video = 'https://www.youtube.com/embed/dQw4w9WgXcQ', movement = { gesture: "getSchwifty" })
+    relax.setNodes(relaxEnd, flossing);
 
-  let flossingFollow = new Question("Använder du tandtråd?", "nej", "jo");
-  let guidance = new Question("Hjälp med att hitta rätt?", "nej", "jo");
-  flossing.setNodes(flossingFollow, guidance);
+    let flossingFollow = new Question("Använder du tandtråd?", "nej", "jo");
+    let guidance = new Question("Hjälp med att hitta rätt?", "nej", "jo");
+    flossing.setNodes(flossingFollow, guidance);
 
-  let flossingSometimes = new RobotFunction("Här är en video om tandhygien", video = 'https://www.youtube.com/embed/vYbVHPLZrRo')
-  flossingFollow.setNodes(flossingSometimes, flossingSometimes);
+    let flossingSometimes = new RobotFunction("Här är en video om tandhygien", video = 'https://www.youtube.com/embed/vYbVHPLZrRo')
+    flossingFollow.setNodes(flossingSometimes, flossingSometimes);
 
-  let guidanceFollow = new Question("Välj din tandläkare");
-  guidance.setNodes(new RobotFunction("Ha en trevlig dag"), guidanceFollow);
+    let guidanceFollow = new Question("Välj din tandläkare");
+    guidance.setNodes(new RobotFunction("Ha en trevlig dag"), guidanceFollow);
 
-  guidanceFollow.setNodes(new RobotFunction("Ha en trevlig dag"), new RobotFunction("Ha en trevlig dag"));
+    guidanceFollow.setNodes(new RobotFunction("Ha en trevlig dag"), new RobotFunction("Ha en trevlig dag"));
 
-  return greeting;
+    return greeting;
 }
 
-function getAbortNode(){
-  return new RobotFunction("Ha en trevlig dag")
+function getAbortNode() {
+    return new RobotFunction("Ha en trevlig dag")
 }
 
 //const rootNode = createTree();

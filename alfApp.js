@@ -43,35 +43,39 @@ function iframeModal() {
 }
 
 function setGesture(movement) {
-    url = "http://193.167.34.217:5000/move"
-        //url = "http://192.168.1.38:5000/move"
-    fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({
-                gesture: movement.gesture,
-                bodyPart: movement.bodyPart,
-                direction: movement.direction,
-                distance: movement.distance
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-        .then(res => res.json())
-        .then(console.log)
+    /*     url = "http://193.167.34.217:5000/move"
+            //url = "http://192.168.1.38:5000/move"
+        fetch(url, {
+                method: 'POST',
+                body: JSON.stringify({
+                    gesture: movement.gesture,
+                    bodyPart: movement.bodyPart,
+                    direction: movement.direction,
+                    distance: movement.distance
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            })
+            .then(res => res.json())
+            .then(console.log) */
     console.log(movement)
 }
 
 function setAnswers(node) {
     answerFound = false; // Perhaps bake this into node?
-    const leftAnswer = document.getElementById("left_answer");
-    const rightAnswer = document.getElementById("right_answer");
+    const nodeAAnswer = document.getElementById("node-A");
+    const nodeBAnswer = document.getElementById("node-B");
+    const nodeCAnswer = document.getElementById("node-C")
+
     if (node._text || undefined) {
-        leftAnswer.innerHTML = "^";
-        rightAnswer.innerHTML = "^";
+        nodeAAnswer.innerHTML = "A";
+        nodeBAnswer.innerHTML = "B";
+        nodeCAnswer.innerHTML = "C";
     } else {
-        leftAnswer.innerHTML = node.leftAnswer;
-        rightAnswer.innerHTML = node.rightAnswer;
+        nodeAAnswer.innerHTML = node.nodeAAnswer;
+        nodeBAnswer.innerHTML = node.nodeBAnswer;
+        nodeCAnswer.innerHTML = node.nodeCAnswer;
     }
 }
 
