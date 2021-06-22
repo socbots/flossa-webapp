@@ -1,29 +1,8 @@
-# alf_frontend
-Interaction app for alf robot
+# TEST BRANCH
+This is a test branch, don't merge.
 
-## Must run on Chrome with flag --autoplay-policy=no-user-gesture-required 
+## Purpose
+This branch is to test performance on Alf while playing a local video while having him utilize TTS simultaniously.
 
-## Files
-
-### alfApp.js
-- Main logic 
-### speech.js
-- Contains code for tts & stt
-### tree.js
-- Code for the interaction tree
-### Alf_frontend.txt
-- Developer thoughts and musings
-### index.html
-- index.html
-
-## Preview
-
-### Start
-![start](./images/readme/start.png)
-### Face detection buttons
-![face-detection](./images/readme/face_detection.png)
-### Question interface
-![question](./images/readme/question.png)
-### video modal
-![video](./images/readme/video.png)
-
+## How to:
+Start the app and press "Nej"/"No"/"Negative" whatever is there

@@ -32,6 +32,7 @@
     padding: 20px;
     width: fit-content;
     /* Could be more or less, depending on screen size */
+    overflow: hidden;
 }
 
 
@@ -132,4 +133,15 @@ input[type=button]:hover {
     color: #000000;
     background-color: #1d97bd;
     text-align: center;
+}
+
+body {
+    background-color: rgb(0, 0, 0);
+}
+
+
+/* test stuff */
+
+#transcript {
+    font-size: x-small;
 }
