@@ -2,13 +2,12 @@
 
 // This class is the node for our tree structure. It should never be a leaf node, and should allways have 2 child nodes.
 class Question {
-    constructor(question, nodeAAnswer = undefined, nodeBAnswer = undefined, nodeCAnswer = undefined, movement = undefined) {
+    constructor(question, nodeAAnswer = undefined, nodeBAnswer = undefined, nodeCAnswer = undefined, movement = undefined, video = undefined) {
         this.question = question;
+        this.video = video;
         this.nodeAAnswer = nodeAAnswer;
         this.nodeBAnswer = nodeBAnswer;
         this.nodeCAnswer = nodeCAnswer;
-        this.leftNode = null;
-        this.rightNode = null;
         this._movement = movement;
     }
     setNodes(nodeA, nodeB = undefined, nodeC = undefined) {
