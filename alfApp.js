@@ -31,11 +31,12 @@ function iframeModal() {
     // When the user clicks on the button, open the modal
     iframeModal.style.display = "block";
     // When the user clicks on <span> (x), close the modal
-    span.addEventListener('click', function() {
-        location.reload();
+    span.addEventListener('click', function () {
+        currentNode = currentNode.nodeA;
+        startDialogue();
     });
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == iframeModal) {
             location.reload();
         }
@@ -68,7 +69,8 @@ function setAnswers(node) {
     const nodeBAnswer = document.getElementById("node-B");
     const nodeCAnswer = document.getElementById("node-C")
 
-    if (node._text || undefined) {
+    if (node instanceof RobotFunction) {
+        console.log("is robot function")
         nodeAAnswer.innerHTML = "A";
         nodeBAnswer.innerHTML = "B";
         nodeCAnswer.innerHTML = "C";
@@ -144,8 +146,8 @@ window.scrollTo(0, 1);
 
 // Test to trigger microphone and audio request from browser
 navigator.mediaDevices.getUserMedia({ audio: true })
-    // We save the rootNode incase we want to reset the dialogue at some point
-    // createTree() is from the tree.js file
+// We save the rootNode incase we want to reset the dialogue at some point
+// createTree() is from the tree.js file
 const rootNode = createTree();
 let currentNode = rootNode;
 let notUnderstod = false;
@@ -164,6 +166,8 @@ const TODO = [
     "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
     "Text is placeholder",
     "Videos are placeholder",
+    "Change all node._text to: node instanceof RobotFunction",
+    "Video and nodeA followup"
 ]
 
 TODO.forEach(element => {
