@@ -10,6 +10,9 @@ class Question {
         this.nodeCAnswer = nodeCAnswer;
         this._movement = movement;
     }
+    setVideo(video) {
+        this.video = video;
+    }
     setNodes(nodeA, nodeB = undefined, nodeC = undefined) {
         this.nodeA = nodeA;
         this.nodeB = nodeB;
@@ -61,18 +64,27 @@ const mening5 = "Kommer du ihåg hur ofta jag rekommenderade att du ska använda
 function createTree() {
     // greeting == Root Node
     let greeting = new Question(mening1, "nej", "ja", movement = wave_left);
+    console.log("greeting is:", greeting);
 
+    const flossingTutorial = new Question(question = mening2);
+    flossingTutorial.setVideo("./media/Folktandvården Stockholm – Hur man använder tandtråd.mp4"); // Can't call video="url" like in Python, so a separate function is needed
+    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"), flossingTutorial);
+    
+    const robotTellsYouHowToFloss = new Question(mening3);
+    flossingTutorial.setNodes(nodeA = robotTellsYouHowToFloss);
 
+    
+    let flossingQuiz = new Question(mening4, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
 
-    let greetingFollow = new Question(mening4, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
-    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", video = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"), greetingFollow);
+    robotTellsYouHowToFloss.setNodes(nodeA = flossingQuiz);
 
     let flossing = new Question("Vill du ha hygienråd?", "jo", "nej", movement = { bodyPart: "head", direction: "up", distance: 4 });
+    flossingQuiz.setNodes(flossing, flossing, flossing);
+    /* 
     let relax = new Question("Kan jag hjälpa dig slappna av", "jo", "nej");
-    greetingFollow.setNodes(relax, flossing, flossing);
-
     let relaxEnd = new RobotFunction("Här är en video för att hjälpa dig slappna av!", video = 'https://www.youtube.com/embed/dQw4w9WgXcQ', movement = { gesture: "getSchwifty" })
-    relax.setNodes(relaxEnd, flossing);
+    relax.setNodes(relaxEnd, flossing); */
+
 
     let flossingFollow = new Question("Använder du tandtråd?", "nej", "jo");
     let guidance = new Question("Hjälp med att hitta rätt?", "nej", "jo");

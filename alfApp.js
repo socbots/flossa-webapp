@@ -5,13 +5,27 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
     } // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
     if (currentNode._video || undefined) {
         //console.log("video found")
-        setVideo(currentNode._video)
+        setVideo(currentNode._video);
         videoRunning = true;
         window.scrollTo(0, 1);
     }
     if (currentNode._movement || undefined) {
         //console.log("movement found")
-        setGesture(currentNode._movement)
+        setGesture(currentNode._movement);
+    }
+    // If it's the tutorial video then it'll play, close after 50 seconds and start the next dialogue
+    if (currentNode instanceof Question && currentNode.video || undefined) {
+        setVideo(currentNode.video);
+        videoRunning = true;
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+            console.log("TROLOLOLO");
+            document.getElementById("iframeModal").style.display = "none";
+            isRec = false;
+            answerFound = true;
+            currentNode = currentNode.nodeA;
+            startDialogue(notUnderstod = false);
+        }, 50000);
     }
 }
 
@@ -75,13 +89,10 @@ function setAnswers(node) {
         nodeBAnswer.innerHTML = "B";
         nodeCAnswer.innerHTML = "C";
     } else {
+        console.log("NODE=", node);
         checkNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
         checkNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
         checkNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
-        // le old
-        /* nodeAAnswer.innerHTML = node.nodeAAnswer;
-        nodeBAnswer.innerHTML = node.nodeBAnswer;
-        nodeCAnswer.innerHTML = node.nodeCAnswer; */
     }
 }
 
@@ -166,7 +177,6 @@ const TODO = [
     "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
     "Text is placeholder",
     "Videos are placeholder",
-    "Change all node._text to: node instanceof RobotFunction",
     "Video and nodeA followup"
 ]
 
