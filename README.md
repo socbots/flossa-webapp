@@ -19,11 +19,11 @@ Interaction app for alf robot
 ## Preview
 
 ### Start
-![start](./images/readme/start.png)
+![start](./media/readme/start.png)
 ### Face detection buttons
-![face-detection](./images/readme/face_detection.png)
+![face-detection](./media/readme/face_detection.png)
 ### Question interface
-![question](./images/readme/question.png)
+![question](./media/readme/question.png)
 ### video modal
-![video](./images/readme/video.png)
+![video](./media/readme/video.png)
 
