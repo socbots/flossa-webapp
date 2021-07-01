@@ -8,6 +8,7 @@
 
 "use strict";
 
+/*
 // Put variables in global scope to make them available to the browser console.
 const audio = document.querySelector("audio");
 let rest = document.getElementById("result");
@@ -68,13 +69,15 @@ function handleSuccess(stream) {
         meterRefresh = setInterval(() => {
             soundMeterValues.push(parseFloat(soundMeter.instant.toFixed(4)));
             /* console.log(soundMeter.instant.toFixed(4)); */
-            currentSoundLevel = soundMeterValues.reduceRight((accumulator, currentValue, index) => {
-                if (index < soundMeterValues.length - soundMeterValuesToSum) return accumulator;
-                return accumulator + currentValue;
-            }, 0);
-            /* console.log(currentSoundLevel); */
 
+/*
+currentSoundLevel = soundMeterValues.reduceRight((accumulator, currentValue, index) => {
+    if (index < soundMeterValues.length - soundMeterValuesToSum) return accumulator;
+    return accumulator + currentValue;
+}, 0);
+/* console.log(currentSoundLevel); */
 
+/*
             if (soundMeter.instant.toFixed(4) > previousSoundLevel + 0.01) {
                 if (mediaRecorder.state == "inactive") {
                     console.log("Starting@ " + currentSoundLevel);
@@ -189,6 +192,10 @@ function handleError(error) {
         error.name;
     console.log("navigator audio stream error: " + errorMessage);
 }
+ */
+
+
+
 
 function checkInput(result, isFinal = false) {
     result = result.toLowerCase();
@@ -229,8 +236,40 @@ function checkInput(result, isFinal = false) {
 }
 
 let answerFound = false;
+let kaldi;
 
-navigator.mediaDevices
-    .getUserMedia(constraints)
-    .then(handleSuccess)
-    .catch(handleError);
+async function main() {
+    kaldi = new KaldiWeb.KaldiASR("http://0.0.0.0:4400/models", "english_small");
+    await kaldi.askForMicrophone();
+    await kaldi.init();
+}
+main();
+
+// Listen to the custom event that was created in updateTranscription
+window.addEventListener("onTranscription", (msg) => {
+    const { transcription, isFinal } = msg.detail;
+    console.log("Transcription:", transcription);
+
+    if (transcription) {
+        document.getElementById("result").textContent = transcription;
+        checkInput(transcription, isFinal);
+        setTimeout(() => {
+            isRec = false;
+            console.log("isRec == " + isRec);
+            console.log("answerFound state == " + answerFound);
+            console.log("notUndersod state == " + notUnderstod);
+            console.log("Timer typeof == " + typeof (timer));
+            if (answerFound) {
+                console.log("answerFound, going to next node")
+                startDialogue(notUnderstod = false);
+            } else if (timer) {
+                console.log("Timer is on, startrecording()")
+                startRecording();
+            } else {
+                console.log("notUnderstod true, asking again")
+                startDialogue(notUnderstod = true);
+            }
+        }, 1000)
+
+    }
+});

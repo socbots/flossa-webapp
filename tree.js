@@ -56,22 +56,22 @@ const wave_left= {
 // We create the children and then the next line before an empty line we set the children to their parent node.
 function createTree() {
   // greeting == Root Node
-  let greeting = new Question("Hej! Vill du tala med mig", "nej", "jo", movement = wave_left);
+  let greeting = new Question("Hej! Vill du tala med mig", "no", "yes", movement = wave_left);
 
 
 
-  let greetingFollow = new Question("Hur Känner du dig inför besöket?", "spänd", "lugn");
+  let greetingFollow = new Question("Hur Känner du dig inför besöket?", "worried", "calm");
   greeting.setNodes(new RobotFunction("Ha en trevlig dag!", video = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"), greetingFollow);
 
-  let flossing = new Question("Vill du ha hygienråd?", "jo", "nej", movement = {bodyPart:"head", direction:"up", distance:4});
-  let relax = new Question("Kan jag hjälpa dig slappna av", "jo", "nej");
+  let flossing = new Question("Vill du ha hygienråd?", "yes", "no", movement = {bodyPart:"head", direction:"up", distance:4});
+  let relax = new Question("Kan jag hjälpa dig slappna av", "yes", "no");
   greetingFollow.setNodes(relax, flossing);
 
   let relaxEnd = new RobotFunction("Här är en video för att hjälpa dig slappna av!", video = 'https://www.youtube.com/embed/dQw4w9WgXcQ', movement = {gesture:"getSchwifty"})
   relax.setNodes(relaxEnd, flossing);
 
-  let flossingFollow = new Question("Använder du tandtråd?", "nej", "jo");
-  let guidance = new Question("Hjälp med att hitta rätt?", "nej", "jo");
+  let flossingFollow = new Question("Använder du tandtråd?", "no", "yes");
+  let guidance = new Question("Hjälp med att hitta rätt?", "yes", "yes");
   flossing.setNodes(flossingFollow, guidance);
 
   let flossingSometimes = new RobotFunction("Här är en video om tandhygien", video = 'https://www.youtube.com/embed/vYbVHPLZrRo')

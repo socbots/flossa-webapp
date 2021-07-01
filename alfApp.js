@@ -123,7 +123,7 @@ function isDetected(state) {
 window.scrollTo(0, 1);
 
 // Test to trigger microphone and audio request from browser
-navigator.mediaDevices.getUserMedia({ audio: true })
+// navigator.mediaDevices.getUserMedia({ audio: true })
     // We save the rootNode incase we want to reset the dialogue at some point
     // createTree() is from the tree.js file
 const rootNode = createTree();
