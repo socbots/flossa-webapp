@@ -43,6 +43,16 @@ function createSpeechFunction() {
         startRecording();
         hideResult();
       }
+      // This is so fucking spaghetti, must make better solution... sometime
+      else if (currentNode instanceof Question
+        && currentNode.monologue
+      ) {
+        console.log("Monologue finished, going to next node");
+        isRec = false;
+        answerFound = true;
+        currentNode = currentNode.nodeA;
+        startDialogue(notUnderstod = false);
+      }
     }
   }
   // make dummy request to wake up server
