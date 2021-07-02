@@ -15,17 +15,22 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
     }
     // If it's the tutorial video then it'll play, close after 50 seconds and start the next dialogue
     if (currentNode instanceof Question && currentNode.video || undefined) {
-        setVideo(currentNode.video);
-        videoRunning = true;
-        window.scrollTo(0, 1);
         setTimeout(() => {
-            console.log("TROLOLOLO");
-            document.getElementById("iframeModal").style.display = "none";
-            isRec = false;
-            answerFound = true;
-            currentNode = currentNode.nodeA;
-            startDialogue(notUnderstod = false);
-        }, 50000);
+            console.log("Starting tutorial video")
+            setVideo(currentNode.video);
+            videoRunning = true;
+            window.scrollTo(0, 1);
+
+            setTimeout(() => {
+                console.log("Ending tutorial video and going to next node");
+                document.getElementById("iframeModal").style.display = "none";
+                isRec = false;
+                answerFound = true;
+                currentNode = currentNode.nodeA;
+                startDialogue(notUnderstod = false);
+            }, currentNode.duration);
+
+        }, currentNode.timeUntilStart);
     }
 }
 
@@ -96,10 +101,10 @@ function setAnswers(node) {
     }
 }
 
-function checkNodeAnswer(element, node, nodeAnswer) {
+function checkNodeAnswer(element, node, nodeAnswer) { 
     /* Checks if the node exists to show it, else it hides the answer button */
-    console.log("nodeanswer: " + nodeAnswer);
-    if (node != undefined) {
+    console.log("nodeanswer: ", nodeAnswer);
+    if (node != undefined && nodeAnswer != undefined) {
         element.style.display = "block";
         element.innerHTML = nodeAnswer;
     } else {

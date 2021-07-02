@@ -191,9 +191,9 @@ function handleError(error) {
 function checkInput(result, isFinal = false) {
 
     // Get answers
-    const nodeAAnswer = document.getElementById("node-A").innerHTML;
-    const nodeBAnswer = document.getElementById("node-B").innerHTML;
-    const nodeCAnswer = document.getElementById("node-C").innerHTML;
+    const nodeAAnswer = document.getElementById("node-A").innerHTML.toLowerCase();
+    const nodeBAnswer = document.getElementById("node-B").innerHTML.toLowerCase();
+    const nodeCAnswer = document.getElementById("node-C").innerHTML.toLowerCase();
 
     result = result.toLowerCase(); //set to lower case
     let results = result.split(" ");
