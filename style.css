@@ -1,3 +1,11 @@
+#result::before {
+    content: "Vad jag hörde: ";
+}
+
+body {
+    background-color: #000000;
+}
+
 /* https://www.w3schools.com/howto/howto_css_modals.asp
  * The Modal (background) */
 
@@ -12,7 +20,7 @@
     top: 0;
     width: 100%;
     /* Full width */
-    height: 100%;
+    height: 100vh;
     /* Full height */
     overflow: auto;
     /* Enable scroll if needed */
@@ -27,8 +35,11 @@
 
 .modal-content {
     background-color: #000000;
-    margin: 15% auto;
+    margin: auto;
+    height: 100%;
     /* 15% from the top and centered */
+    display: flex;
+    place-content: center;
     padding: 20px;
     width: fit-content;
     /* Could be more or less, depending on screen size */
@@ -45,8 +56,8 @@
     transform: translate(-50%, -50%);
     text-align: center;
     padding: 10em;
-    border: darkslategray solid 10px;
-    border-radius: 2em;
+    /*border: rgb(13, 80, 124) solid 10px;
+    border-radius: 2em;*/
 }
 
 .close {
@@ -114,7 +125,7 @@ input[type=button]:hover {
 
 .result-box {
     pointer-events: none !important;
-    background-color: darkslategray !important;
+    background-color: rgb(31, 73, 73) !important;
     min-height: 3em;
 }
 

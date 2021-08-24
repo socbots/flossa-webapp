@@ -15,6 +15,7 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
     }
     // If it's the tutorial video then it'll play, close after 50 seconds and start the next dialogue
     if (currentNode instanceof Question && currentNode.video || undefined) {
+        console.log("startDialogue: video node: isRec=", isRec);
         setTimeout(() => {
             console.log("Starting tutorial video")
             setVideo(currentNode.video);
@@ -51,15 +52,16 @@ function iframeModal() {
     iframeModal.style.display = "block";
     // When the user clicks on <span> (x), close the modal
     span.addEventListener('click', function () {
+        iframeModal.style.display = "none";
         currentNode = currentNode.nodeA;
         startDialogue();
     });
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == iframeModal) {
-            location.reload();
-        }
-    }
+    // window.onclick = function (event) {
+    //     if (event.target == iframeModal) {
+    //         location.reload();
+    //     }
+    // }
 }
 
 function setGesture(movement) {
@@ -83,21 +85,21 @@ function setGesture(movement) {
 }
 
 function setAnswers(node) {
-    answerFound = false; // Perhaps bake this into node?
     const nodeAAnswer = document.getElementById("node-A");
     const nodeBAnswer = document.getElementById("node-B");
     const nodeCAnswer = document.getElementById("node-C")
 
-    if (node instanceof RobotFunction) {
-        console.log("is robot function")
-        nodeAAnswer.innerHTML = "A";
-        nodeBAnswer.innerHTML = "B";
-        nodeCAnswer.innerHTML = "C";
-    } else {
-        console.log("NODE=", node);
+    if (node instanceof Question) {
+        answerFound = false;
         checkNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
         checkNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
         checkNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
+        
+    } else {
+        // nodeAAnswer.innerHTML = "A";
+        // nodeBAnswer.innerHTML = "B";
+        // nodeCAnswer.innerHTML = "C";
+        console.log("NODE=", node);
     }
 }
 
@@ -132,34 +134,6 @@ function setQuestion(node) {
 }
 
 
-
-
-
-let detectedCounter = 0;
-
-function isDetected(state) {
-    if (state && !videoRunning) {
-        detectedCounter = 0;
-        if (!dialogRunning) {
-            notUnderstod = false;
-            currentNode = rootNode;
-            startDialogue(currentNode);
-            dialogRunning = true;
-            //console.log("is see you")
-        }
-    } else {
-        detectedCounter += 1;
-        if (detectedCounter > 50 && dialogRunning) {
-            currentNode = getAbortNode()
-            notUnderstod = false;
-            startDialogue();
-            dialogRunning = false;
-            console.log("bye bye")
-        }
-    }
-}
-window.scrollTo(0, 1);
-
 // Test to trigger microphone and audio request from browser
 navigator.mediaDevices.getUserMedia({ audio: true })
 // We save the rootNode incase we want to reset the dialogue at some point
@@ -167,7 +141,6 @@ navigator.mediaDevices.getUserMedia({ audio: true })
 const rootNode = createTree();
 let currentNode = rootNode;
 let notUnderstod = false;
-let dialogRunning = false;
 
 // these create functions are from the speech.js file
 //button_callback();
@@ -176,13 +149,10 @@ let textToSpeech = createSpeechFunction();
 
 let videoRunning = false;
 
-document.getElementById("speak").addEventListener("click", () => { isDetected(true) })
+document.getElementById("speak").addEventListener("click", () => { currentNode = rootNode; startDialogue(currentNode)})
 
 const TODO = [
     "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
-    "Text is placeholder",
-    "Videos are placeholder",
-    "Video and nodeA followup"
 ]
 
 TODO.forEach(element => {

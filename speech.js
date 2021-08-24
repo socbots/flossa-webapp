@@ -30,6 +30,7 @@ function createSpeechFunction() {
   }
 
   function playAudio(audioBuffer) {
+    isRec = false;
     isSpeaking = true;
     const source = context.createBufferSource();
     source.buffer = audioBuffer;
