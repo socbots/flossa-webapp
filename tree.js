@@ -83,11 +83,11 @@ function createTree() {
 
     const flossingTutorial = new Question(question = mening2);
     flossingTutorial.setVideo(
-        "./media/Folktandvården Stockholm – Hur man använder tandtråd.mp4#t=12",
+        "./media/toothflesh.mp4#t=12",
         13000,
         16000
     ); // Can't call video="url" like in Python, so a separate function is needed
-    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", "./media/Folktandvården Stockholm – Hur man använder tandtråd.mp4#t=12"), flossingTutorial);
+    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", ), flossingTutorial);
 
     const flossingFails = new Question(mening3, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
     flossingTutorial.setNodes(nodeA = flossingFails);
