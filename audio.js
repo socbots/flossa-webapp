@@ -68,6 +68,9 @@ function handleSuccess(stream) {
         let previousSoundLevel = 0;
 
         meterRefresh = setInterval(() => {
+            if (!isRec) {
+                return;
+            }
             soundMeterValues.push(parseFloat(soundMeter.instant.toFixed(4)));
             /* console.log(soundMeter.instant.toFixed(4)); */
             currentSoundLevel = soundMeterValues.reduceRight((accumulator, currentValue, index) => {
@@ -79,7 +82,7 @@ function handleSuccess(stream) {
 
             if (soundMeter.instant.toFixed(4) > previousSoundLevel + 0.01) {
                 if (mediaRecorder.state == "inactive") {
-                    console.log("Starting@ " + currentSoundLevel);
+                    console.log("Starting recording");
                     startSoundLevel = currentSoundLevel;
                     mediaRecorder.start();
                     mediaRecorder.ondataavailable = (data) => {
@@ -93,7 +96,7 @@ function handleSuccess(stream) {
                 }
             } else if (
                 mediaRecorder.state == "recording" && startSoundLevel > currentSoundLevel) {
-                console.log("Stopping@ " + currentSoundLevel);
+                console.log("Stopping recording");
                 mediaRecorder.stop();
                 startSoundLevel = 0;
                 soundMeterValues = [];
@@ -151,18 +154,22 @@ function handleSuccess(stream) {
                             console.log("Result from success: " + result);
                             rest.textContent = result;
                             checkInput(result);
-                            setTimeout(() => {
-                                isRec = false;
-                                console.log("isRec == " + isRec);
-                                console.log("answerFound state == " + answerFound);
-                                console.log("notUndersod state == " + notUnderstod);
-                                if (answerFound) {
-                                    console.log("answerFound, going to next node")
-                                } else {
-                                    console.log("notUnderstod true, asking again")
-                                    startDialogue(notUnderstod = true)
-                                }
-                            }, 15000)
+
+                            // if (!currentNode.monologue && currentNode.video == undefined) {
+                            //     console.log("audio.js: Setting timeout");
+                            //     setTimeout(() => {
+                            //         isRec = false;
+                            //         console.log("isRec == " + isRec);
+                            //         console.log("answerFound state == " + answerFound);
+                            //         console.log("notUndersod state == " + notUnderstod);
+                            //         if (answerFound) {
+                            //             console.log("answerFound, going to next node")
+                            //         } else {
+                            //             console.log("notUnderstod true, asking again")
+                            //             startDialogue(notUnderstod = true)
+                            //         }
+                            //     }, 15000)
+                            // }
 
                         } else {
                             console.log("No result from success")
@@ -190,6 +197,13 @@ function handleError(error) {
 
 function checkInput(result, isFinal = false) {
 
+    if (!isRec) {
+        console.log("isrec=", isRec);
+        return;
+    }
+    
+    isRec = false;
+
     // Get answers
     const nodeAAnswer = document.getElementById("node-A").innerHTML.toLowerCase();
     const nodeBAnswer = document.getElementById("node-B").innerHTML.toLowerCase();
@@ -207,37 +221,36 @@ function checkInput(result, isFinal = false) {
         // If we cant find a match for the input our user gives we startDialog with the current node and set the notUnderstod parameter to true
         for (const r of results) {
             // Test the user input against nodes if answers in our nodes.
-            if (nodeAAnswer.includes(r) && r) {
+            // We only check the first word
+            if (nodeAAnswer.toLowerCase().split(" ")[0] == r) {
                 console.log("Going nodeA");
                 // rec.abort() terminates
                 isRec = false;
                 answerFound = true;
                 currentNode = currentNode.nodeA;
                 startDialogue(notUnderstod = false);
-                break;
-            } else if (nodeBAnswer.includes(r) && r) {
+                return;
+            } else if (nodeBAnswer.toLowerCase().split(" ")[0] == r) {
                 console.log("Going nodeB");
                 isRec = false;
                 answerFound = true;
                 currentNode = currentNode.nodeB;
                 startDialogue(notUnderstod = false);
-                break;
-            } else if (nodeCAnswer.includes(r) && r) {
+                return;
+            } else if (nodeCAnswer.toLowerCase().split(" ")[0] == r) {
                 console.log("Going nodeC");
                 isRec = false;
                 answerFound = true;
                 currentNode = currentNode.nodeC;
                 startDialogue(notUnderstod = false);
-                break;
+                return;
             }
         }
-        // What does these even do?
-        if (isFinal) {
-            console.log("isFinal");
-            // quickfix: I don't like this global variable but it works
-        } else if (answerFound == false) {
+
+            isRec = false;
+            startDialogue(notUnderstod = true);
             console.log("answerFound state == " + answerFound);
-        }
+        
     }
 }
 
