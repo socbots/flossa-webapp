@@ -65,23 +65,19 @@ function iframeModal() {
 }
 
 function setGesture(movement) {
-    /*     url = "http://193.167.34.217:5000/move"
+         url = "http://alfsse.herokuapp.com/move"
             //url = "http://192.168.1.38:5000/move"
         fetch(url, {
                 method: 'POST',
-                body: JSON.stringify({
-                    gesture: movement.gesture,
-                    bodyPart: movement.bodyPart,
-                    direction: movement.direction,
-                    distance: movement.distance
-                }),
+                body: JSON.stringify(movement),
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8'
                 }
             })
             .then(res => res.json())
-            .then(console.log) */
-    console.log(movement)
+            .then((res2) => {
+                console.log("movement res from heroku:", res2);
+            });
 }
 
 function setAnswers(node) {
@@ -103,7 +99,7 @@ function setAnswers(node) {
     }
 }
 
-function checkNodeAnswer(element, node, nodeAnswer) { 
+function checkNodeAnswer(element, node, nodeAnswer) {
     /* Checks if the node exists to show it, else it hides the answer button */
     console.log("nodeanswer: ", nodeAnswer);
     if (node != undefined && nodeAnswer != undefined) {
