@@ -27,13 +27,16 @@ class Question {
         this.nodeB = nodeB;
         this.nodeC = nodeC;
     }
-    setMovement(bodyPart = null, gesture = null, direction = null, distance = null) {
-        this._movement = {
+    setMovement(movObj) {
+        /*
+        {
             bodyPart: bodyPart,
             gesture: gesture,
             direction: direction,
             distance: distance,
         }
+        */
+        this._movement = movObj
     }
 }
 
@@ -45,13 +48,16 @@ class RobotFunction {
         this._video = video
         this._movement = movement;
     }
-    setMovement(bodyPart = null, gesture = null, direction = null, distance = null) {
-        this._movement = {
+    setMovement(movObj) {
+        /*
+        {
             bodyPart: bodyPart,
             gesture: gesture,
             direction: direction,
             distance: distance,
         }
+        */
+        this._movement = movObj
     }
 }
 
@@ -79,7 +85,9 @@ const goodBye = "Diskutera gärna med tandläkaren eller tandhygienisten vilken 
 // We create the children and then the next line before an empty line we set the children to their parent node.
 function createTree() {
     // greeting == Root Node
-    let greeting = new Question(mening1, "nej", "ja", movement = wave_left);
+    let greeting = new Question(mening1, "nej", "ja");
+    // {bodyPart: "left_hand", direction: "up", distance: 5.0}
+    greeting.setMovement(wave_left);
 
     const flossingTutorial = new Question(question = mening2);
     flossingTutorial.setVideo(
