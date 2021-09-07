@@ -45,14 +45,23 @@ function createSpeechFunction() {
         hideResult();
       }
       // This is so fucking spaghetti, must make better solution... sometime
-      else if (currentNode instanceof Question
-        && currentNode.monologue
-      ) {
+      else if (currentNode instanceof Question && currentNode.monologue) {
         console.log("Monologue finished, going to next node");
         isRec = false;
         answerFound = true;
         currentNode = currentNode.nodeA;
         startDialogue(notUnderstod = false);
+      }
+      /* If it's a RobotFunction then it is the end of the interaction tree
+      ** So we reset the tree to wait for the next person to talk with.
+      ** Actually it's better to do a location.reload() here because google stt is being used.
+      ** But if kaldi was in use instead, the rootNode could just be an empty question
+      ** which listens for "hej" or something else for voice activation.
+      */
+      else if (currentNode instanceof RobotFunction) {
+        console.log("source.onended: is RobotFunction.");
+        currentNode = rootNode;
+        startDialogue();
       }
     }
   }

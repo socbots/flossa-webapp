@@ -3,11 +3,10 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
     if (setQuestions) {
         setQuestion(currentNode, notUnderstod);
     } // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
-    if (currentNode._video || undefined) {
-        //console.log("video found")
-        setVideo(currentNode._video);
-        videoRunning = true;
-        window.scrollTo(0, 1);
+    if (currentNode instanceof RobotFunction) {
+        // setVideo(currentNode._video);
+        // videoRunning = true;
+        // window.scrollTo(0, 1);
     }
     if (currentNode._movement || undefined) {
         //console.log("movement found")
@@ -65,19 +64,19 @@ function iframeModal() {
 }
 
 function setGesture(movement) {
-         url = "http://alfsse.herokuapp.com/move"
-            //url = "http://192.168.1.38:5000/move"
-        fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(movement),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8'
-                }
-            })
-            .then(res => res.json())
-            .then((res2) => {
-                console.log("movement res from heroku:", res2);
-            });
+    url = "http://alfsse.herokuapp.com/move"
+    //url = "http://192.168.1.38:5000/move"
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(movement),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+    })
+        .then(res => res.json())
+        .then((res2) => {
+            console.log("movement res from heroku:", res2);
+        });
 }
 
 function setAnswers(node) {
@@ -90,7 +89,7 @@ function setAnswers(node) {
         checkNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
         checkNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
         checkNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
-        
+
     } else {
         // nodeAAnswer.innerHTML = "A";
         // nodeBAnswer.innerHTML = "B";
@@ -145,7 +144,7 @@ let textToSpeech = createSpeechFunction();
 
 let videoRunning = false;
 
-document.getElementById("speak").addEventListener("click", () => { currentNode = rootNode; startDialogue(currentNode)})
+document.getElementById("speak").addEventListener("click", () => { currentNode = rootNode; startDialogue(currentNode) })
 
 const TODO = [
     "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",

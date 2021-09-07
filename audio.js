@@ -197,10 +197,8 @@ function handleError(error) {
 
 function checkInput(result, isFinal = false) {
 
-    if (!isRec) {
-        console.log("isrec=", isRec);
-        return;
-    }
+    // Return if it's not recording. This means that a button was clicked while Alf was still speaking
+    if (!isRec) return;
     
     isRec = false;
 
