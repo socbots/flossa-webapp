@@ -81,6 +81,12 @@ body {
 
 #answer-container {
     display: none;
+    place-items: center;
+    flex-direction: column;
+}
+
+.button-container {
+    width: 70%;
 }
 
 #canvasBtn {
@@ -130,17 +136,28 @@ input[type=button]:hover {
 }
 
 
+/* The initial speak button */
+
+#speak-container {
+    width: 100%;
+    text-align: center;
+}
+
+#speak {
+    width: 70%;
+}
+
 /* Styling for the question */
 
 .speak-container {
     display: none;
     padding: 0.8em 1.8em;
     margin: 0 0.4em 0.4em 0;
-    border: 0.16em solid rgba(255, 255, 255, 0);
+    border: 0.16em solid #ccc;
     border-radius: 2em;
     font-weight: bolder;
     font-size: x-large;
-    color: #000000;
-    background-color: #1d97bd;
+    color: #ddd;
+    background-color: transparent;
     text-align: center;
 }
