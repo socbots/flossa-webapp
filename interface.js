@@ -13,7 +13,7 @@ var speakContainer = document.getElementById("speak-container");
 var questionContainer = document.getElementById("question");
 speakButton.onclick = function() {
     speakContainer.style.display = "none"
-    answerContainer.style.display = "block"
+    answerContainer.style.display = "flex"
     questionContainer.style.display = "block"
-
+    
 }
