@@ -17,3 +17,24 @@ speakButton.onclick = function() {
     questionContainer.style.display = "block"
     
 }
+
+/**
+ * Make the whole app fullscreen in order to hide the URL bar
+ * Click/tap on "vad jag hörde" to run
+ */
+const requestFullscreen = async (target) => {
+    console.log("requestFullscreen");
+    if (target.requestFullscreen) {
+        target.requestFullscreen();
+    }
+    if (target.webkitRequestFullscreen) {
+        target.webkitRequestFullscreen();
+    }
+    if (target.msRequestFullscreen) {
+        target.msRequestFullscreen();
+    }
+}
+
+document.querySelector("#fullscreen-request").addEventListener("click", async (ev) => {
+    await requestFullscreen(document.documentElement);
+});
