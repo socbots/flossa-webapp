@@ -95,7 +95,7 @@ function createTree() {
         13000,
         16000
     ); // Can't call video="url" like in Python, so a separate function is needed
-    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", ), flossingTutorial);
+    greeting.setNodes(new RobotFunction("Ha en trevlig dag!",), flossingTutorial);
 
     const flossingFails = new Question(mening3, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
     flossingTutorial.setNodes(nodeA = flossingFails);
@@ -108,9 +108,9 @@ function createTree() {
         movement = undefined,
         video = undefined,
         monologue = true
-        );
+    );
     flossingFails.setNodes(illusion, illusion, illusion);
-    
+
     // Super fail: checkInput() will split up the answer and then see if that word is contained in
     // NodeA, NodeB, NodeC. "dag" exists in every answer so NodeA will always be chosene
     const flossingHowOften = new Question(mening4, "Varje", "Varannan", "Tredje");
@@ -124,7 +124,7 @@ function createTree() {
         movement = undefined,
         video = undefined,
         monologue = true
-        );
+    );
     const flossingWrongAnswer = new Question(
         'Det var fel. Svaret är varje dag <break time="1s"/>',
         nodeAAnswer = undefined,
@@ -133,7 +133,7 @@ function createTree() {
         movement = undefined,
         video = undefined,
         monologue = true
-        );
+    );
     flossingHowOften.setNodes(flossingCorrectAnswer, flossingWrongAnswer, flossingWrongAnswer);
 
     flossingCorrectAnswer.setNodes(new RobotFunction(goodBye));
