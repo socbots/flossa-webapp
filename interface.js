@@ -15,26 +15,39 @@ speakButton.onclick = function() {
     speakContainer.style.display = "none"
     answerContainer.style.display = "flex"
     questionContainer.style.display = "block"
-    
+
 }
 
 /**
  * Make the whole app fullscreen in order to hide the URL bar
  * Click/tap on "vad jag hörde" to run
  */
-const requestFullscreen = async (target) => {
-    console.log("requestFullscreen");
-    if (target.requestFullscreen) {
-        target.requestFullscreen();
-    }
-    if (target.webkitRequestFullscreen) {
-        target.webkitRequestFullscreen();
-    }
-    if (target.msRequestFullscreen) {
-        target.msRequestFullscreen();
+const toggleFullscreen = async(target) => {
+    console.log("toggleFullscreen");
+    if (!document.fullscreenElement &&
+        !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+            document.documentElement.msRequestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
     }
 }
 
-document.querySelector("#fullscreen-request").addEventListener("click", async (ev) => {
-    await requestFullscreen(document.documentElement);
+document.querySelector("#fullscreen-request").addEventListener("click", async(ev) => {
+    await toggleFullscreen(document.documentElement);
 });
