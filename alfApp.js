@@ -19,6 +19,9 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
             console.log("Starting tutorial video")
             setVideo(currentNode.video);
             videoRunning = true;
+
+            if (currentNode.delayedMovement) setGesture(currentNode.delayedMovement.gesture);
+
             window.scrollTo(0, 1);
 
             setTimeout(() => {
