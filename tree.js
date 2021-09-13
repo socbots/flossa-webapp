@@ -8,7 +8,8 @@ class Question {
         nodeCAnswer = undefined,
         movement = undefined,
         video = undefined,
-        monologue = false) {
+        monologue = false,
+        delayedMovement = undefined) {
         this.question = question;
         this.video = video;
         this.nodeAAnswer = nodeAAnswer;
@@ -16,6 +17,7 @@ class Question {
         this.nodeCAnswer = nodeCAnswer;
         this._movement = movement;
         this.monologue = monologue;
+        this.delayedMovement = delayedMovement;
     }
     setVideo(video, timeUntilStart, duration) {
         this.video = video;
@@ -37,6 +39,17 @@ class Question {
         }
         */
         this._movement = movObj
+    }
+    setDelayedMovement(gesture, time = undefined) {
+        /* object with the shape:
+        {
+            bodyPart: bodyPart,
+            gesture: gesture,
+            direction: direction,
+            distance: distance,
+        }
+        */
+        this.delayedMovement = { gesture, time };
     }
 }
 
@@ -61,9 +74,21 @@ class RobotFunction {
     }
 }
 
-const wave_left = {
-    bodyPart: "left_hand",
-    gesture: "wave"
+const emoteList = {
+    wave_left: {
+        bodyPart: "left_hand",
+        gesture: "wave"
+    },
+    look_down: {
+        bodyPart: "head",
+        direction: "down",
+        distance: 5
+    },
+    look_up: {
+        bodyPart: "head",
+        direction: "up",
+        distance: 8
+    }
 }
 
 const mening1 = "Hej! Vill du lära dig hur du använder tandtråd på bästa sätt? Du kan svara genom tal eller med att trycka på min skärm."
@@ -87,7 +112,7 @@ function createTree() {
     // greeting == Root Node
     let greeting = new Question(mening1, "nej", "ja");
     // {bodyPart: "left_hand", direction: "up", distance: 5.0}
-    greeting.setMovement(wave_left);
+    greeting.setMovement(emoteList.wave_left);
 
     const flossingTutorial = new Question(question = mening2);
     flossingTutorial.setVideo(
@@ -96,24 +121,14 @@ function createTree() {
         16000
     ); // Can't call video="url" like in Python, so a separate function is needed
     //Make alf look down on the screen
-    flossingTutorial.setMovement({
-        bodyPart: "head",
-        direction: "down",
-        distance: 6
-
-    })
+    flossingTutorial.setDelayedMovement(emoteList.look_down);
     greeting.setNodes(new RobotFunction("Ha en trevlig dag!", ), flossingTutorial);
 
 
     const flossingFails = new Question(mening3, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
     flossingTutorial.setNodes(nodeA = flossingFails);
     //Make alf look back up when asking question
-    flossingFails.setMovement({
-        bodyPart: "head",
-        direction: "up",
-        distance: 6
-
-    })
+    flossingFails.setMovement(emoteList.look_up);
 
     const illusion = new Question(
         'Båda är rätta svaret <break time="1s"/>',
