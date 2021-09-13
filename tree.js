@@ -95,10 +95,25 @@ function createTree() {
         13000,
         16000
     ); // Can't call video="url" like in Python, so a separate function is needed
-    greeting.setNodes(new RobotFunction("Ha en trevlig dag!",), flossingTutorial);
+    //Make alf look down on the screen
+    flossingTutorial.setMovement({
+        bodyPart: "head",
+        direction: "down",
+        distance: 6
+
+    })
+    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", ), flossingTutorial);
+
 
     const flossingFails = new Question(mening3, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
     flossingTutorial.setNodes(nodeA = flossingFails);
+    //Make alf look back up when asking question
+    flossingFails.setMovement({
+        bodyPart: "head",
+        direction: "up",
+        distance: 6
+
+    })
 
     const illusion = new Question(
         'Båda är rätta svaret <break time="1s"/>',
@@ -109,6 +124,7 @@ function createTree() {
         video = undefined,
         monologue = true
     );
+
     flossingFails.setNodes(illusion, illusion, illusion);
 
     // Super fail: checkInput() will split up the answer and then see if that word is contained in
