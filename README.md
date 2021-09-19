@@ -5,7 +5,7 @@ Interaction app for alf robot
 
 ## Files
 
-### alfApp.js
+### ~~alfApp.js~~ main.js
 - Main logic 
 ### speech.js
 - Contains code for tts & stt
@@ -13,8 +13,12 @@ Interaction app for alf robot
 - Code for the interaction tree
 ### Alf_frontend.txt
 - Developer thoughts and musings
+- Pre v1.0
 ### index.html
 - index.html
+### webRTC
+- Audio recording using webRTC files
+- Soundmeter to gauge sound volume
 
 ## Preview
 
