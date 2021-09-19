@@ -1,89 +1,155 @@
-/*
- *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
- *
- *  Use of this source code is governed by a BSD-style license
- *  that can be found in the LICENSE file in the root of the source
- *  tree.
- */
-
-/* global AudioContext, SoundMeter */
-
-'use strict';
-
-const startButton = document.getElementById('startButton');
-const stopButton = document.getElementById('stopButton');
-startButton.onclick = start;
-stopButton.onclick = stop;
-
-const instantMeter = document.querySelector('#instant meter');
-const slowMeter = document.querySelector('#slow meter');
-const clipMeter = document.querySelector('#clip meter');
-
-const instantValueDisplay = document.querySelector('#instant .value');
-const slowValueDisplay = document.querySelector('#slow .value');
-const clipValueDisplay = document.querySelector('#clip .value');
-
-// Put variables in global scope to make them available to the browser console.
-const constraints = window.constraints = {
-  audio: true,
-  video: false
-};
-
-let meterRefresh = null;
-
-function handleSuccess(stream) {
-  // Put variables in global scope to make them available to the
-  // browser console.
-  window.stream = stream;
-  const soundMeter = window.soundMeter = new SoundMeter(window.audioContext);
-  soundMeter.connectToSource(stream, function(e) {
-    if (e) {
-      alert(e);
-      return;
+// This function starts and moves the dialog onwards 
+function startDialogue(notUnderstod = false, setQuestions = true) {
+    if (setQuestions) {
+        setQuestion(currentNode, notUnderstod);
     }
-    meterRefresh = setInterval(() => {
-      instantMeter.value = instantValueDisplay.innerText =
-        soundMeter.instant.toFixed(2);
-      slowMeter.value = slowValueDisplay.innerText =
-        soundMeter.slow.toFixed(2);
-      clipMeter.value = clipValueDisplay.innerText =
-        soundMeter.clip;
-    }, 200);
-  });
+    if (currentNode._movement || undefined) {
+        setGesture(currentNode._movement);
+    }
+    // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
+    // If it's the tutorial video then it'll play, close after 50 seconds and start the next dialogue
+    if (currentNode instanceof Question && currentNode.video || undefined) {
+        console.log("startDialogue: video node: isRec=", isRec);
+        setTimeout(() => {
+            console.log("Starting tutorial video")
+            setVideo(currentNode.video);
+            videoRunning = true;
+
+            if (currentNode.delayedMovement) setGesture(currentNode.delayedMovement.gesture);
+
+            window.scrollTo(0, 1);
+
+            setTimeout(() => {
+                console.log("Ending tutorial video and going to next node");
+                document.getElementById("iframeModal").style.display = "none";
+                isRec = false;
+                answerFound = true;
+                currentNode = currentNode.nodeA;
+                startDialogue(notUnderstod = false);
+            }, currentNode.duration);
+
+        }, currentNode.timeUntilStart);
+    }
 }
 
-function handleError(error) {
-  console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+//Video properties, adjusted for Alf robot, 2021
+function setVideo(url) {
+    videoPlayer = document.getElementById("video");
+    videoPlayer.src = url;
+    videoPlayer.width = 1000;
+    videoPlayer.height = 700;
+    iframeModal();
+}
+
+//Modal for video
+function iframeModal() {
+    var iframeModal = document.getElementById("iframeModal");
+    var span = document.getElementById("iframeClose");
+    iframeModal.style.display = "block";
+    // When the user clicks on <span> (x), close the modal and start next Dialogue in tree
+    span.addEventListener('click', function() {
+        iframeModal.style.display = "none";
+        currentNode = currentNode.nodeA;
+        startDialogue();
+    });
+}
+
+//Sends gesture commands to backend
+function setGesture(movement) {
+    url = "http://alfsse.herokuapp.com/move" //Backend adress
+    fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(movement),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+        .then(res => res.json())
+        .then((res2) => {
+            console.log("movement res from heroku:", res2);
+        });
+}
+
+//Populates answer answer-buttons with node answer element
+function setAnswers(node) {
+    const nodeAAnswer = document.getElementById("node-A");
+    const nodeBAnswer = document.getElementById("node-B");
+    const nodeCAnswer = document.getElementById("node-C")
+
+    if (node instanceof Question) {
+        answerFound = false;
+        checkNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
+        checkNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
+        checkNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
+
+    } else {
+        console.log("NODE=", node);
+    }
+}
+
+/* Checks if the node exists to show it, else it hides the answer button */
+function checkNodeAnswer(element, node, nodeAnswer) {
+    console.log("nodeanswer: ", nodeAnswer);
+    if (node != undefined && nodeAnswer != undefined) {
+        element.style.display = "block";
+        element.innerHTML = nodeAnswer;
+    } else {
+        element.style.display = "none";
+        element.innerHTML = ""; // Seems okay to keep it empty for checkInput
+    }
+}
+
+// 
+function setQuestion(node) {
+    const question = document.getElementById("question");
+    setAnswers(node, notUnderstod);
+    // The TTS API uses SSML so the text should be within <speak> tags
+    // If the user input was not understod add "jag förstod inte..." and a 1sec break between the question.
+    // node?._text || node.question means that if the node is of the type RobotFunction it will have a ._text variable else it is a Question and has a .question variable.
+    const text = notUnderstod ?
+        '<speak> Jag förstod inte vad du menade? <break time="1s"/>' + ((node._text || undefined) || node.question) + '</speak>' :
+        '<speak>' + ((node._text || undefined) || node.question) + '</speak>';
+
+    const point = text.search("<break");
+    const textNewline = text.slice(0, point) + "<br>" + text.slice(point)
+
+    question.innerHTML = point < 0 ? text : textNewline;
+    textToSpeech(text);
 }
 
 
-function start() {
-  console.log('Requesting local stream');
-  startButton.disabled = true;
-  stopButton.disabled = false;
+// Test to trigger microphone and audio request from browser
+navigator.mediaDevices.getUserMedia({ audio: true })
+    // We save the rootNode incase we want to reset the dialogue at some point
+    // createTree() is from the tree.js file
+const rootNode = createTree();
+let currentNode = rootNode;
+let notUnderstod = false;
 
-  try {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    window.audioContext = new AudioContext();
-  } catch (e) {
-    alert('Web Audio API not supported.');
-  }
+// these create functions are from the speech.js file
+//button_callback();
 
-  navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then(handleSuccess)
-      .catch(handleError);
-}
+let textToSpeech = createSpeechFunction();
 
-function stop() {
-  console.log('Stopping local stream');
-  startButton.disabled = false;
-  stopButton.disabled = true;
+let videoRunning = false;
 
-  window.stream.getTracks().forEach(track => track.stop());
-  window.soundMeter.stop();
-  clearInterval(meterRefresh);
-  instantMeter.value = instantValueDisplay.innerText = '';
-  slowMeter.value = slowValueDisplay.innerText = '';
-  clipMeter.value = clipValueDisplay.innerText = '';
-}
+document.getElementById("speak").addEventListener("click", () => {
+    currentNode = rootNode;
+    startDialogue(currentNode)
+})
+
+const TODO = [
+    "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
+]
+
+TODO.forEach(element => {
+    console.log("TODO: " + element);
+});
+
+// I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
+//let notUnderstod = false;
+//setButtonListeners();
+//setInterval(() => { isDetected(detected); }, 500);
+
+//fetch("https://193.167.34.217/robotfunction")
+//  .then((d)=> console.log(d))

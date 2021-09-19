@@ -1,8 +1,3 @@
-/*
-Credits:
-https://www.w3schools.com/howto/howto_css_modals.asp
-*/
-
 /* Hide speak button on click */
 // Get the buttons
 var speakButton = document.getElementById("speak");
