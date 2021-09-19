@@ -116,7 +116,7 @@ function createTree() {
 
     const flossingTutorial = new Question(question = mening2);
     flossingTutorial.setVideo(
-        "./media/toothflesh.mp4#t=12",
+        "./media/tutorial540p.mp4#t=12",
         13000,
         16000
     ); // Can't call video="url" like in Python, so a separate function is needed

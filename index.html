@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="interface.js" type="text/javascript"></script>
     <link rel="stylesheet" href="style.css">
     <title>Alf App</title>
 </head>
@@ -15,7 +14,7 @@
         <div id="fullscreen-request">
             <button class="result-box" id="result"></button>
         </div>
-        <<div class="button-container" id="speak-container">>
+        <div class="button-container" id="speak-container">
             <input type="button" id="speak" value="speak">
         </div>
         <div>
@@ -23,6 +22,7 @@
             </div>
         </div>
         <div>
+            <!-- Interactive buttons -->
             <div id="answer-container">
                 <div class="button-container">
                     <button id="node-A" class="answer-button"></button>
@@ -40,7 +40,6 @@
 
     <!-- The Modal -->
     <div id="iframeModal" class="modal">
-        <!-- Modal content -->
         <div class="modal-content">
             <span class="close" id="iframeClose">&times;</span>
             <video id="video" width="0" height="0" frameborder="0" src="" autoplay muted></video>
@@ -48,11 +47,13 @@
 
     </div>
 
+    <script src="interface.js" defer></script>
     <script src="speech.js" defer></script>
     <script src="tree.js" defer></script>
-    <script src="alfApp.js" defer></script>
-    <script src="audio.js" defer></script>
-    <script src="soundmeter.js" defer></script>
+    <script src="main.js" defer></script>
+    <script src="webRTC/audio.js" defer></script>
+    <script src="webRTC/soundmeter.js" defer></script>
+    <script src="webRTC/webRTCMain.js" defer></script>
 </body>
 
 </html>
