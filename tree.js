@@ -1,6 +1,6 @@
 // CLASSES 
 
-// This class is the node for our tree structure. It should never be a leaf node, and should allways have 2 child nodes.
+// This class is the node for our tree structure. It should never be a leaf node, and should always have 2 child nodes.
 class Question {
     constructor(question,
         nodeAAnswer = undefined,
@@ -53,9 +53,8 @@ class Question {
     }
 }
 
-// The RobotFunction class is used as the leaf nodes of our tree structure
-// This means that when we encounter a RoboFunction the dialogue has ended.
-class RobotFunction {
+// The EndTree class is used as the leaf nodes of our tree structure
+class EndTree {
     constructor(text, video = undefined, movement = undefined) {
         this._text = text;
         this._video = video
@@ -74,6 +73,7 @@ class RobotFunction {
     }
 }
 
+// movObj emotelist for robot
 const emoteList = {
     wave_left: {
         bodyPart: "left_hand",
@@ -91,46 +91,44 @@ const emoteList = {
     }
 }
 
-const mening1 = "Hej! Vill du lära dig hur du använder tandtråd på bästa sätt? Du kan svara genom tal eller med att trycka på min skärm."
-const mening2 = "Fint. Det är omöjligt att göra rent mellan tänderna med en vanlig tandborste. Tandköttsinflammationer och kariesangrepp \
+// Manuscript for robot
+const sentence01 = "Hej! Vill du lära dig hur du använder tandtråd på bästa sätt? Du kan svara genom tal eller med att trycka på min skärm."
+const sentence02 = "Fint. Det är omöjligt att göra rent mellan tänderna med en vanlig tandborste. Tandköttsinflammationer och kariesangrepp \
                 startar ofta där. Därför rekommenderas du att använda tandtråden en gång varje dag innan du borstar tänderna. Ta en rejäl \
                 bit tandtråd och linda den runt fingrarna. Låt tandtråden försiktigt följa den ena tandytan ner i tandköttsfickan. Dra \
                 den sakta uppåt igen. För sedan ner tråden längs med den andra tandytan och upp igen. Gör så mellan alla tänder, också \
                 de längst bak."
-const mening3 = "Nu har jag en fråga till dig. Ibland börjar de blöda när du använder tandtråd. Vad tror du det kan bero på. Säg: fel \
+const sentence03 = "Nu har jag en fråga till dig. Ibland börjar de blöda när du använder tandtråd. Vad tror du det kan bero på. Säg: fel \
                 teknik, tecken på tandköttsinflammation, eller båda. Du kan också svara genom att trycka på min skärm."
-const mening4 = "Kommer du ihåg hur ofta jag rekommenderade att du ska använda tandtråd. Säg: varje dag, varannan dag eller tredje dag. \
+const sentence04 = "Kommer du ihåg hur ofta jag rekommenderade att du ska använda tandtråd. Säg: varje dag, varannan dag eller tredje dag. \
                 Du kan också svara genom att trycka på min skärm."
 const goodBye = "Diskutera gärna med tandläkaren eller tandhygienisten vilken om vilken tandtråd,eller borste som passar dig. \
                 Sköt om dig nu och ha det så bra"
 
-// CREATE QUESTIONS TREE
-
-// This was a bit hard to populate and make it look nice/easy to understand. Use miro interaction tree to make it easier to follow
+// INTERACTION TREE
 // We create the children and then the next line before an empty line we set the children to their parent node.
 function createTree() {
-    // greeting == Root Node
-    let greeting = new Question(mening1, "nej", "ja");
-    // {bodyPart: "left_hand", direction: "up", distance: 5.0}
-    greeting.setMovement(emoteList.wave_left);
+    // startNode == Root Node
+    let startNode = new Question(sentence01, "nej", "ja");
+    startNode.setMovement(emoteList.wave_left); //Make Alf wave
 
-    const flossingTutorial = new Question(question = mening2);
-    flossingTutorial.setVideo(
+    //video tutorial node
+    const videoTutorialNode = new Question(question = sentence02);
+    videoTutorialNode.setVideo(
         "./media/tutorial540p.mp4#t=12",
         13000,
         16000
-    ); // Can't call video="url" like in Python, so a separate function is needed
-    //Make alf look down on the screen
-    flossingTutorial.setDelayedMovement(emoteList.look_down);
-    greeting.setNodes(new RobotFunction("Ha en trevlig dag!", ), flossingTutorial);
+    );
+    videoTutorialNode.setDelayedMovement(emoteList.look_down); //Make Alf look down (on the screen, delayed until video starts)
+    startNode.setNodes(new EndTree("Ha en trevlig dag!", ), videoTutorialNode);
 
+    //question 01
+    const questionNode01 = new Question(sentence03, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
+    videoTutorialNode.setNodes(nodeA = questionNode01);
+    questionNode01.setMovement(emoteList.look_up); //Make Alf look back up for question
 
-    const flossingFails = new Question(mening3, nodeAAnswer = "fel teknik", nodeBAnswer = "tecken på tandköttsinflammation", nodeCAnswer = "båda");
-    flossingTutorial.setNodes(nodeA = flossingFails);
-    //Make alf look back up when asking question
-    flossingFails.setMovement(emoteList.look_up);
-
-    const illusion = new Question(
+    //question 02
+    const questionNode02 = new Question(
         'Båda är rätta svaret <break time="1s"/>',
         nodeAAnswer = undefined,
         nodeBAnswer = undefined,
@@ -140,14 +138,14 @@ function createTree() {
         monologue = true
     );
 
-    flossingFails.setNodes(illusion, illusion, illusion);
+    questionNode01.setNodes(questionNode02, questionNode02, questionNode02);
 
-    // Super fail: checkInput() will split up the answer and then see if that word is contained in
-    // NodeA, NodeB, NodeC. "dag" exists in every answer so NodeA will always be chosene
-    const flossingHowOften = new Question(mening4, "Varje", "Varannan", "Tredje");
-    illusion.setNodes(nodeA = flossingHowOften);
+    //question 03
+    const questionNode03 = new Question(sentence04, "Varje", "Varannan", "Tredje");
+    questionNode02.setNodes(nodeA = questionNode03);
 
-    const flossingCorrectAnswer = new Question(
+    //question 03 correct answer
+    const questionNode03Correct = new Question(
         'Det var rätt! Svaret är varje dag <break time="1s"/>',
         nodeAAnswer = undefined,
         nodeBAnswer = undefined,
@@ -156,7 +154,8 @@ function createTree() {
         video = undefined,
         monologue = true
     );
-    const flossingWrongAnswer = new Question(
+    //question 03 wrong answer
+    const questionNode03Wrong = new Question(
         'Det var fel. Svaret är varje dag <break time="1s"/>',
         nodeAAnswer = undefined,
         nodeBAnswer = undefined,
@@ -165,22 +164,13 @@ function createTree() {
         video = undefined,
         monologue = true
     );
-    flossingHowOften.setNodes(flossingCorrectAnswer, flossingWrongAnswer, flossingWrongAnswer);
+    questionNode03.setNodes(questionNode03Correct, questionNode03Wrong, questionNode03Wrong);
 
-    flossingCorrectAnswer.setNodes(new RobotFunction(goodBye));
-    flossingWrongAnswer.setNodes(new RobotFunction(goodBye));
-
-    /*
-    let guidanceFollow = new Question("Välj din tandläkare");
-    guidance.setNodes(new RobotFunction("Ha en trevlig dag"), guidanceFollow);
-
-    guidanceFollow.setNodes(new RobotFunction("Ha en trevlig dag"), new RobotFunction("Ha en trevlig dag"));
-*/
-    return greeting;
+    questionNode03Correct.setNodes(new EndTree(goodBye));
+    questionNode03Wrong.setNodes(new EndTree(goodBye));
+    return startNode;
 }
 
 function getAbortNode() {
-    return new RobotFunction("Ha en trevlig dag")
+    return new EndTree("Ha en trevlig dag")
 }
-
-//const rootNode = createTree();

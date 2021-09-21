@@ -6,7 +6,7 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
     if (currentNode._movement || undefined) {
         setGesture(currentNode._movement);
     }
-    // If the new node has a _text getter it is of the type RobotFunction Then we don't continue the dialogue
+    // If the new node has an attribute _text getter it is of the type EndTree which then won't continue the dialogue
     // If it's the tutorial video then it'll play, close after 50 seconds and start the next dialogue
     if (currentNode instanceof Question && currentNode.video || undefined) {
         console.log("startDialogue: video node: isRec=", isRec);
@@ -32,7 +32,7 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
     }
 }
 
-//Video properties, adjusted for Alf robot, 2021
+// Video properties, adjusted for Alf robot (2021)
 function setVideo(url) {
     videoPlayer = document.getElementById("video");
     videoPlayer.src = url;
@@ -41,7 +41,7 @@ function setVideo(url) {
     iframeModal();
 }
 
-//Modal for video
+// Modal for video
 function iframeModal() {
     var iframeModal = document.getElementById("iframeModal");
     var span = document.getElementById("iframeClose");
@@ -54,7 +54,7 @@ function iframeModal() {
     });
 }
 
-//Sends gesture commands to backend
+// Sends gesture commands to backend
 function setGesture(movement) {
     url = "http://alfsse.herokuapp.com/move" //Backend adress
     fetch(url, {
@@ -70,7 +70,7 @@ function setGesture(movement) {
         });
 }
 
-//Populates answer answer-buttons with node answer element
+// Populates answer answer-buttons with node answer element
 function setAnswers(node) {
     const nodeAAnswer = document.getElementById("node-A");
     const nodeBAnswer = document.getElementById("node-B");
@@ -78,34 +78,22 @@ function setAnswers(node) {
 
     if (node instanceof Question) {
         answerFound = false;
-        checkNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
-        checkNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
-        checkNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
+        showHideNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
+        showHideNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
+        showHideNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
 
     } else {
         console.log("NODE=", node);
     }
 }
 
-/* Checks if the node exists to show it, else it hides the answer button */
-function checkNodeAnswer(element, node, nodeAnswer) {
-    console.log("nodeanswer: ", nodeAnswer);
-    if (node != undefined && nodeAnswer != undefined) {
-        element.style.display = "block";
-        element.innerHTML = nodeAnswer;
-    } else {
-        element.style.display = "none";
-        element.innerHTML = ""; // Seems okay to keep it empty for checkInput
-    }
-}
-
-// 
 function setQuestion(node) {
     const question = document.getElementById("question");
     setAnswers(node, notUnderstod);
-    // The TTS API uses SSML so the text should be within <speak> tags
-    // If the user input was not understod add "jag förstod inte..." and a 1sec break between the question.
-    // node?._text || node.question means that if the node is of the type RobotFunction it will have a ._text variable else it is a Question and has a .question variable.
+    /* The TTS API uses SSML so the text should be within <speak> tags
+     * If the user input was not understod add "jag förstod inte..." and a 1sec break between the question.
+     * node?._text || node.question means that if the node is of the type EndTree it will have a ._text variable else it is a Question and has a .question variable.
+     */
     const text = notUnderstod ?
         '<speak> Jag förstod inte vad du menade? <break time="1s"/>' + ((node._text || undefined) || node.question) + '</speak>' :
         '<speak>' + ((node._text || undefined) || node.question) + '</speak>';
@@ -118,26 +106,36 @@ function setQuestion(node) {
 }
 
 
+
+// Shows/hides answer buttons withh CSS
+function showHideNodeAnswer(element, node, nodeAnswer) {
+    console.log("nodeanswer: ", nodeAnswer);
+    if (node != undefined && nodeAnswer != undefined) {
+        element.style.display = "block";
+        element.innerHTML = nodeAnswer;
+    } else {
+        element.style.display = "none";
+        element.innerHTML = ""; //Can be kept empty for checkInput()
+    }
+}
+
 // Test to trigger microphone and audio request from browser
 navigator.mediaDevices.getUserMedia({ audio: true })
-    // We save the rootNode incase we want to reset the dialogue at some point
-    // createTree() is from the tree.js file
-const rootNode = createTree();
+const rootNode = createTree(); // create node tree from tree.js, save rootNode incase of reset
 let currentNode = rootNode;
 let notUnderstod = false;
 
-// these create functions are from the speech.js file
-//button_callback();
-
+// Call and create functions from the speech.js file
 let textToSpeech = createSpeechFunction();
-
 let videoRunning = false;
 
+// Initialization
 document.getElementById("speak").addEventListener("click", () => {
     currentNode = rootNode;
     startDialogue(currentNode)
 })
 
+// TODO list in in browser console
 const TODO = [
     "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
 ]
@@ -145,11 +143,3 @@ const TODO = [
 TODO.forEach(element => {
     console.log("TODO: " + element);
 });
-
-// I don't like using global flags but since I can't find a rec.running, rec.state, rec.isRecognizing etc. variable here we are. 
-//let notUnderstod = false;
-//setButtonListeners();
-//setInterval(() => { isDetected(detected); }, 500);
-
-//fetch("https://193.167.34.217/robotfunction")
-//  .then((d)=> console.log(d))
