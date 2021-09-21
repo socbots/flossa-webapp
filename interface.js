@@ -1,10 +1,7 @@
-/* Hide speak button on click */
-// Get the buttons
+// Hides/shows buttons on initialization (by pressing "speak" button)
 var speakButton = document.getElementById("speak");
 var answerContainer = document.getElementById("answer-container");
-// Get the speak button container
 var speakContainer = document.getElementById("speak-container");
-// Get the question text container
 var questionContainer = document.getElementById("question");
 speakButton.onclick = function() {
     speakContainer.style.display = "none"

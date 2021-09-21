@@ -1,7 +1,7 @@
 // SPEECH RECOGNITION
 
 function createRecognitionObject() {
-  console.log("createRecognitionObject is Chrome only webspeechAPI!, currently commented out")
+    console.log("createRecognitionObject is Chrome only webspeechAPI!, currently commented out")
 }
 
 // SPEECH SYNTHESIS
@@ -11,72 +11,71 @@ function createRecognitionObject() {
 
 function createSpeechFunction() {
 
-  let isSpeaking = false;
-  const context = new AudioContext();
+    let isSpeaking = false;
+    const context = new AudioContext();
 
-  let textToSpeech = (text) => {
-    //console.log(text);
-    if (!isSpeaking) {
-      let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE&rate=1.4"
-      fetch(url)
-        .then(response => response.arrayBuffer())
-        .then(buffer => context.decodeAudioData(buffer)) // Being called on startup, needs more logic?
-        .then(audio => playAudio(audio))
+    let textToSpeech = (text) => {
+        if (!isSpeaking) {
+            let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE&rate=1.4"
+            fetch(url)
+                .then(response => response.arrayBuffer())
+                .then(buffer => context.decodeAudioData(buffer)) // Being called on startup, needs more logic?
+                .then(audio => playAudio(audio))
+        }
     }
-  }
 
-  function hideResult() {
-    document.getElementById("result").innerHTML = ""
-  }
+    function hideResult() {
+        document.getElementById("result").innerHTML = ""
+    }
 
-  function playAudio(audioBuffer) {
-    isRec = false;
-    isSpeaking = true;
-    const source = context.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(context.destination);
-    source.detune.value = -400;
-    source.start();
-    console.log(source);
-    source.onended = () => {
-      isSpeaking = false;
-      if (currentNode.nodeAAnswer != undefined) {
-        startRecording();
-        hideResult();
-      }
-      // This is so fucking spaghetti, must make better solution... sometime
-      else if (currentNode instanceof Question && currentNode.monologue) {
-        console.log("Monologue finished, going to next node");
+    function playAudio(audioBuffer) {
         isRec = false;
-        answerFound = true;
-        currentNode = currentNode.nodeA;
-        startDialogue(notUnderstod = false);
-      }
-      /* If it's a RobotFunction then it is the end of the interaction tree
-      ** So we reset the tree to wait for the next person to talk with.
-      ** Actually it's better to do a location.reload() here because google stt is being used.
-      ** But if kaldi was in use instead, the rootNode could just be an empty question
-      ** which listens for "hej" or something else for voice activation.
-      */
-      else if (currentNode instanceof RobotFunction) {
-        console.log("source.onended: is RobotFunction.");
-        currentNode = rootNode;
-        startDialogue();
-      }
+        isSpeaking = true;
+        const source = context.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(context.destination);
+        source.detune.value = -400;
+        source.start();
+        console.log(source);
+        source.onended = () => {
+            isSpeaking = false;
+            if (currentNode.nodeAAnswer != undefined) {
+                startRecording();
+                hideResult();
+            }
+            // This is so fucking spaghetti, must make better solution... sometime
+            else if (currentNode instanceof Question && currentNode.monologue) {
+                console.log("Monologue finished, going to next node");
+                isRec = false;
+                answerFound = true;
+                currentNode = currentNode.nodeA;
+                startDialogue(notUnderstod = false);
+            }
+            /* If it's a EndTree then it is the end of the interaction tree
+             ** So we reset the tree to wait for the next person to talk with.
+             ** Actually it's better to do a location.reload() here because google stt is being used.
+             ** But if kaldi was in use instead, the rootNode could just be an empty question
+             ** which listens for "hej" or something else for voice activation.
+             */
+            else if (currentNode instanceof EndTree) {
+                console.log("source.onended: is EndTree.");
+                currentNode = rootNode;
+                startDialogue();
+            }
+        }
     }
-  }
-  // make dummy request to wake up server
-  textToSpeech(" ");
+    // make dummy request to wake up server
+    textToSpeech(" ");
 
-  return textToSpeech;
+    return textToSpeech;
 }
 
 function startRecording() {
-  if (!(currentNode instanceof RobotFunction) && !isRec) {
-    console.log("Startrecording setting isRec == " + isRec);
-    isRec = true;
-    notUnderstod = false;
-  }
+    if (!(currentNode instanceof EndTree) && !isRec) {
+        console.log("Startrecording setting isRec == " + isRec);
+        isRec = true;
+        notUnderstod = false;
+    }
 }
 
 let isRec = false;

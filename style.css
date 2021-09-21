@@ -6,6 +6,7 @@ body {
     background-color: #000000;
 }
 
+
 /* https://www.w3schools.com/howto/howto_css_modals.asp
  * The Modal (background) */
 
@@ -94,18 +95,6 @@ body {
 }
 
 
-/* !important rule to force face-detection buttons for increased visibility */
-
-.face-interface {
-    margin-top: 1em !important;
-    background-color: darkviolet !important;
-}
-
-.face-interface:hover {
-    background-color: deeppink !important;
-}
-
-
 /* Removes default styling on buttons and input[type=button] */
 
 button,
@@ -146,6 +135,7 @@ input[type=button]:hover {
 #speak {
     width: 70%;
 }
+
 
 /* Styling for the question */
 
