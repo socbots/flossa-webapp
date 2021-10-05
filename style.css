@@ -1,5 +1,7 @@
-#result::before {
-    content: "Vad jag hörde: ";
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    color: #FFFFFF;
 }
 
 body {
@@ -7,74 +9,52 @@ body {
 }
 
 
-/* https://www.w3schools.com/howto/howto_css_modals.asp
- * The Modal (background) */
+/* Container for "Vad jag hörde:" transform for centering*/
 
-.modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100vh;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
+#fullscreen-request {
+    margin: 1em;
+    text-align: center;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    background-color: rgb(48, 49, 48);
+    font-size: medium;
+}
+
+#fullscreen-request:hover {
+    background-color: rgb(54, 87, 176);
+}
+
+.feedback-container {
+    pointer-events: none;
     background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
+    font-size: xx-large;
+    min-height: 3em;
+    position: absolute;
+    top: 3em;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.feedback-container::before {
+    content: "Vad jag hörde: ";
 }
 
 
-/* Modal Content/Box */
-
-.modal-content {
-    background-color: #000000;
-    margin: auto;
-    height: 100%;
-    /* 15% from the top and centered */
-    display: flex;
-    place-content: center;
-    padding: 20px;
-    width: fit-content;
-    /* Could be more or less, depending on screen size */
-}
-
-
-/* The Close Button */
+/* Holds answering buttons and text */
 
 .interface {
     width: 50em;
     position: absolute;
-    top: 50%;
+    top: 20em;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     padding: 10em;
     /*border: rgb(13, 80, 124) solid 10px;
     border-radius: 2em;*/
-}
-
-.close {
-    color: rgb(255, 0, 0);
-    float: right;
-    font-size: 32px;
-    font-weight: bolder;
-    padding-left: 0.3em;
-    margin-top: -0.3em;
-}
-
-.close:hover,
-.close:focus {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    cursor: pointer;
 }
 
 
@@ -105,23 +85,17 @@ input[type=button] {
     margin: 0 0.4em 0.4em 0;
     border: 0.16em solid rgba(255, 255, 255, 0);
     border-radius: 2em;
-    font-weight: bolder;
     font-size: x-large;
     color: #FFFFFF;
-    background-color: #84f14e;
+    font-weight: bolder;
+    background-color: rgb(8, 125, 8);
     text-align: center;
 }
 
 button:hover,
 input[type=button]:hover {
     cursor: pointer;
-    background-color: teal;
-}
-
-.result-box {
-    pointer-events: none !important;
-    background-color: rgb(31, 73, 73) !important;
-    min-height: 3em;
+    background-color: rgb(54, 87, 176);
 }
 
 
@@ -145,9 +119,62 @@ input[type=button]:hover {
     margin: 0 0.4em 0.4em 0;
     border: 0.16em solid #ccc;
     border-radius: 2em;
-    font-weight: bolder;
-    font-size: x-large;
-    color: #ddd;
     background-color: transparent;
     text-align: center;
+}
+
+
+/* https://www.w3schools.com/howto/howto_css_modals.asp
+ * The Modal (background) */
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100vh;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #000000;
+    margin: auto;
+    height: 100%;
+    /* 15% from the top and centered */
+    display: flex;
+    place-content: center;
+    padding: 20px;
+    width: fit-content;
+    /* Could be more or less, depending on screen size */
+}
+
+
+/* Video modal close button */
+
+.close {
+    color: rgb(255, 0, 0);
+    float: right;
+    font-size: 32px;
+    font-weight: bolder;
+    padding-left: 0.3em;
+    margin-top: -0.3em;
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
 }
