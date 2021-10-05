@@ -137,6 +137,11 @@ document.getElementById("speak").addEventListener("click", () => {
 
 // TODO list in in browser console
 const TODO = [
+    "Move 'Vad jag hörde' to a fixed position, higher up",
+    "Fix dental floss blue background image as pepper",
+    "Change button colors to green, RGB of about: (25,150,100)",
+    "Don't have subtitles, only the dental floss background",
+    "Hide answers until question has been fully asked",
     "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
 ]
 
