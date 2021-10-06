@@ -1,12 +1,13 @@
 # alf_frontend
 Interaction app for alf robot
 
-## Must run on Chrome with flag --autoplay-policy=no-user-gesture-required 
+## Must run in Firefox
 
 ## Files
 
-### ~~alfApp.js~~ main.js
+### main.js
 - Main logic 
+- Has a TODO list (see console)
 ### speech.js
 - Contains code for tts & stt
 ### tree.js
@@ -23,9 +24,9 @@ Interaction app for alf robot
 ## Preview
 
 ### Start
-![start](./media/readme/start.png)
+MAKE NEW
 ### Question interface
-![question](./media/readme/question.png)
+MAKE NEW
 ### video modal
-![video](./media/readme/video.png)
+MAKE NEW
 
