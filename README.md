@@ -24,9 +24,11 @@ Interaction app for alf robot
 ## Preview
 
 ### Start
-MAKE NEW
+![start](./media/readme/start.png)
+### Talking
+![start](./media/readme/talking.png)
 ### Question interface
-MAKE NEW
+![start](./media/readme/question.png)
 ### video modal
-MAKE NEW
+![start](./media/readme/video.png)
 

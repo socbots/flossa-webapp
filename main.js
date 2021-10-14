@@ -79,6 +79,7 @@ function setAnswers(node) {
 
     if (node instanceof Question) {
         answerFound = false;
+        // Show hide buttons
         showHideNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
         showHideNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
         showHideNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
@@ -112,6 +113,9 @@ function setQuestion(node) {
 function showHideNodeAnswer(element, node, nodeAnswer) {
     // console.log("nodeanswer: ", nodeAnswer);
     if (node != undefined && nodeAnswer != undefined) {
+        // Hide super-image
+        document.getElementById("super-image").style.display = "none";
+        // Show buttons
         element.style.display = "block";
         element.innerHTML = nodeAnswer;
     } else {
@@ -139,11 +143,13 @@ document.getElementById("speak").addEventListener("click", () => {
 // TODO list in in browser console
 const TODO = [
     "DONE - Move 'Vad jag hörde' to a fixed position, higher up",
-    "SIMILAR IMAGE IN MEDIA FOLDER - Fix dental floss blue background image as pepper",
+    "DONE - Fix dental floss blue background image as pepper",
     "DONE - Change button colors to green, RGB of about: (25,150,100)",
-    "Don't have subtitles, only the dental floss background",
-    "Hide answers until question has been fully asked",
-    "Update README",
+    "DONE - Don't have subtitles, only the dental floss background",
+    "DONE - Hide answers until question has been fully asked",
+    "DONE - Update README, pretty images",
+    "Alf Iimediately start speaking after tree is done?",
+    "Proper documentation",
     "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
 ]
 

@@ -111,6 +111,21 @@ input[type=button]:hover {
 }
 
 
+/* Position the image under everything and somewhat in the middle  */
+
+#super-image {
+    display: none;
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 400px;
+    margin-top: -200px;
+    margin-left: -300px;
+}
+
+
 /* Styling for the question */
 
 .speak-container {

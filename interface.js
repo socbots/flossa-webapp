@@ -4,9 +4,11 @@
 var speakButton = document.getElementById("speak");
 var answerContainer = document.getElementById("answer-container");
 var speakContainer = document.getElementById("speak-container");
+var superImage = document.getElementById("super-image");
 speakButton.onclick = function() {
-    speakContainer.style.display = "none"
-    answerContainer.style.display = "flex"
+    speakContainer.style.display = "none";
+    answerContainer.style.display = "flex";
+    superImage.style.display = "block";
 }
 
 /**
@@ -45,8 +47,10 @@ document.querySelector("#fullscreen-request").addEventListener("click", async(ev
 
 
 // Quick test to hide buttons after answer
+// Also now shows "super-image"
 function hideButtons() {
     document.getElementById("node-A").style.display = "none";
-    document.getElementById("node-B").style.display = "none";;
-    document.getElementById("node-C").style.display = "none";;
+    document.getElementById("node-B").style.display = "none";
+    document.getElementById("node-C").style.display = "none";
+    document.getElementById("super-image").style.display = "block";
 }
