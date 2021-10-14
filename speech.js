@@ -38,6 +38,7 @@ function createSpeechFunction() {
         source.start();
         console.log(source);
         source.onended = () => {
+            setAnswers(currentNode, notUnderstod);
             isSpeaking = false;
             if (currentNode.nodeAAnswer != undefined) {
                 startRecording();

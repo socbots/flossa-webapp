@@ -1,5 +1,6 @@
 // This function starts and moves the dialog onwards 
 function startDialogue(notUnderstod = false, setQuestions = true) {
+    hideButtons();
     if (setQuestions) {
         setQuestion(currentNode, notUnderstod);
     }
@@ -88,8 +89,8 @@ function setAnswers(node) {
 }
 
 function setQuestion(node) {
-    const question = document.getElementById("question");
-    setAnswers(node, notUnderstod);
+    // const question = document.getElementById("question");
+    //setAnswers(node, notUnderstod);
     /* The TTS API uses SSML so the text should be within <speak> tags
      * If the user input was not understod add "jag förstod inte..." and a 1sec break between the question.
      * node?._text || node.question means that if the node is of the type EndTree it will have a ._text variable else it is a Question and has a .question variable.
@@ -101,7 +102,7 @@ function setQuestion(node) {
     const point = text.search("<break");
     const textNewline = text.slice(0, point) + "<br>" + text.slice(point)
 
-    question.innerHTML = point < 0 ? text : textNewline;
+    // question.innerHTML = point < 0 ? text : textNewline;
     textToSpeech(text);
 }
 
@@ -109,7 +110,7 @@ function setQuestion(node) {
 
 // Shows/hides answer buttons withh CSS
 function showHideNodeAnswer(element, node, nodeAnswer) {
-    console.log("nodeanswer: ", nodeAnswer);
+    // console.log("nodeanswer: ", nodeAnswer);
     if (node != undefined && nodeAnswer != undefined) {
         element.style.display = "block";
         element.innerHTML = nodeAnswer;

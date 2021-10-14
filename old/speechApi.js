@@ -1,8 +1,7 @@
-
 const start = document.getElementById("start");
 start.addEventListener("click", startChain);
 
-const questionField = document.getElementById("question");
+// const questionField = document.getElementById("question");
 let currentQuestion = null;
 const result = document.getElementById("result");
 result.innerHTML = "";
@@ -14,47 +13,46 @@ const alfTalk = document.getElementById("alf_talkbox");
 //stopR.addEventListener("click",stop)
 
 function record() {
-  recognition.start();
-  recognizing = true;
-  console.log("I hear voices");
+    recognition.start();
+    recognizing = true;
+    console.log("I hear voices");
 }
 
 function stop() {
-  recognition.stop();
-  recognizing = false;
-  console.log(currentQuestion);
-  if (result.innerHTML.includes(currentQuestion.answers.right)) {
-    console.log("Going right");
-    currentQuestion = currentQuestion.right;
-    refreshQuestion();
+    recognition.stop();
+    recognizing = false;
+    console.log(currentQuestion);
+    if (result.innerHTML.includes(currentQuestion.answers.right)) {
+        console.log("Going right");
+        currentQuestion = currentQuestion.right;
+        refreshQuestion();
 
-  }
-  else if (result.innerHTML.includes(currentQuestion.answers.right)) {
-    console.log("Going left");
-    currentQuestion = currentQuestion.left;
-    refreshQuestion();
+    } else if (result.innerHTML.includes(currentQuestion.answers.right)) {
+        console.log("Going left");
+        currentQuestion = currentQuestion.left;
+        refreshQuestion();
 
-  }
-  else {
-    alfTalk.innerHTML = "Jag förstod inte vad du menade"
-    result.innerHTML = "";
-  }
+    } else {
+        alfTalk.innerHTML = "Jag förstod inte vad du menade"
+        result.innerHTML = "";
+    }
 }
+
 function startChain() {
-  result.innerHTML = "";
-  if (currentQuestion == null) {
-    currentQuestion = greeting;
-  }
-  refreshQuestion();
+    result.innerHTML = "";
+    if (currentQuestion == null) {
+        currentQuestion = greeting;
+    }
+    refreshQuestion();
 }
 
 function refreshQuestion() {
-  if (result.innerHTML != "") {
-    stop();
-  }
-  result.innerHTML = "";
-  questionField.innerHTML = currentQuestion.question;
-  record();
+    if (result.innerHTML != "") {
+        stop();
+    }
+    result.innerHTML = "";
+    // questionField.innerHTML = currentQuestion.question;
+    record();
 }
 
 // SPEECH RECOGNITION
@@ -70,27 +68,27 @@ recognition.interimResults = true;
 recognition.maxAlternatives = 1;
 
 recognition.onresult = (e) => {
-  //  console.log(e.results)
-  console.log(e.results[0][0].transcript);
-  result.innerHTML = e.results[0][0].transcript;
+    //  console.log(e.results)
+    console.log(e.results[0][0].transcript);
+    result.innerHTML = e.results[0][0].transcript;
 }
 
 // SPEECH SYNTHESIS
 function createSpeechSynth() {
-  const speak = document.getElementById("speak");
-  const textInput = document.getElementById("textinput");
-  let synth = window.speechSynthesis;
-  let voices = [];
-  speak.addEventListener("click", speakNow);
+    const speak = document.getElementById("speak");
+    const textInput = document.getElementById("textinput");
+    let synth = window.speechSynthesis;
+    let voices = [];
+    speak.addEventListener("click", speakNow);
 
-  let speakNow = () => {
-    su = new SpeechSynthesisUtterance(textInput.value);
-    voices = synth.getVoices();
-    //su.voice = "sv-SE";
-    su.lang = "sv-SE";
-    synth.speak(su);
-  }
-  return speakNow;
+    let speakNow = () => {
+        su = new SpeechSynthesisUtterance(textInput.value);
+        voices = synth.getVoices();
+        //su.voice = "sv-SE";
+        su.lang = "sv-SE";
+        synth.speak(su);
+    }
+    return speakNow;
 }
 
 // AMPLITUDE DETECTION
@@ -100,68 +98,67 @@ let amplitudeLevel = false;
 let ampLimit = 0;
 
 navigator.mediaDevices.getUserMedia({ audio: true })
-  .then(stream => {
-    // const mediaRecorder = new MediaRecorder(stream);
+    .then(stream => {
+        // const mediaRecorder = new MediaRecorder(stream);
 
-    audioContext = new AudioContext();
-    analyser = audioContext.createAnalyser();
-    microphone = audioContext.createMediaStreamSource(stream);
-    javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+        audioContext = new AudioContext();
+        analyser = audioContext.createAnalyser();
+        microphone = audioContext.createMediaStreamSource(stream);
+        javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
 
-    analyser.smoothingTimeConstant = 0.8;
-    analyser.fftSize = 1024;
+        analyser.smoothingTimeConstant = 0.8;
+        analyser.fftSize = 1024;
 
-    microphone.connect(analyser);
-    analyser.connect(javascriptNode);
-    javascriptNode.connect(audioContext.destination);
-    javascriptNode.onaudioprocess = function () {
-      var array = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteFrequencyData(array);
-      var values = 0;
+        microphone.connect(analyser);
+        analyser.connect(javascriptNode);
+        javascriptNode.connect(audioContext.destination);
+        javascriptNode.onaudioprocess = function() {
+            var array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+            var values = 0;
 
-      var length = array.length;
-      for (var i = 0; i < length; i++) {
-        values += (array[i]);
-      }
+            var length = array.length;
+            for (var i = 0; i < length; i++) {
+                values += (array[i]);
+            }
 
-      var average = values / length;
+            var average = values / length;
 
-      // if (average > 50 && !recognizing){
-      //   record();
-      // }
-      if (average > 50) {
-        ampLimit = 0;
-      }
-      else if (average < 50 && result.innerHTML != "") {
-        ampLimit += 1;
-        if (ampLimit > 30) {
-          console.log("Stopping")
-          ampLimit = 0;
-          stop();
+            // if (average > 50 && !recognizing){
+            //   record();
+            // }
+            if (average > 50) {
+                ampLimit = 0;
+            } else if (average < 50 && result.innerHTML != "") {
+                ampLimit += 1;
+                if (ampLimit > 30) {
+                    console.log("Stopping")
+                    ampLimit = 0;
+                    stop();
+                }
+            }
+            //console.log("microphone input volume "+Math.round(average));
         }
-      }
-      //console.log("microphone input volume "+Math.round(average));
-    }
-  });
+    });
 
 // QUESTIONS 
 
 class Question {
-  constructor(question, answers) {
-    this.question = question;
-    this.answers = answers;
-  }
-  setChildren(left, right) {
-    this.left = left;
-    this.right = right;
-  }
+    constructor(question, answers) {
+        this.question = question;
+        this.answers = answers;
+    }
+    setChildren(left, right) {
+        this.left = left;
+        this.right = right;
+    }
 }
 
 class Answer {
-  constructor(left, right) {
-    this.left = left;
-    this.right = right;
-  }
+    constructor(left, right) {
+        this.left = left;
+        this.right = right;
+    }
 }
 
 let yesNo = new Answer("nej", "jo");

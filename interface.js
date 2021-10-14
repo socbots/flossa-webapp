@@ -1,13 +1,12 @@
 // Hides/shows buttons on initialization (by pressing "speak" button)
+
+// rewrite to proper functions!
 var speakButton = document.getElementById("speak");
 var answerContainer = document.getElementById("answer-container");
 var speakContainer = document.getElementById("speak-container");
-var questionContainer = document.getElementById("question");
 speakButton.onclick = function() {
     speakContainer.style.display = "none"
     answerContainer.style.display = "flex"
-    questionContainer.style.display = "block"
-
 }
 
 /**
@@ -43,3 +42,11 @@ const toggleFullscreen = async(target) => {
 document.querySelector("#fullscreen-request").addEventListener("click", async(ev) => {
     await toggleFullscreen(document.documentElement);
 });
+
+
+// Quick test to hide buttons after answer
+function hideButtons() {
+    document.getElementById("node-A").style.display = "none";
+    document.getElementById("node-B").style.display = "none";;
+    document.getElementById("node-C").style.display = "none";;
+}
