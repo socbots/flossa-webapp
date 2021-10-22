@@ -60,8 +60,13 @@ function createSpeechFunction() {
              */
             else if (currentNode instanceof EndTree) {
                 console.log("source.onended: is EndTree.");
-                currentNode = rootNode;
-                startDialogue();
+                /* currentNode = rootNode;
+                startDialogue(); */
+
+                // reloads page after 5 seconds
+                setTimeout(function() {
+                    window.location.reload(1);
+                }, 5000);
             }
         }
     }

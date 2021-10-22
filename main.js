@@ -109,7 +109,7 @@ function setQuestion(node) {
 
 
 
-// Shows/hides answer buttons withh CSS
+// Shows/hides answer buttons with CSS
 function showHideNodeAnswer(element, node, nodeAnswer) {
     // console.log("nodeanswer: ", nodeAnswer);
     if (node != undefined && nodeAnswer != undefined) {
@@ -148,7 +148,7 @@ const TODO = [
     "DONE - Don't have subtitles, only the dental floss background",
     "DONE - Hide answers until question has been fully asked",
     "DONE - Update README, pretty images",
-    "Alf Iimediately start speaking after tree is done?",
+    "DONE, now waits 5 seconds than reloads page - Alf Iimediately start speaking after tree is done?",
     "Proper documentation",
     "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
 ]
