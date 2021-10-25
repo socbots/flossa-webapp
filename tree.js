@@ -75,65 +75,62 @@ class EndTree {
 
 // movObj emotelist for robot
 const emoteList = {
-    wave_left: {
-        bodyPart: "left_hand",
-        gesture: "wave"
-    },
-    look_down: {
-        bodyPart: "head",
-        direction: "down",
-        distance: 5
-    },
-    look_up: {
-        bodyPart: "head",
-        direction: "up",
-        distance: 8
+        wave_left: {
+            bodyPart: "left_hand",
+            gesture: "wave"
+        },
+        look_down: {
+            bodyPart: "head",
+            direction: "down",
+            distance: 5
+        },
+        look_up: {
+            bodyPart: "head",
+            direction: "up",
+            distance: 8
+        }
     }
-}
-
-/************* SVENSKA *************/
-/****** Manuscript for robot ******/
+    /************* English *************/
+    /****** Manuscript for robot ******/
 
 const intro = {
-    "sentence": "Hej! Jag heter Alf och hjälper till här i tandvården. Vill du lära dig hur du använder tandtråd på bästa sätt? Du kan svara genom tal eller med att trycka på min skärm.",
-    "continue_no": "Nej",
-    "continue_yes": "Ja"
+    "sentence": "Hello! My name is Alf and I help here at the dental clinic. Would you like to learn how to use dental floss? You can answer by speech or by pressing my screen.",
+    "continue_no": "No",
+    "continue_yes": "Yes"
 };
 
-const cancel = "Ha en trevlig dag!"
+const cancel = "Have a nice day!"
 
 const sentence_video = {
-    "sentence": "Fint. Det är omöjligt att göra rent mellan tänderna med en vanlig tandborste. Tandköttsinflammationer och kariesangrepp \
-                startar ofta där. Därför rekommenderas du att använda tandtråden en gång varje dag innan du borstar tänderna. Ta en rejäl \
-                bit tandtråd och linda den runt fingrarna. Låt tandtråden försiktigt följa den ena tandytan ner i tandköttsfickan. Dra \
-                den sakta uppåt igen. För sedan ner tråden längs med den andra tandytan och upp igen. Gör så mellan alla tänder, också \
-                de längst bak."
+    "sentence": "Nice. It is impossible to completely clean between your teeth with a standard toothbrush. \
+    Gingivitis and caries attack usually start from there. That is why it is recommended that you use dental \
+    floss at least once a day before you brush your teeth. Take a long enough string of dental floss and spin it \
+    around your fingers. Let the dental floss carefully follow the outline of your tooth and down into the gum. \
+    Pull the dental floss carefully up again and down on the other side of your tooth. Repeat this stage for each tooth, even the ones in the back."
 };
 
 const question_01 = {
-    "sentence": "Nu har jag en fråga till dig. Ibland börjar de blöda när du använder tandtråd. Vad tror du det kan bero på. Säg: fel \
-    teknik, tecken på tandköttsinflammation, eller båda. Du kan också svara genom att trycka på min skärm.",
-    "answerA": "Fel teknik",
-    "answerB": "Tecken på tandköttsinflammation",
-    "answerC": "Båda"
+    "sentence": "Now I have a question for you. Sometimes your gum starts to bleed when you use dental floss. \
+    What do you think is the cause of this? Say: Wrong technic, signs of gingivitis, or both. You can answer by speech of by using my screen.",
+    "answerA": "Wrong technic",
+    "answerB": "Signs of gingivitis",
+    "answerC": "Both"
 };
 
 const monologue_01 = {
-    "sentence": "Båda är rätta svaret <break time='1s'/>"
+    "sentence": "Both is the correct answer <break time='1s'/>"
 };
 
 const question_02 = {
-    "sentence": "Kommer du ihåg hur ofta jag rekommenderade att du ska använda tandtråd. Säg: varje dag, varannan dag eller tredje dag. \
-                Du kan också svara genom att trycka på min skärm.",
-    "answerA": "Varje",
-    "answerB": "Varannan",
-    "answerC": "Tredje",
-    "correct": "Det var rätt! Svaret är varje dag <break time='1s'/>",
-    "wrong": "Det var fel. Svaret är varje dag <break time='1s'/>"
+    "sentence": "Do you remember how often I recommended you use dental floss. Say: every day, every second day or every third day. You can answer by speech or using my screen.",
+    "answerA": "Every day",
+    "answerB": "Second day",
+    "answerC": "Third day",
+    "correct": "That was correct! It is every day. <break time='1s'/>",
+    "wrong": "That was wrong. It is every day. <break time='1s'/>"
 };
 
-const outro = "Diskutera gärna med tandläkaren eller tandhygienisten vilken om vilken tandtråd,eller borste som passar dig. \
-                Sköt om dig nu och ha det så bra"
+const outro = "Please discuss with your dentist or dental hygienist about what dental floss or toothbrush fits your needs the best. <break time='1s'/> Take care now and have a nice day."
 
 /************* Interaction Tree *************/
 // We create the children and then the next line before an empty line we set the children to their parent node.

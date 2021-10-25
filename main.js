@@ -97,7 +97,8 @@ function setQuestion(node) {
      * node?._text || node.question means that if the node is of the type EndTree it will have a ._text variable else it is a Question and has a .question variable.
      */
     const text = notUnderstod ?
-        '<speak> Jag förstod inte vad du menade? <break time="1s"/>' + ((node._text || undefined) || node.question) + '</speak>' :
+        //'<speak> Jag förstod inte vad du menade? <break time="1s"/>' + ((node._text || undefined) || node.question) + '</speak>' :
+        '<speak> Sorry, I did not understand you? <break time="1s"/>' + ((node._text || undefined) || node.question) + '</speak>' :
         '<speak>' + ((node._text || undefined) || node.question) + '</speak>';
 
     const point = text.search("<break");
@@ -142,15 +143,7 @@ document.getElementById("speak").addEventListener("click", () => {
 
 // TODO list in in browser console
 const TODO = [
-    "DONE - Move 'Vad jag hörde' to a fixed position, higher up",
-    "DONE - Fix dental floss blue background image as pepper",
-    "DONE - Change button colors to green, RGB of about: (25,150,100)",
-    "DONE - Don't have subtitles, only the dental floss background",
-    "DONE - Hide answers until question has been fully asked",
-    "DONE - Update README, pretty images",
-    "DONE, now waits 5 seconds than reloads page - Alf Iimediately start speaking after tree is done?",
-    "Proper documentation",
-    "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
+    "ENGLISH TEST VERSION"
 ]
 
 TODO.forEach(element => {
