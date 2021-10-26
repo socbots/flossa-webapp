@@ -36,7 +36,7 @@ body {
 }
 
 .feedback-container::before {
-    content: "Vad jag hörde: ";
+    content: "What I heard: ";
 }
 
 
