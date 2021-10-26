@@ -24,10 +24,6 @@ body {
     font-size: medium;
 }
 
-#fullscreen-request:hover {
-    background-color: rgb(54, 87, 176);
-}
-
 .feedback-container {
     pointer-events: none;
     background-color: rgb(0, 0, 0);
@@ -40,7 +36,7 @@ body {
 }
 
 .feedback-container::before {
-    content: "What I heard: ";
+    content: "Vad jag hörde: ";
 }
 
 
@@ -91,12 +87,6 @@ input[type=button] {
     font-weight: bolder;
     background-color: rgb(8, 125, 8);
     text-align: center;
-}
-
-button:hover,
-input[type=button]:hover {
-    cursor: pointer;
-    background-color: rgb(54, 87, 176);
 }
 
 
@@ -186,11 +176,4 @@ input[type=button]:hover {
     font-weight: bolder;
     padding-left: 0.3em;
     margin-top: -0.3em;
-}
-
-.close:hover,
-.close:focus {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    cursor: pointer;
 }
