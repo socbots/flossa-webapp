@@ -49,41 +49,49 @@ function handleSuccess(stream) {
     window.stream = stream;
     console.log("Got stream with constraints:", constraints);
     console.log("Using audio device: " + audioTracks[0].label);
-    stream.oninactive = function () {
+    stream.oninactive = function() {
         console.log("Stream ended");
     };
     var blob;
     //audio.srcObject = stream;
     const soundMeter = (window.soundMeter = new SoundMeter(window.audioContext));
-    soundMeter.connectToSource(stream, function (e) {
+    soundMeter.connectToSource(stream, function(e) {
         if (e) {
             alert(e);
             return;
         }
 
         let soundMeterValues = []
-        let startSoundLevel = 0;
         let currentSoundLevel = 0;
         let soundMeterValuesToSum = 10;
         let previousSoundLevel = 0;
 
         meterRefresh = setInterval(() => {
             if (!isRec) {
-                return;
+                return; // Some problem with Alf listening to himself
             }
             soundMeterValues.push(parseFloat(soundMeter.instant.toFixed(4)));
-            /* console.log(soundMeter.instant.toFixed(4)); */
+            /* console.log(soundMeter.instant.toFixed(4)); */ //Check sound meter auido level
             currentSoundLevel = soundMeterValues.reduceRight((accumulator, currentValue, index) => {
                 if (index < soundMeterValues.length - soundMeterValuesToSum) return accumulator;
                 return accumulator + currentValue;
             }, 0);
-            /* console.log(currentSoundLevel); */
 
 
-            if (soundMeter.instant.toFixed(4) > previousSoundLevel + 0.01) {
+            /* Every (4) miliseconds the soundmeter checks the audio level
+             * If we are recording and the new audio level + (some arbitary test number)
+             * if lower than the previous sound level we finnish the recording and send the blob
+             * 
+             * If the current sound level isn't lower than (4) miliseconds ago
+             * we'll continue/start recording
+             */
+            if (mediaRecorder.state == "recording" && previousSoundLevel > currentSoundLevel + 0.02) {
+                console.log("Stopping recording");
+                mediaRecorder.stop();
+                soundMeterValues = [];
+            } else {
                 if (mediaRecorder.state == "inactive") {
                     console.log("Starting recording");
-                    startSoundLevel = currentSoundLevel;
                     mediaRecorder.start();
                     mediaRecorder.ondataavailable = (data) => {
                         recordedChunks.push(data.data);
@@ -94,12 +102,6 @@ function handleSuccess(stream) {
                         recordedChunks.push(data.data);
                     };
                 }
-            } else if (
-                mediaRecorder.state == "recording" && startSoundLevel > currentSoundLevel) {
-                console.log("Stopping recording");
-                mediaRecorder.stop();
-                startSoundLevel = 0;
-                soundMeterValues = [];
             }
             previousSoundLevel = currentSoundLevel;
         }, 75);
@@ -108,8 +110,8 @@ function handleSuccess(stream) {
             console.log(e);
             result.innerHTML = e.results[0][0].transcript;
             checkInput(e.results[0][0].transcript)
-            // recognition.stop();
-            // If it is the final result stop recognition
+                // recognition.stop();
+                // If it is the final result stop recognition
             if (e.results[0].isFinal) {
                 checkInput(e.results[0][0].transcript, true)
             }
@@ -144,9 +146,9 @@ function handleSuccess(stream) {
                 console.log("grammar=", formData.get("grammar"));
 
                 fetch(alfttsurl, {
-                    method: "POST",
-                    body: formData,
-                })
+                        method: "POST",
+                        body: formData,
+                    })
                     .then((response) => response.text())
                     .then((result) => {
                         console.log("Success from " + alfttsurl);
@@ -199,7 +201,7 @@ function checkInput(result, isFinal = false) {
 
     // Return if it's not recording. This means that a button was clicked while Alf was still speaking
     if (!isRec) return;
-    
+
     isRec = false;
 
     // Get answers
@@ -245,10 +247,10 @@ function checkInput(result, isFinal = false) {
             }
         }
 
-            isRec = false;
-            startDialogue(notUnderstod = true);
-            console.log("answerFound state == " + answerFound);
-        
+        isRec = false;
+        startDialogue(notUnderstod = true);
+        console.log("answerFound state == " + answerFound);
+
     }
 }
 

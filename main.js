@@ -142,15 +142,8 @@ document.getElementById("speak").addEventListener("click", () => {
 
 // TODO list in in browser console
 const TODO = [
-    "DONE - Move 'Vad jag hörde' to a fixed position, higher up",
-    "DONE - Fix dental floss blue background image as pepper",
-    "DONE - Change button colors to green, RGB of about: (25,150,100)",
-    "DONE - Don't have subtitles, only the dental floss background",
-    "DONE - Hide answers until question has been fully asked",
-    "DONE - Update README, pretty images",
-    "DONE, now waits 5 seconds than reloads page - Alf Iimediately start speaking after tree is done?",
     "Proper documentation",
-    "First miliseconds of audio seems to be not included in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
+    "TESTING - First miliseconds of audio dropping in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
 ]
 
 TODO.forEach(element => {
