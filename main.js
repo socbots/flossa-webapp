@@ -97,7 +97,7 @@ function setQuestion(node) {
      * node?._text || node.question means that if the node is of the type EndTree it will have a ._text variable else it is a Question and has a .question variable.
      */
     const text = notUnderstod ?
-        '<speak> Jag förstod inte vad du menade? <break time="1s"/>' + ((node._text || undefined) || node.question) + '</speak>' :
+        '<speak> Jag förstod inte vad du menade? <break time="1s"/>' /*+ ((node._text || undefined) || node.question) +*/ + '</speak>' :
         '<speak>' + ((node._text || undefined) || node.question) + '</speak>';
 
     const point = text.search("<break");
