@@ -98,7 +98,7 @@ function setQuestion(node) {
      */
     const text = notUnderstod ?
         //'<speak> Jag förstod inte vad du menade? <break time="1s"/>' + ((node._text || undefined) || node.question) + '</speak>' :
-        '<speak> Sorry, I did not understand you? <break time="1s"/>' + ((node._text || undefined) || node.question) + '</speak>' :
+        '<speak> Sorry, I did not understand you? <break time="1s"/>' /*+ ((node._text || undefined) || node.question) +*/ + '</speak>' :
         '<speak>' + ((node._text || undefined) || node.question) + '</speak>';
 
     const point = text.search("<break");
