@@ -49,13 +49,13 @@ function handleSuccess(stream) {
     window.stream = stream;
     console.log("Got stream with constraints:", constraints);
     console.log("Using audio device: " + audioTracks[0].label);
-    stream.oninactive = function () {
+    stream.oninactive = function() {
         console.log("Stream ended");
     };
     var blob;
     //audio.srcObject = stream;
     const soundMeter = (window.soundMeter = new SoundMeter(window.audioContext));
-    soundMeter.connectToSource(stream, function (e) {
+    soundMeter.connectToSource(stream, function(e) {
         if (e) {
             alert(e);
             return;
@@ -108,8 +108,8 @@ function handleSuccess(stream) {
             console.log(e);
             result.innerHTML = e.results[0][0].transcript;
             checkInput(e.results[0][0].transcript)
-            // recognition.stop();
-            // If it is the final result stop recognition
+                // recognition.stop();
+                // If it is the final result stop recognition
             if (e.results[0].isFinal) {
                 checkInput(e.results[0][0].transcript, true)
             }
@@ -132,7 +132,7 @@ function handleSuccess(stream) {
                 a.download = "test.ogg";
                 //a.click();
 
-                const alfttsurl = "https://alf-tts-api.herokuapp.com/stt";
+                const alfttsurl = "https://alf-tts-api.herokuapp.com/engstt";
                 let formData = new FormData();
                 const nodeAAnswer = document.getElementById("node-A").innerHTML;
                 const nodeBAnswer = document.getElementById("node-B").innerHTML;
@@ -144,9 +144,9 @@ function handleSuccess(stream) {
                 console.log("grammar=", formData.get("grammar"));
 
                 fetch(alfttsurl, {
-                    method: "POST",
-                    body: formData,
-                })
+                        method: "POST",
+                        body: formData,
+                    })
                     .then((response) => response.text())
                     .then((result) => {
                         console.log("Success from " + alfttsurl);
@@ -199,7 +199,7 @@ function checkInput(result, isFinal = false) {
 
     // Return if it's not recording. This means that a button was clicked while Alf was still speaking
     if (!isRec) return;
-    
+
     isRec = false;
 
     // Get answers
@@ -245,10 +245,10 @@ function checkInput(result, isFinal = false) {
             }
         }
 
-            isRec = false;
-            startDialogue(notUnderstod = true);
-            console.log("answerFound state == " + answerFound);
-        
+        isRec = false;
+        startDialogue(notUnderstod = true);
+        console.log("answerFound state == " + answerFound);
+
     }
 }
 
