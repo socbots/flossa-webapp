@@ -62,28 +62,36 @@ function handleSuccess(stream) {
         }
 
         let soundMeterValues = []
-        let startSoundLevel = 0;
         let currentSoundLevel = 0;
         let soundMeterValuesToSum = 10;
         let previousSoundLevel = 0;
 
         meterRefresh = setInterval(() => {
             if (!isRec) {
-                return;
+                return; // Some problem with Alf listening to himself
             }
             soundMeterValues.push(parseFloat(soundMeter.instant.toFixed(4)));
-            /* console.log(soundMeter.instant.toFixed(4)); */
+            /* console.log(soundMeter.instant.toFixed(4)); */ //Check sound meter auido level
             currentSoundLevel = soundMeterValues.reduceRight((accumulator, currentValue, index) => {
                 if (index < soundMeterValues.length - soundMeterValuesToSum) return accumulator;
                 return accumulator + currentValue;
             }, 0);
-            /* console.log(currentSoundLevel); */
 
 
-            if (soundMeter.instant.toFixed(4) > previousSoundLevel + 0.01) {
+            /* Every (4) miliseconds the soundmeter checks the audio level
+             * If we are recording and the new audio level + (some arbitary test number)
+             * if lower than the previous sound level we finnish the recording and send the blob
+             * 
+             * If the current sound level isn't lower than (4) miliseconds ago
+             * we'll continue/start recording
+             */
+            if (mediaRecorder.state == "recording" && previousSoundLevel > currentSoundLevel + 0.02) {
+                console.log("Stopping recording");
+                mediaRecorder.stop();
+                soundMeterValues = [];
+            } else {
                 if (mediaRecorder.state == "inactive") {
                     console.log("Starting recording");
-                    startSoundLevel = currentSoundLevel;
                     mediaRecorder.start();
                     mediaRecorder.ondataavailable = (data) => {
                         recordedChunks.push(data.data);
@@ -94,12 +102,6 @@ function handleSuccess(stream) {
                         recordedChunks.push(data.data);
                     };
                 }
-            } else if (
-                mediaRecorder.state == "recording" && startSoundLevel > currentSoundLevel) {
-                console.log("Stopping recording");
-                mediaRecorder.stop();
-                startSoundLevel = 0;
-                soundMeterValues = [];
             }
             previousSoundLevel = currentSoundLevel;
         }, 75);
