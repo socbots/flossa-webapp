@@ -88,6 +88,7 @@ function handleSuccess(stream) {
             if (mediaRecorder.state == "recording" && previousSoundLevel > currentSoundLevel + 0.02) {
                 console.log("Stopping recording");
                 mediaRecorder.stop();
+                isRec = false;
                 soundMeterValues = [];
             } else {
                 if (mediaRecorder.state == "inactive") {
