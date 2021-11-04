@@ -88,7 +88,6 @@ function handleSuccess(stream) {
             if (mediaRecorder.state == "recording" && previousSoundLevel > currentSoundLevel + 0.02) {
                 console.log("Stopping recording");
                 mediaRecorder.stop();
-                isRec = false;
                 soundMeterValues = [];
             } else {
                 if (mediaRecorder.state == "inactive") {
@@ -122,6 +121,7 @@ function handleSuccess(stream) {
         mediaRecorder.onstop = () => {
 
             if (isRec == true) {
+                isRec = false;
                 blob = new Blob(recordedChunks, { type: "audio/webm" });
                 console.log(blob);
                 var a = document.createElement("a");
@@ -199,9 +199,6 @@ function handleError(error) {
 }
 
 function checkInput(result, isFinal = false) {
-
-    // Return if it's not recording. This means that a button was clicked while Alf was still speaking
-    if (!isRec) return;
 
     isRec = false;
 
