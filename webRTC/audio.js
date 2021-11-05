@@ -121,6 +121,7 @@ function handleSuccess(stream) {
         mediaRecorder.onstop = () => {
 
             if (isRec == true) {
+                isRec = false;
                 blob = new Blob(recordedChunks, { type: "audio/webm" });
                 console.log(blob);
                 var a = document.createElement("a");
@@ -134,7 +135,7 @@ function handleSuccess(stream) {
                 a.download = "test.ogg";
                 //a.click();
 
-                const alfttsurl = "https://alf-tts-api.herokuapp.com/engstt";
+                const alfttsurl = "https://alf-tts-api.herokuapp.com/stt";
                 let formData = new FormData();
                 const nodeAAnswer = document.getElementById("node-A").innerHTML;
                 const nodeBAnswer = document.getElementById("node-B").innerHTML;
@@ -199,9 +200,6 @@ function handleError(error) {
 
 function checkInput(result, isFinal = false) {
 
-    // Return if it's not recording. This means that a button was clicked while Alf was still speaking
-    if (!isRec) return;
-
     isRec = false;
 
     // Get answers
@@ -247,9 +245,10 @@ function checkInput(result, isFinal = false) {
             }
         }
 
-        isRec = false;
-        startDialogue(notUnderstod = true);
-        console.log("answerFound state == " + answerFound);
+        isRec = true;
+        return;
+        //startDialogue(notUnderstod = true);
+        //console.log("answerFound state == " + answerFound);
 
     }
 }

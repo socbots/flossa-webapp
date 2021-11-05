@@ -57,7 +57,8 @@ function iframeModal() {
 
 // Sends gesture commands to backend
 function setGesture(movement) {
-    url = "http://alfsse.herokuapp.com/move" //Backend adress
+    url = "http://192.168.1.34:5000/move" //Backend adress
+    //url = "http://alfsse.herokuapp.com/move" //Backend adress
     fetch(url, {
             method: 'POST',
             body: JSON.stringify(movement),

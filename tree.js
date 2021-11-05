@@ -111,8 +111,8 @@ const sentence_video = {
 
 const question_01 = {
     "sentence": "Now I have a question for you. Sometimes your gum starts to bleed when you use dental floss. \
-    What do you think is the cause of this? Say: Wrong technic, signs of gingivitis, or both. You can answer by speech of by using my screen.",
-    "answerA": "Wrong technic",
+    What do you think is the cause of this. Say Wrong technique, signs of gingivitis, or both. You can answer by speech or by using my screen.",
+    "answerA": "Wrong technique",
     "answerB": "Signs of gingivitis",
     "answerC": "Both"
 };
