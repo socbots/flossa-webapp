@@ -157,23 +157,6 @@ function handleSuccess(stream) {
                             console.log("Result from success: " + result);
                             rest.textContent = result;
                             checkInput(result);
-
-                            // if (!currentNode.monologue && currentNode.video == undefined) {
-                            //     console.log("audio.js: Setting timeout");
-                            //     setTimeout(() => {
-                            //         isRec = false;
-                            //         console.log("isRec == " + isRec);
-                            //         console.log("answerFound state == " + answerFound);
-                            //         console.log("notUndersod state == " + notUnderstod);
-                            //         if (answerFound) {
-                            //             console.log("answerFound, going to next node")
-                            //         } else {
-                            //             console.log("notUnderstod true, asking again")
-                            //             startDialogue(notUnderstod = true)
-                            //         }
-                            //     }, 15000)
-                            // }
-
                         } else {
                             console.log("No result from success")
                             startDialogue(notUnderstod = true);
@@ -244,10 +227,9 @@ function checkInput(result, isFinal = false) {
                 return;
             }
         }
-
-        isRec = false;
-        startDialogue(notUnderstod = true);
-        console.log("answerFound state == " + answerFound);
+        //If we didn't find an answer, but still got a response from the STT we just restart the recording again
+        isRec = true;
+        return;
 
     }
 }

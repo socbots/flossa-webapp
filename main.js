@@ -57,7 +57,8 @@ function iframeModal() {
 
 // Sends gesture commands to backend
 function setGesture(movement) {
-    url = "http://alfsse.herokuapp.com/move" //Backend adress
+    url = "http://192.168.1.34" //PI local address
+        //url = "http://alfsse.herokuapp.com/move" //Backend adress
     fetch(url, {
             method: 'POST',
             body: JSON.stringify(movement),
@@ -143,7 +144,8 @@ document.getElementById("speak").addEventListener("click", () => {
 // TODO list in in browser console
 const TODO = [
     "Proper documentation",
-    "TESTING - First miliseconds of audio dropping in blob after changing to WebRTC swap, problem on short voice lines like 'jo' or 'nej'",
+    "Suggestion, only repeat or excuess Alf after X amount of failiures",
+    "Suggestion, make Alf show innerHTML of answer in VAD JAG HÖRDE when something correct is spoken"
 ]
 
 TODO.forEach(element => {

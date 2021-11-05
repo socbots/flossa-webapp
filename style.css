@@ -30,7 +30,7 @@ body {
     font-size: xx-large;
     min-height: 3em;
     position: absolute;
-    top: 3em;
+    top: 1em;
     left: 50%;
     transform: translate(-50%, 0);
 }
@@ -43,13 +43,13 @@ body {
 /* Holds answering buttons and text */
 
 .interface {
-    width: 50em;
+    width: 40em;
     position: absolute;
-    top: 20em;
+    top: 15em;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    padding: 10em;
+    padding: 5em, 5em, 0em, 5em;
     /*border: rgb(13, 80, 124) solid 10px;
     border-radius: 2em;*/
 }
