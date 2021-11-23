@@ -35,10 +35,6 @@ body {
     transform: translate(-50%, 0);
 }
 
-.feedback-container::before {
-    content: "Vad jag hörde: ";
-}
-
 
 /* Holds answering buttons and text */
 

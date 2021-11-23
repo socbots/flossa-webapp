@@ -11,6 +11,11 @@ speakButton.onclick = function() {
     superImage.style.display = "block";
 }
 
+
+/* Sets text/explanation before container that holds stt result */
+document.getElementById("feedback-container-before").innerHTML = feedback_container_before
+
+
 /**
  * Make the whole app fullscreen in order to hide the URL bar
  * Click/tap on "vad jag hörde" to run

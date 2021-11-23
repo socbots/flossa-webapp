@@ -11,7 +11,10 @@
 
 <body>
     <div id="fullscreen-request">&#x26F6;</div>
-    <div class="feedback-container" id="result"></div>
+    <div class="feedback-container">
+        <span id="feedback-container-before"></span>
+        <span id="result"></span>
+    </div>
     <div class="interface">
         <div class="button-container" id="speak-container">
             <input type="button" id="speak" value="Börja">
@@ -44,6 +47,7 @@
 
     </div>
 
+    <script src="text.js" defer></script>
     <script src="interface.js" defer></script>
     <script src="speech.js" defer></script>
     <script src="tree.js" defer></script>
