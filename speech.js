@@ -1,9 +1,3 @@
-// SPEECH RECOGNITION
-
-function createRecognitionObject() {
-    console.log("createRecognitionObject is Chrome only webspeechAPI!, currently commented out")
-}
-
 // SPEECH SYNTHESIS
 
 // This function returns a function called textToSpeech that we can save to a variable and call when needed.
@@ -86,5 +80,3 @@ function startRecording() {
 let isRec = false;
 let timeroffset = false;
 let timer;
-
-/* let rec = createRecognitionObject(); // Should remove */

@@ -7,7 +7,10 @@
  */
 
 "use strict";
-
+/** ENLGISH VERSION
+ * Main change:
+ *   uses new url
+ */
 // Put variables in global scope to make them available to the browser console.
 const audio = document.querySelector("audio");
 let rest = document.getElementById("result");
@@ -135,7 +138,7 @@ function handleSuccess(stream) {
                 a.download = "test.ogg";
                 //a.click();
 
-                const alfttsurl = "https://alf-tts-api.herokuapp.com/stt";
+                const alfttsurl = "https://alf-tts-api.herokuapp.com/enstt";
                 let formData = new FormData();
                 const nodeAAnswer = document.getElementById("node-A").innerHTML;
                 const nodeBAnswer = document.getElementById("node-B").innerHTML;

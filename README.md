@@ -45,9 +45,16 @@ The tree works by creating a node. Currently 2 class nodes are available, Questi
 ### gesture.js
 - List of emotes and gesures
 - Function for sending gestures to SSE backend
-### webRTC
+### webRTC/
 - Audio recording using webRTC files
 - Soundmeter to gauge sound volume
+
+### media/
+- video tutorial and images
+
+### englishVersionResources/
+- modified files to build an English version of the app
+  - mainly url changes
 
 ## Flow diagram
 Shows how the application and its surrounding systems work in conjunction.

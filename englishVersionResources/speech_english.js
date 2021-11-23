@@ -1,8 +1,7 @@
-// SPEECH RECOGNITION
-
-function createRecognitionObject() {
-    console.log("createRecognitionObject is Chrome only webspeechAPI!, currently commented out")
-}
+/** ENLGISH VERSION
+ * Main change:
+ *   uses new url
+ */
 
 // SPEECH SYNTHESIS
 
@@ -87,5 +86,3 @@ function startRecording() {
 let isRec = false;
 let timeroffset = false;
 let timer;
-
-/* let rec = createRecognitionObject(); // Should remove */
