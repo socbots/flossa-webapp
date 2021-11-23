@@ -192,7 +192,7 @@ function checkInput(result, isFinal = false) {
 
     result = result.toLowerCase(); //set to lower case
     let results = result.split(" ");
-    console.log("checkInput result word by word:");
+    console.log("checkInput:");
     for (const r of results) {
         console.log("result: " + r);
     }
@@ -208,6 +208,7 @@ function checkInput(result, isFinal = false) {
                 // rec.abort() terminates
                 isRec = false;
                 answerFound = true;
+                setFeedbackContainer(currentNode.nodeAAnswer)
                 currentNode = currentNode.nodeA;
                 startDialogue(notUnderstod = false);
                 return;
@@ -215,6 +216,7 @@ function checkInput(result, isFinal = false) {
                 console.log("Going nodeB");
                 isRec = false;
                 answerFound = true;
+                setFeedbackContainer(currentNode.nodeBAnswer)
                 currentNode = currentNode.nodeB;
                 startDialogue(notUnderstod = false);
                 return;
@@ -222,6 +224,7 @@ function checkInput(result, isFinal = false) {
                 console.log("Going nodeC");
                 isRec = false;
                 answerFound = true;
+                setFeedbackContainer(currentNode.nodeCAnswer)
                 currentNode = currentNode.nodeC;
                 startDialogue(notUnderstod = false);
                 return;

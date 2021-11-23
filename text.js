@@ -19,7 +19,7 @@ const sentence_video = {
 };
 
 const question_01 = {
-    "sentence": "Nu har jag en fråga till dig. Ibland börjar de blöda när du använder tandtråd. Vad tror du det kan bero på. Säg: fel \
+    "sentence": "Nu har jag en fråga till dig. Ibland börjar tänderna blöda när du använder tandtråd. Vad tror du det kan bero på. Säg: fel \
     teknik, tecken på tandköttsinflammation, eller båda. Du kan också svara genom att trycka på min skärm.",
     "answerA": "Fel teknik",
     "answerB": "Tecken på tandköttsinflammation",
@@ -42,5 +42,7 @@ const question_02 = {
 
 const outro = "Diskutera gärna med tandläkaren eller tandhygienisten vilken om vilken tandtråd,eller borste som passar dig. \
                 Sköt om dig nu och ha det så bra"
+
+const sorry_repeat = '<speak> Jag förstod inte vad du menade? <break time="1s"/></speak>'
 
 const feedback_container_before = "Vad jag hörde: "

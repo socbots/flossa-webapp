@@ -59,3 +59,60 @@ function hideButtons() {
     document.getElementById("node-C").style.display = "none";
     document.getElementById("super-image").style.display = "block";
 }
+
+
+// Shows/hides answer buttons with CSS
+function showHideNodeAnswer(element, node, nodeAnswer) {
+    if (node != undefined && nodeAnswer != undefined) {
+        // Hide super-image
+        document.getElementById("super-image").style.display = "none";
+        // Show buttons
+        element.style.display = "block";
+        element.innerHTML = nodeAnswer;
+    } else {
+        element.style.display = "none";
+        element.innerHTML = ""; //Can be kept empty for checkInput()
+    }
+}
+
+// Populates answer-buttons with node answer element
+function setAnswers(node) {
+    const nodeAAnswer = document.getElementById("node-A");
+    const nodeBAnswer = document.getElementById("node-B");
+    const nodeCAnswer = document.getElementById("node-C")
+
+    if (node instanceof Question) {
+        answerFound = false;
+        // Show hide buttons
+        showHideNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
+        showHideNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
+        showHideNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
+
+    } else {
+        console.log("NODE=", node);
+    }
+}
+
+// Modal for video
+function iframeModal() {
+    var iframeModal = document.getElementById("iframeModal");
+    var span = document.getElementById("iframeClose");
+    iframeModal.style.display = "block";
+    // When the user clicks on <span> (x) close the modal
+    span.addEventListener('click', function() {
+        iframeModal.style.display = "none";
+    });
+}
+
+// Video properties, adjusted for Alf robot (2021)
+function setVideo(node) {
+    videoPlayer = document.getElementById("video");
+    videoPlayer.src = node.video;
+    videoPlayer.width = 1000;
+    videoPlayer.height = 700;
+    iframeModal();
+}
+
+function setFeedbackContainer(nodeText) {
+    document.getElementById('result').innerHTML = nodeText;
+}

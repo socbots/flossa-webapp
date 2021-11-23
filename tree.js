@@ -1,6 +1,7 @@
 // CLASSES 
 
-// This class is the node for our tree structure. It should never be a leaf node, and should always have 2 child nodes.
+// This class is the node for our tree structure.
+// It should never be a leaf node, and should always have child nodes.
 class Question {
     constructor(question,
         nodeAAnswer = undefined,
@@ -30,25 +31,9 @@ class Question {
         this.nodeC = nodeC;
     }
     setMovement(movObj) {
-        /*
-        {
-            bodyPart: bodyPart,
-            gesture: gesture,
-            direction: direction,
-            distance: distance,
-        }
-        */
         this._movement = movObj
     }
     setDelayedMovement(gesture, time = undefined) {
-        /* object with the shape:
-        {
-            bodyPart: bodyPart,
-            gesture: gesture,
-            direction: direction,
-            distance: distance,
-        }
-        */
         this.delayedMovement = { gesture, time };
     }
 }
@@ -61,38 +46,13 @@ class EndTree {
         this._movement = movement;
     }
     setMovement(movObj) {
-        /*
-        {
-            bodyPart: bodyPart,
-            gesture: gesture,
-            direction: direction,
-            distance: distance,
-        }
-        */
         this._movement = movObj
-    }
-}
-
-// movObj emotelist for robot
-const emoteList = {
-    wave_left: {
-        bodyPart: "left_hand",
-        gesture: "wave"
-    },
-    look_down: {
-        bodyPart: "head",
-        direction: "down",
-        distance: 5
-    },
-    look_up: {
-        bodyPart: "head",
-        direction: "up",
-        distance: 8
     }
 }
 
 /************* Interaction Tree *************/
 // dialog found in text.js
+// emote list for gestures found in gesture.js
 // We create the children and then the next line before an empty line we set the children to their parent node.
 function createTree() {
     // startNode == Root Node

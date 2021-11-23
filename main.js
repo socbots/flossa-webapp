@@ -7,13 +7,14 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
     if (currentNode._movement || undefined) {
         setGesture(currentNode._movement);
     }
-    // If the new node has an attribute _text getter it is of the type EndTree which then won't continue the dialogue
-    // If it's the tutorial video then it'll play, close after 50 seconds and start the next dialogue
+    // Special adjustment to timings for the tutorial video
+    // then it'll play the video after a delay
+    // close after 50 seconds
+    // then automatically start the next dialogue
     if (currentNode instanceof Question && currentNode.video || undefined) {
-        console.log("startDialogue: video node: isRec=", isRec);
         setTimeout(() => {
             console.log("Starting tutorial video")
-            setVideo(currentNode.video);
+            setVideo(currentNode);
             videoRunning = true;
 
             if (currentNode.delayedMovement) setGesture(currentNode.delayedMovement.gesture);
@@ -33,74 +34,12 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
     }
 }
 
-// Video properties, adjusted for Alf robot (2021)
-function setVideo(url) {
-    videoPlayer = document.getElementById("video");
-    videoPlayer.src = url;
-    videoPlayer.width = 1000;
-    videoPlayer.height = 700;
-    iframeModal();
-}
-
-// Modal for video
-function iframeModal() {
-    var iframeModal = document.getElementById("iframeModal");
-    var span = document.getElementById("iframeClose");
-    iframeModal.style.display = "block";
-    // When the user clicks on <span> (x), close the modal and start next Dialogue in tree
-    span.addEventListener('click', function() {
-        iframeModal.style.display = "none";
-        currentNode = currentNode.nodeA;
-        startDialogue();
-    });
-}
-
-// Sends gesture commands to backend
-function setGesture(movement) {
-    url = "http://192.168.1.34" //PI local address
-        //url = "http://alfsse.herokuapp.com/move" //Backend adress
-    fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(movement),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-        .then(res => res.json())
-        .then((res2) => {
-            console.log("movement res from heroku:", res2);
-        });
-}
-
-// Populates answer answer-buttons with node answer element
-function setAnswers(node) {
-    const nodeAAnswer = document.getElementById("node-A");
-    const nodeBAnswer = document.getElementById("node-B");
-    const nodeCAnswer = document.getElementById("node-C")
-
-    if (node instanceof Question) {
-        answerFound = false;
-        // Show hide buttons
-        showHideNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
-        showHideNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
-        showHideNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
-
-    } else {
-        console.log("NODE=", node);
-    }
-}
-
 function setQuestion(node) {
-    // const question = document.getElementById("question");
-    //setAnswers(node, notUnderstod);
-    /* The TTS API uses SSML so the text should be within <speak> tags
-     * If the user input was not understod add "jag förstod inte..." and a 1sec break between the question.
-     * node?._text || node.question means that if the node is of the type EndTree it will have a ._text variable else it is a Question and has a .question variable.
-     */
-    const text = notUnderstod ?
-        '<speak> Jag förstod inte vad du menade? <break time="1s"/>' /*+ ((node._text || undefined) || node.question) +*/ + '</speak>' :
-        '<speak>' + ((node._text || undefined) || node.question) + '</speak>';
+    // TTS API uses SSML so the text should be within <speak> tags
+    // Formats SSML or sends sorry_repeat if not understod
+    const text = notUnderstod ? sorry_repeat : '<speak>' + ((node._text || undefined) || node.question) + '</speak>';
 
+    // SSML format for breaks
     const point = text.search("<break");
     const textNewline = text.slice(0, point) + "<br>" + text.slice(point)
 
@@ -108,26 +47,17 @@ function setQuestion(node) {
     textToSpeech(text);
 }
 
-
-
-// Shows/hides answer buttons with CSS
-function showHideNodeAnswer(element, node, nodeAnswer) {
-    // console.log("nodeanswer: ", nodeAnswer);
-    if (node != undefined && nodeAnswer != undefined) {
-        // Hide super-image
-        document.getElementById("super-image").style.display = "none";
-        // Show buttons
-        element.style.display = "block";
-        element.innerHTML = nodeAnswer;
-    } else {
-        element.style.display = "none";
-        element.innerHTML = ""; //Can be kept empty for checkInput()
-    }
+// Legacy function for building SSML repetition of full node dialoge
+function repeat_question(node) {
+    s = '<speak>' + sorry_repeat + ((node._text || undefined) || node.question) + '</speak>';
+    return s
 }
 
 // Test to trigger microphone and audio request from browser
 navigator.mediaDevices.getUserMedia({ audio: true })
-const rootNode = createTree(); // create node tree from tree.js, save rootNode incase of reset
+
+// Create node tree from tree.js, save rootNode incase of reset
+const rootNode = createTree();
 let currentNode = rootNode;
 let notUnderstod = false;
 
@@ -144,8 +74,7 @@ document.getElementById("speak").addEventListener("click", () => {
 // TODO list in in browser console
 const TODO = [
     "Proper documentation",
-    "Suggestion, only repeat or excuess Alf after X amount of failiures",
-    "Suggestion, make Alf show innerHTML of answer in VAD JAG HÖRDE when something correct is spoken"
+    "Suggestion, only repeat Alf after X amount of failiures",
 ]
 
 TODO.forEach(element => {

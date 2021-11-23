@@ -40,8 +40,11 @@ The tree works by creating a node. Currently 2 class nodes are available, Questi
 ### speech.js
 - Contains code for tts & stt
 ### interface.js
-- Interface adjustment scripts
-  - For example: toggle full screen
+- Interface scripts
+  - For example: toggle full screen, hide buttons or video modal
+### gesture.js
+- List of emotes and gesures
+- Function for sending gestures to SSE backend
 ### webRTC
 - Audio recording using webRTC files
 - Soundmeter to gauge sound volume
