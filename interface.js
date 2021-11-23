@@ -82,7 +82,6 @@ function setAnswers(node) {
     const nodeCAnswer = document.getElementById("node-C")
 
     if (node instanceof Question) {
-        answerFound = false;
         // Show hide buttons
         showHideNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
         showHideNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);

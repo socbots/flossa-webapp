@@ -48,7 +48,6 @@ function createSpeechFunction() {
             else if (currentNode instanceof Question && currentNode.monologue) {
                 console.log("Monologue finished, going to next node");
                 isRec = false;
-                answerFound = true;
                 currentNode = currentNode.nodeA;
                 startDialogue(notUnderstod = false);
             }

@@ -206,24 +206,18 @@ function checkInput(result, isFinal = false) {
             if (nodeAAnswer.toLowerCase().split(" ")[0] == r) {
                 console.log("Going nodeA");
                 // rec.abort() terminates
-                isRec = false;
-                answerFound = true;
                 setFeedbackContainer(currentNode.nodeAAnswer)
                 currentNode = currentNode.nodeA;
                 startDialogue(notUnderstod = false);
                 return;
             } else if (nodeBAnswer.toLowerCase().split(" ")[0] == r) {
                 console.log("Going nodeB");
-                isRec = false;
-                answerFound = true;
                 setFeedbackContainer(currentNode.nodeBAnswer)
                 currentNode = currentNode.nodeB;
                 startDialogue(notUnderstod = false);
                 return;
             } else if (nodeCAnswer.toLowerCase().split(" ")[0] == r) {
                 console.log("Going nodeC");
-                isRec = false;
-                answerFound = true;
                 setFeedbackContainer(currentNode.nodeCAnswer)
                 currentNode = currentNode.nodeC;
                 startDialogue(notUnderstod = false);
@@ -236,8 +230,6 @@ function checkInput(result, isFinal = false) {
 
     }
 }
-
-let answerFound = false;
 
 navigator.mediaDevices
     .getUserMedia(constraints)

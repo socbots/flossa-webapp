@@ -25,7 +25,6 @@ function startDialogue(notUnderstod = false, setQuestions = true) {
                 console.log("Ending tutorial video and going to next node");
                 document.getElementById("iframeModal").style.display = "none";
                 isRec = false;
-                answerFound = true;
                 currentNode = currentNode.nodeA;
                 startDialogue(notUnderstod = false);
             }, currentNode.duration);
