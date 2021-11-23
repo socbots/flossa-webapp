@@ -1,34 +1,79 @@
 # alf_frontend
 Interaction app for alf robot
 
-## Must run in Firefox
+<span style="font-size:2em; color:#FF6666"> App must be run in Firefox </span>
+## Preview
+
+![preview_gif](./media/readme/preview.gif)
+
 
 ## Files
 
-### main.js
-- Main logic 
-- Has a TODO list (see console)
-### speech.js
-- Contains code for tts & stt
-### tree.js
-- Code for the interaction tree
-### Alf_frontend.txt
-- Developer thoughts and musings
-- Pre v1.0
 ### index.html
 - index.html
+
+### main.js
+- Main logic
+
+`startDialogue()`, loops nodes from *tree.js*, starting with `rootNode`
+
+-   `currentNode` keeps track of active node
+-   Child-nodes are set on parent-node to progress of interaction
+-   Each dialogue goes through textToSpeech() in *speech.js* to query for audio files.
+-   Recording `isRec()` sets to true as dialogue finnishes.
+-   Depending on user input, selected childnode is then selected and `startDialogue()` begins again.
+    - Audio user input is handled with **webRTC**
+    - User input outside scope of childnodes gets passed through `startDialogue()` with `currentNode` and attribute `notUnderstood` set to True
+-   Tree ends with node class `EndTree`
+
+
+### text.js
+- Holds all text as dictionaries that are used in tree.js
+### tree.js
+- Code for the interaction tree
+
+The tree works by creating a node. Currently 2 class nodes are available, Question and EndTree:
+
+- Current node tree layout
+
+![tree](./media/readme/tree-flow.png)
+### speech.js
+- Contains code for tts & stt
+### interface.js
+- Interface adjustment scripts
+  - For example: toggle full screen
 ### webRTC
 - Audio recording using webRTC files
 - Soundmeter to gauge sound volume
 
-## Preview
+## Flow diagram
+Shows how the application and its surrounding systems work in conjunction.
+![flow](./media/readme/alf-flow-long.png)
 
-### Start
-![start](./media/readme/start.png)
-### Talking
-![start](./media/readme/talking.png)
-### Question interface
-![start](./media/readme/question.png)
-### video modal
-![start](./media/readme/video.png)
+## 3rd party services
+The following services and applications are used to make the whole system work.
 
+### TTS & STT
+[Github](https://github.com/socbots/ALFTTSNuggPy)
+
+Available on [heroku](https://alf-tts-api.herokuapp.com/)
+
+- Uses google services for text-to-speech and speech-to-text
+- Different ports for Swedish and English
+
+Can also be run on local Raspberry
+
+### SSE Backend
+[Github](https://github.com/socbots/sse_backend)
+
+Run on local Raspberry
+
+- Stream to post movement commands for Mobile SDK
+
+### Mobile SDK
+[Github](https://github.com/socbots/MobileSDK)
+
+Run from phone in virtualwing @Arcada
+
+- Grants access to movements
+- Listens to SSE stream for movement instructions
