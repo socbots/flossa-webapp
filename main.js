@@ -1,5 +1,5 @@
 // This function starts and moves the dialog onwards 
-function forwardNodeTree(understod = true) {
+function nodeStart(understood = true) {
     // Hide buttons and show background
     hideButtons();
     // If we have movement, set it
@@ -10,7 +10,7 @@ function forwardNodeTree(understod = true) {
     if (currentNode instanceof Video) {
         setVideo(currentNode);
     } else {
-        setTTS(currentNode, understod);
+        setTTS(currentNode, understood);
     }
 }
 
@@ -35,15 +35,15 @@ function setVideo(node) {
             document.getElementById("iframeModal").style.display = "none";
             video.pause(); //stop video
             currentNode = currentNode.nextNode;
-            forwardNodeTree();
+            nodeStart();
         }, currentNode.videoDuration);
     }, currentNode.videoDelayStart);
 }
 
-function setTTS(node, understod = true) {
+function setTTS(node, understood = true) {
     // TTS API uses SSML so the text should be within <speak> tags
-    // Formats SSML or sends sorry_repeat if not understod
-    const text = understod ? '<speak>' + node.tts + '</speak>' : sorry_repeat;
+    // Formats SSML or sends sorry_repeat if not understood
+    const text = understood ? '<speak>' + node.tts + '</speak>' : sorry_repeat;
 
     // SSML format for breaks
     const point = text.search("<break");
@@ -58,13 +58,13 @@ function repeat_question(node) {
     return s
 }
 
-function checkInput(result) {
+function checkUserInput(result) {
     // Get answers
     const answers = getAnswers()
 
     result = result.toLowerCase(); //set to lower case
     let results = result.split(" ");
-    // If we cant find a match for the input our user gives we startDialog with the current node and set the understod parameter to true
+    // If we cant find a match for the input our user gives we startDialog with the current node and set the understood parameter to true
     for (const r of results) {
         // Test the user input against nodes if answers in our nodes.
         // We only check the first word
@@ -72,19 +72,19 @@ function checkInput(result) {
             console.log("Going nodeA");
             setFeedbackContainer(currentNode.nodeAAnswer)
             currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeA
-            forwardNodeTree(understod = true);
+            nodeStart(understood = true);
             return;
         } else if (answers[1].split(" ")[0] == r) {
             console.log("Going nodeB");
             setFeedbackContainer(currentNode.nodeBAnswer)
             currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeB
-            forwardNodeTree(understod = true);
+            nodeStart(understood = true);
             return;
         } else if (answers[2].split(" ")[0] == r) {
             console.log("Going nodeC");
             setFeedbackContainer(currentNode.nodeCAnswer)
             currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeC
-            forwardNodeTree(understod = true);
+            nodeStart(understood = true);
             return;
         }
     }
@@ -100,7 +100,7 @@ navigator.mediaDevices.getUserMedia({ audio: true })
 // Create node tree from tree.js, save rootNode incase of reset
 const rootNode = createTree();
 let currentNode = rootNode;
-let understod = true;
+let understood = true;
 
 // Call and create functions from the speech.js file
 let textToSpeech = createSpeechFunction();
@@ -108,5 +108,5 @@ let textToSpeech = createSpeechFunction();
 // Initialization
 document.getElementById("speak").addEventListener("click", () => {
     currentNode = rootNode;
-    forwardNodeTree(currentNode)
+    nodeStart(currentNode)
 })

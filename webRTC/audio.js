@@ -44,7 +44,7 @@ function handleSuccess(stream) {
     stream.oninactive = function() {
         console.log("Stream ended");
     };
-    var blob;
+    let blob;
     const soundMeter = (window.soundMeter = new SoundMeter(window.audioContext));
     soundMeter.connectToSource(stream, function(e) {
         if (e) {
@@ -100,7 +100,7 @@ function handleSuccess(stream) {
         mediaRecorder.onresult = (e) => {
             console.log(e);
             result.innerHTML = e.results[0][0].transcript;
-            checkInput(e.results[0][0].transcript)
+            checkUserInput(e.results[0][0].transcript)
         };
 
 
@@ -127,10 +127,10 @@ function handleSuccess(stream) {
                     if (result) {
                         console.log("Result from success: " + result);
                         rest.textContent = result;
-                        checkInput(result);
+                        checkUserInput(result);
                     } else {
                         console.log("No result from success")
-                        forwardNodeTree(understod = true);
+                        nodeStart(understood = true);
                     }
                 })
                 .catch((error) => {

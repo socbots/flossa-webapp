@@ -31,12 +31,12 @@ function createSpeechFunction() {
         source.onended = () => {
             isSpeaking = false;
             if (currentNode instanceof Question || currentNode instanceof trickQuestion) {
-                setAnswers(currentNode, understod);
+                setAnswers(currentNode, understood);
                 clearResult();
                 startRecording();
             } else if (currentNode instanceof Monologue) {
                 currentNode = currentNode.nextNode;
-                forwardNodeTree();
+                nodeStart();
             } else if (currentNode instanceof Video) {
                 // Video class can play without stt, hence it is forwarded to nextNode in setVideo in main.js
                 return

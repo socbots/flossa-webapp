@@ -15,16 +15,16 @@ Interaction app for alf robot
 ### main.js
 - Main logic
 
-`forwardNodeTree()`, loops nodes from *tree.js*, starting with `rootNode`
+`nodeStart()`, loops nodes from *tree.js*, starting with `rootNode`
 
 -   `currentNode` keeps track of active node
 -   Child-nodes are set on parent-node to progress interaction
 -   Each dialogue goes through textToSpeech() in *speech.js* to query for audio files.
 -   Recording is controlled with `isRec()` variable.
     - Audio user input is handled with **webRTC**
-    - User input outside scope of childnodes gets passed through `forwardNodeTree()` with `currentNode` and attribute `understood` set to false
+    - User input outside scope of childnodes gets passed through `nodeStart()` with `currentNode` and attribute `understood` set to false
 -   Depending on class and user input, childnode is set to `currentNode`.
--   New `currentNode` is activated with `forwardNodeTree()`
+-   New `currentNode` is activated with `nodeStart()`
 -   Tree ends with node class `EndTree`
 
 
@@ -39,11 +39,11 @@ Interaction app for alf robot
   - Question
     - Takes between 2-3 answers for a question
     - Set child nodes with setNodes
-    - Forwards new node in main.js -> checkInput()
+    - Forwards new node in main.js -> checkUserInput()
   - trickQuestion
     - Takes between 2-3 answers for a question
     - Set child node with setNextNode
-    - Forwards to next node in main.js -> checkInput()
+    - Forwards to next node in main.js -> checkUserInput()
   - Monologue
     - Only tts
     - Set child node with setNextNode
@@ -76,7 +76,7 @@ Interaction app for alf robot
 ### webRTC/
 - Audio recording using webRTC files
 - Soundmeter to gauge sound volume
-- audio.js calls checkInput for Question and trickQuestion node classes to forward next node
+- audio.js calls checkUserInput for Question and trickQuestion node classes to forward next node
 
 ### media/
 - video tutorial and images

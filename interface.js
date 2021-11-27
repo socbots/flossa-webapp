@@ -99,9 +99,9 @@ function setButtonListeners() {
     const nodeBbtn = document.getElementById("node-B");
     const nodeCbtn = document.getElementById("node-C");
 
-    nodeAbtn.addEventListener("click", () => { checkInput(nodeAbtn.innerHTML, true) })
-    nodeBbtn.addEventListener("click", () => { checkInput(nodeBbtn.innerHTML, true) })
-    nodeCbtn.addEventListener("click", () => { checkInput(nodeCbtn.innerHTML, true) })
+    nodeAbtn.addEventListener("click", () => { checkUserInput(nodeAbtn.innerHTML, true) })
+    nodeBbtn.addEventListener("click", () => { checkUserInput(nodeBbtn.innerHTML, true) })
+    nodeCbtn.addEventListener("click", () => { checkUserInput(nodeCbtn.innerHTML, true) })
 }
 
 // Modal for video
