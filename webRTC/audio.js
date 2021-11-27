@@ -107,15 +107,6 @@ function handleSuccess(stream) {
         mediaRecorder.onstop = () => {
             isRec = false;
             blob = new Blob(recordedChunks, { type: "audio/webm" });
-            console.log(blob);
-            var a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display:none";
-
-            reader.readAsDataURL(blob);
-            let url = URL.createObjectURL(blob);
-            a.href = url;
-            a.download = "test.ogg";
             // const alfttsurl = "https://alf-tts-api.herokuapp.com/enstt"; // english url
             const alfttsurl = "https://alf-tts-api.herokuapp.com/stt";
             let formData = new FormData();
