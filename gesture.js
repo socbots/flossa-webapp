@@ -19,17 +19,30 @@ const emoteList = {
 
 // Sends gesture commands to SSE backend
 function setGesture(movement) {
-    url = "http://192.168.1.34" //PI local address for raspberry
-        //url = "http://alfsse.herokuapp.com/move" //Backend adress
-    fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(movement),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-        .then(res => res.json())
-        .then((res2) => {
-            console.log("gesture response:", res2);
-        });
+    let test = true
+
+    // Available targets with urls for gesture stream
+    targets = {
+        'raspberry': "http://192.168.1.34",
+        'herokuapp': "http://alfsse.herokuapp.com/move" //Currently down?
+    }
+
+    // Delay to customize timings of gesture
+    // default = 0ms
+    setTimeout(() => {
+        // select target and set url
+        target = 'raspberry'
+        url = targets[target]
+        fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(movement.gesture),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            })
+            .then(res => res.json())
+            .then((res2) => {
+                console.log("gesture response from ", target, ": ", res2);
+            });
+    }, movement.time);
 }

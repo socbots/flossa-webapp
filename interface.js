@@ -62,17 +62,25 @@ function hideButtons() {
 
 
 // Shows/hides answer buttons with CSS
-function showHideNodeAnswer(element, node, nodeAnswer) {
-    if (node != undefined && nodeAnswer != undefined) {
-        // Hide super-image
-        document.getElementById("super-image").style.display = "none";
-        // Show buttons
-        element.style.display = "block";
-        element.innerHTML = nodeAnswer;
-    } else {
+function showButtons(element, nodeAnswer) {
+    // Hide super-image
+    document.getElementById("super-image").style.display = "none";
+    // Show buttons
+    element.style.display = "block";
+    element.innerHTML = nodeAnswer;
+    if (nodeAnswer == undefined) {
         element.style.display = "none";
-        element.innerHTML = ""; //Can be kept empty for checkInput()
     }
+}
+
+// returns a list of the node Answers in lower case
+function getAnswers() {
+    list = []
+    list.push(nodeAAnswer = document.getElementById("node-A").innerHTML.toLowerCase());
+    list.push(nodeBAnswer = document.getElementById("node-B").innerHTML.toLowerCase());
+    list.push(nodeCAnswer = document.getElementById("node-C").innerHTML.toLowerCase());
+
+    return list
 }
 
 // Populates answer-buttons with node answer element
@@ -80,20 +88,24 @@ function setAnswers(node) {
     const nodeAAnswer = document.getElementById("node-A");
     const nodeBAnswer = document.getElementById("node-B");
     const nodeCAnswer = document.getElementById("node-C")
-
-    if (node instanceof Question) {
         // Show hide buttons
-        showHideNodeAnswer(nodeAAnswer, node.nodeA, node.nodeAAnswer);
-        showHideNodeAnswer(nodeBAnswer, node.nodeB, node.nodeBAnswer);
-        showHideNodeAnswer(nodeCAnswer, node.nodeC, node.nodeCAnswer);
+    showButtons(nodeAAnswer, node.nodeAAnswer);
+    showButtons(nodeBAnswer, node.nodeBAnswer);
+    showButtons(nodeCAnswer, node.nodeCAnswer);
+}
 
-    } else {
-        console.log("NODE=", node);
-    }
+function setButtonListeners() {
+    const nodeAbtn = document.getElementById("node-A");
+    const nodeBbtn = document.getElementById("node-B");
+    const nodeCbtn = document.getElementById("node-C");
+
+    nodeAbtn.addEventListener("click", () => { checkInput(nodeAbtn.innerHTML, true) })
+    nodeBbtn.addEventListener("click", () => { checkInput(nodeBbtn.innerHTML, true) })
+    nodeCbtn.addEventListener("click", () => { checkInput(nodeCbtn.innerHTML, true) })
 }
 
 // Modal for video
-function iframeModal() {
+function setIframeModal() {
     var iframeModal = document.getElementById("iframeModal");
     var span = document.getElementById("iframeClose");
     iframeModal.style.display = "block";
@@ -104,14 +116,16 @@ function iframeModal() {
 }
 
 // Video properties, adjusted for Alf robot (2021)
-function setVideo(node) {
-    videoPlayer = document.getElementById("video");
-    videoPlayer.src = node.video;
-    videoPlayer.width = 1000;
-    videoPlayer.height = 700;
-    iframeModal();
+function setVideoProperties(video, url) {
+    video.src = url;
+    video.width = 1000;
+    video.height = 700;
 }
 
-function setFeedbackContainer(nodeText) {
-    document.getElementById('result').innerHTML = nodeText;
+function setFeedbackContainer(text) {
+    document.getElementById('result').innerHTML = text;
+}
+
+function clearResult() {
+    document.getElementById("result").innerHTML = ""
 }
