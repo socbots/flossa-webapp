@@ -116,8 +116,8 @@ function handleSuccess(stream) {
             let url = URL.createObjectURL(blob);
             a.href = url;
             a.download = "test.ogg";
-            // const alfttsurl = "https://alf-tts-api.herokuapp.com/enstt"; // english url
-            const alfttsurl = "https://alf-tts-api.herokuapp.com/stt";
+            const alfttsurl = "https://alf-tts-api.herokuapp.com/enstt"; // english url
+            //const alfttsurl = "https://alf-tts-api.herokuapp.com/stt";
             let formData = new FormData();
             let grammar = getAnswers();
 

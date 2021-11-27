@@ -1,81 +1,112 @@
 // This function starts and moves the dialog onwards 
-function startDialogue(notUnderstod = false, setQuestions = true) {
+function forwardNodeTree(understod = true) {
+    // Hide buttons and show background
     hideButtons();
-    if (setQuestions) {
-        setQuestion(currentNode, notUnderstod);
+    // If we have movement, set it
+    if (currentNode.movement) {
+        setGesture(currentNode.movement);
     }
-    if (currentNode._movement || undefined) {
-        setGesture(currentNode._movement);
-    }
-    // Special adjustment to timings for the tutorial video
-    // then it'll play the video after a delay
-    // close after 50 seconds
-    // then automatically start the next dialogue
-    if (currentNode instanceof Question && currentNode.video || undefined) {
-        setTimeout(() => {
-            console.log("Starting tutorial video")
-            setVideo(currentNode);
-            videoRunning = true;
-
-            if (currentNode.delayedMovement) setGesture(currentNode.delayedMovement.gesture);
-
-            window.scrollTo(0, 1);
-
-            setTimeout(() => {
-                console.log("Ending tutorial video and going to next node");
-                document.getElementById("iframeModal").style.display = "none";
-                isRec = false;
-                currentNode = currentNode.nodeA;
-                startDialogue(notUnderstod = false);
-            }, currentNode.duration);
-
-        }, currentNode.timeUntilStart);
+    // Special Timeouts for Video
+    if (currentNode instanceof Video) {
+        setVideo(currentNode);
+    } else {
+        setTTS(currentNode, understod);
     }
 }
 
-function setQuestion(node) {
+function setVideo(node) {
+    video = document.getElementById("video");
+    setVideoProperties(video, node.video)
+        // Check if we have tts and then mute video
+    if (node.tts == undefined) {
+        video.muted = false;
+    } else {
+        video.muted = true
+        setTTS(currentNode)
+    }
+    setTimeout(() => {
+        video.play(); //start video
+        setIframeModal();
+
+        // Scroll page to top to orient user for video
+        window.scrollTo(0, 1);
+
+        setTimeout(() => {
+            document.getElementById("iframeModal").style.display = "none";
+            video.pause(); //stop video
+            currentNode = currentNode.nextNode;
+            forwardNodeTree();
+        }, currentNode.videoDuration);
+    }, currentNode.videoDelayStart);
+}
+
+function setTTS(node, understod = true) {
     // TTS API uses SSML so the text should be within <speak> tags
     // Formats SSML or sends sorry_repeat if not understod
-    const text = notUnderstod ? sorry_repeat : '<speak>' + ((node._text || undefined) || node.question) + '</speak>';
+    const text = understod ? '<speak>' + node.tts + '</speak>' : sorry_repeat;
 
     // SSML format for breaks
     const point = text.search("<break");
     const textNewline = text.slice(0, point) + "<br>" + text.slice(point)
 
-    // question.innerHTML = point < 0 ? text : textNewline;
     textToSpeech(text);
 }
 
 // Legacy function for building SSML repetition of full node dialoge
 function repeat_question(node) {
-    s = '<speak>' + sorry_repeat + ((node._text || undefined) || node.question) + '</speak>';
+    s = '<speak>' + sorry_repeat + node.tts + '</speak>';
     return s
 }
 
+function checkInput(result) {
+    // Get answers
+    const answers = getAnswers()
+
+    result = result.toLowerCase(); //set to lower case
+    let results = result.split(" ");
+    // If we cant find a match for the input our user gives we startDialog with the current node and set the understod parameter to true
+    for (const r of results) {
+        // Test the user input against nodes if answers in our nodes.
+        // We only check the first word
+        if (answers[0].split(" ")[0] == r) {
+            console.log("Going nodeA");
+            setFeedbackContainer(currentNode.nodeAAnswer)
+            currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeA
+            forwardNodeTree(understod = true);
+            return;
+        } else if (answers[1].split(" ")[0] == r) {
+            console.log("Going nodeB");
+            setFeedbackContainer(currentNode.nodeBAnswer)
+            currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeB
+            forwardNodeTree(understod = true);
+            return;
+        } else if (answers[2].split(" ")[0] == r) {
+            console.log("Going nodeC");
+            setFeedbackContainer(currentNode.nodeCAnswer)
+            currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeC
+            forwardNodeTree(understod = true);
+            return;
+        }
+    }
+    //If we didn't find an answer, but still got a response from the STT we just restart the recording again
+    isRec = true;
+    return;
+}
+
 // Test to trigger microphone and audio request from browser
+let isRec = false;
 navigator.mediaDevices.getUserMedia({ audio: true })
 
 // Create node tree from tree.js, save rootNode incase of reset
 const rootNode = createTree();
 let currentNode = rootNode;
-let notUnderstod = false;
+let understod = true;
 
 // Call and create functions from the speech.js file
 let textToSpeech = createSpeechFunction();
-let videoRunning = false;
 
 // Initialization
 document.getElementById("speak").addEventListener("click", () => {
     currentNode = rootNode;
-    startDialogue(currentNode)
+    forwardNodeTree(currentNode)
 })
-
-// TODO list in in browser console
-const TODO = [
-    "Proper documentation",
-    "Suggestion, only repeat Alf after X amount of failiures",
-]
-
-TODO.forEach(element => {
-    console.log("TODO: " + element);
-});
