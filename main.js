@@ -95,7 +95,6 @@ function checkUserInput(result) {
 
 // Test to trigger microphone and audio request from browser
 let isRec = false;
-navigator.mediaDevices.getUserMedia({ audio: true })
 
 // Create node tree from tree.js, save rootNode incase of reset
 const rootNode = createTree();
