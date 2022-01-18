@@ -20,7 +20,7 @@ function createSpeechFunction() {
     }
 
     function playAudio(audioBuffer) {
-        isRec = false;
+        kaldi.robotCanListen = false;
         isSpeaking = true;
         const source = context.createBufferSource();
         source.buffer = audioBuffer;
@@ -55,5 +55,5 @@ function createSpeechFunction() {
 }
 
 function startRecording() {
-    isRec = true;
+    kaldi.robotCanListen = true;
 }
