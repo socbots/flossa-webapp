@@ -17,10 +17,10 @@
     </div>
     <div class="interface">
         <div class="button-container" id="speak-container">
-            <input type="button" id="speak" value="Börja">
+            <input type="button" id="speak" value="Start">
         </div>
         <div>
-            <img src="media/tandtrad_med_text.jpg" id="super-image">
+            <img src="media/super_image.png" id="super-image">
         </div>
         <!-- Interactive buttons -->
         <div id="answer-container">
@@ -47,14 +47,16 @@
 
     </div>
     <script src="kaldi/kaldi.main.js" defer></script>
-    <script src="englishVersionResources/text_english.js" defer></script>
+    <script src="text.js" defer></script>
     <script src="interface.js" defer></script>
     <script src="speech.js" defer></script>
     <script src="gesture.js" defer></script>
     <script src="tree.js" defer></script>
     <script src="main.js" defer></script>
     <script src="webRTC/audio.js" defer></script>
-    <script src="webRTC/soundmeter.js" defer></script>
+    <!---
+        <script src="webRTC/soundmeter.js" defer></script>
+    -->
 </body>
 
 </html>

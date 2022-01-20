@@ -1,10 +1,11 @@
-# alf_frontend
-Interaction app for alf robot
+# alf_frontend - Kaldi branch
+Interaction app for alf robot using Kaldi ASR
 
 <span style="font-size:2em; color:#FF6666"> App must be run in Firefox </span>
+
 ## Preview
 
-![preview_gif](./media/readme/preview.gif)
+![preview](./media/super_image.png)
 
 
 ## Files

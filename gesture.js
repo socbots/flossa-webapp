@@ -29,11 +29,13 @@ function setGesture(movement) {
 
     // Delay to customize timings of gesture
     // default = 0ms
-    setTimeout(() => {
-        // select target and set url
-        target = 'raspberry'
-        url = targets[target]
-        fetch(url, {
+    if (!test){
+
+        setTimeout(() => {
+            // select target and set url
+            target = 'raspberry'
+            url = targets[target]
+            fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(movement.gesture),
                 headers: {
@@ -44,5 +46,8 @@ function setGesture(movement) {
             .then((res2) => {
                 console.log("gesture response from ", target, ": ", res2);
             });
-    }, movement.time);
+        }, movement.time);
+    } else{
+        console.log("Testing active - No gestures")
+    }
 }

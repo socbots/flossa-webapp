@@ -38,17 +38,19 @@ window.addEventListener("onTranscription", (msg) => {
         // The tree will move forward after 1 second. Iirc if there's no delay after checkUserInput,
         // there's gonna be a 'not understood' infinite loop
         setTimeout(() => {
-            kaldi.robotCanListen = false;
-            console.log("kaldi.robotCanListen=", kaldi.robotCanListen);
-            console.log("answerFound state=", answerFound);
-            console.log("understood=", understood);
-            console.log("Timer typeof=", typeof (timer));
-            if (answerFound) {
-                console.log("answerFound, going to next node");
-                nodeStart(understood = true);
-            } else {
-                console.log("understood=false, asking again");
-                nodeStart(understood = false);
+            if (kaldi.robotCanListen){ // <---- Add this since it keeps loop?
+                kaldi.robotCanListen = false;
+                console.log("kaldi.robotCanListen=", kaldi.robotCanListen);
+                console.log("answerFound state=", answerFound);
+                console.log("understood=", understood);
+                console.log("Timer typeof=", typeof (timer));
+                if (answerFound) {
+                    console.log("answerFound, going to next node");
+                    nodeStart(understood = true);
+                } else {
+                    console.log("understood=false, asking again");
+                    nodeStart(understood = false);
+                }
             }
         }, 1000)
     }

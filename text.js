@@ -1,48 +1,41 @@
+/************* English *************/
 /****** Manuscript for robot ******/
 
-/************* SVENSKA *************/
-
 const intro = {
-    "sentence": "Hej! Jag heter Alf och hjälper till här i tandvården. Vill du lära dig hur du använder tandtråd på bästa sätt? Du kan svara genom tal eller med att trycka på min skärm.",
-    "continue_no": "Nej",
-    "continue_yes": "Ja"
+    "sentence": "Hello! This is a development build, would you like to try speech recognition with Kaldi?",
+    "continue_no": "No",
+    "continue_yes": "Yes"
 };
 
-const cancel = "Ha en trevlig dag!"
+const cancel = "Okay. Have a nice day!"
 
 const sentence_video = {
-    "sentence": "Fint. Det är omöjligt att göra rent mellan tänderna med en vanlig tandborste. Tandköttsinflammationer och kariesangrepp \
-                startar ofta där. Därför rekommenderas du att använda tandtråden en gång varje dag innan du borstar tänderna. Ta en rejäl \
-                bit tandtråd och linda den runt fingrarna. Låt tandtråden försiktigt följa den ena tandytan ner i tandköttsfickan. Dra \
-                den sakta uppåt igen. För sedan ner tråden längs med den andra tandytan och upp igen. Gör så mellan alla tänder, också \
-                de längst bak."
+    "sentence": "Nice. Kaldi is cool!"
 };
 
 const question_01 = {
-    "sentence": "Nu har jag en fråga till dig. Ibland börjar tänderna blöda när du använder tandtråd. Vad tror du det kan bero på. Säg: fel \
-    teknik, tecken på tandköttsinflammation, eller båda. Du kan också svara genom att trycka på min skärm.",
-    "answerA": "Fel teknik",
-    "answerB": "Tecken på tandköttsinflammation",
-    "answerC": "Båda"
+    "sentence": "Lets try a question. What is Alf's profession?",
+    "answerA": "Robot",
+    "answerB": "Dentist",
+    "answerC": "Nurse"
 };
 
 const monologue_01 = {
-    "sentence": "Båda är rätta svaret <break time='1s'/>"
+    "sentence": "Robot is the right answer <break time='1s'/>"
 };
 
 const question_02 = {
-    "sentence": "Kommer du ihåg hur ofta jag rekommenderade att du ska använda tandtråd. Säg: varje dag, varannan dag eller tredje dag. \
-                Du kan också svara genom att trycka på min skärm.",
-    "answerA": "Varje",
-    "answerB": "Varannan",
-    "answerC": "Tredje",
-    "correct": "Det var rätt! Svaret är varje dag <break time='1s'/>",
-    "wrong": "Det var fel. Svaret är varje dag <break time='1s'/>"
+    "sentence": "Next question. Kaldi is an open software for voice recognition:",
+    "answerA": "True",
+    "answerB": "False",
+    "answerC": "Undefined",
+    "correct": "That was correct! <break time='1s'/>",
+    "wrong": "That was wrong. <break time='1s'/>"
 };
 
-const outro = "Diskutera gärna med tandläkaren eller tandhygienisten vilken om vilken tandtråd,eller borste som passar dig. \
-                Sköt om dig nu och ha det så bra"
+const outro = "Thanks for using our service <break time='1s'/> Take care now and have a nice day."
 
-const sorry_repeat = '<speak> Jag förstod inte vad du menade? <break time="1s"/></speak>'
 
-const feedback_container_before = "Vad jag hörde: "
+const sorry_repeat = '<speak> Sorry, I did not understand you? <break time="1s"/></speak>'
+
+const feedback_container_before = "What Kaldi interpreted: "
