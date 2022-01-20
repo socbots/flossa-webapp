@@ -28,10 +28,10 @@ kaldiMain();
 // Audio is transcripted continuously while the person is talking.
 window.addEventListener("onTranscription", (msg) => {
     const { transcription, isFinal } = msg.detail;
-    console.log("Transcription:", transcription);
 
     // Run check input only if there was text in the transcription.
     if (transcription) {
+        console.log("Transcription:", transcription);
         document.getElementById("result").textContent = transcription;
         checkUserInput(transcription, isFinal);
 
