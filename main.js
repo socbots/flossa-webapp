@@ -89,12 +89,12 @@ function checkUserInput(result) {
         }
     }
     //If we didn't find an answer, but still got a response from the STT we just restart the recording again
-    kaldi.robotCanListen = true;
+    kaldi.listening = true;
     return;
 }
 
 // Test to trigger microphone and audio request from browser
-// kaldi.robotCanListen = false; // Kaldi hasn't been initialized yet.
+// kaldi.listening = false; // Kaldi hasn't been initialized yet.
 
 // Create node tree from tree.js, save rootNode incase of reset
 const rootNode = createTree();

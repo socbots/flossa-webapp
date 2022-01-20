@@ -19,7 +19,7 @@ async function kaldiMain() {
     // Download the model and start listening.
     await kaldi.init();
     // Set kaldi to not listen until other parts of the app are ready.
-    kaldi.robotCanListen = false;
+    kaldi.listening = false;
 }
 kaldiMain();
 
@@ -38,9 +38,9 @@ window.addEventListener("onTranscription", (msg) => {
         // The tree will move forward after 1 second. Iirc if there's no delay after checkUserInput,
         // there's gonna be a 'not understood' infinite loop
         setTimeout(() => {
-            if (kaldi.robotCanListen){ // <---- Add this since it keeps loop?
-                kaldi.robotCanListen = false;
-                console.log("kaldi.robotCanListen=", kaldi.robotCanListen);
+            if (kaldi.listening){ // <---- Add this since it keeps loop?
+                kaldi.listening = false;
+                console.log("kaldi.listening=", kaldi.listening);
                 console.log("answerFound state=", answerFound);
                 console.log("understood=", understood);
                 console.log("Timer typeof=", typeof (timer));
