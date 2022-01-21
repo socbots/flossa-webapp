@@ -1,9 +1,12 @@
 :root {
     --main-bg-color: rgb(255, 255, 255);
-    --main-text-color: rgb(0,0,0);
-    --main-button-bg-color: rgb(145,145,145);
+    --main-text-color: rgb(0, 0, 0);
+    --main-button-bg-color: rgb(21, 101, 192);
+    --main-button-text-color: rgb(255, 255, 255);
     --main-button-small-color: rgb(100, 175, 225);
-  }
+    --button-disabled-bg-color: rgba(21, 101, 192, 0.3);
+    --button-disabled-text-color: rgba(255, 255, 255, 0.3);
+}
 
 
 html {
@@ -85,12 +88,22 @@ input[type=button] {
     padding: 0.8em 1.8em;
     margin: 0 0.4em 0.4em 0;
     border: 0.16em solid rgba(255, 255, 255, 0);
-    border-radius: 50px;
+    border-radius: 1rem;
     font-size: x-large;
-    color: #000000;
+    color: var(--main-button-text-color);
     font-weight: bolder;
     background-color: var(--main-button-bg-color);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px -1px,
+        rgba(0, 0, 0, 0.14) 0px 4px 5px 0px,
+        rgba(0, 0, 0, 0.12) 0px 1px 10px 0px;
     text-align: center;
+}
+
+/* Disabled button style: https://ux.stackexchange.com/questions/50834/how-to-make-a-button-look-disabled */
+button:disabled,
+input[type=button]:disabled {
+    background: var(--button-disabled-bg-color);
+    color: var(--button-disabled-text-color);
 }
 
 
@@ -152,7 +165,7 @@ input[type=button] {
     /* Full height */
     overflow: auto;
     /* Enable scroll if needed */
-    background-color:var(--main-bg-color);
+    background-color: var(--main-bg-color);
     /* Fallback color */
     background-color: var(--main-bg-color);
     /* Black w/ opacity */

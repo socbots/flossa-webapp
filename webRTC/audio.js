@@ -20,6 +20,7 @@ async function kaldiMain() {
     await kaldi.init();
     // Set kaldi to not listen until other parts of the app are ready.
     kaldi.listening = false;
+    console.log("running kaldi");
 }
 kaldiMain();
 
@@ -28,30 +29,28 @@ kaldiMain();
 // Audio is transcripted continuously while the person is talking.
 window.addEventListener("onTranscription", (msg) => {
     const { transcription, isFinal } = msg.detail;
-
     // Run check input only if there was text in the transcription.
-    if (transcription) {
+    if (transcription  && !isSpeaking) {
+        if (kaldi.listening){ // <---- Add this since it keeps loop?
         console.log("Transcription:", transcription);
         document.getElementById("result").textContent = transcription;
         checkUserInput(transcription, isFinal);
 
         // The tree will move forward after 1 second. Iirc if there's no delay after checkUserInput,
         // there's gonna be a 'not understood' infinite loop
-        setTimeout(() => {
-            if (kaldi.listening){ // <---- Add this since it keeps loop?
+        // setTimeout(() => {
                 kaldi.listening = false;
                 console.log("kaldi.listening=", kaldi.listening);
                 console.log("answerFound state=", answerFound);
-                console.log("understood=", understood);
-                console.log("Timer typeof=", typeof (timer));
                 if (answerFound) {
                     console.log("answerFound, going to next node");
                     nodeStart(understood = true);
                 } else {
-                    console.log("understood=false, asking again");
-                    nodeStart(understood = false);
+                    console.log("answerFound=false, asking again");
+                    kaldi.listening = true;
+                    //nodeStart(understood = false);
                 }
             }
-        }, 1000)
+        // }, 1000)
     }
 });

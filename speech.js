@@ -2,7 +2,7 @@
 
 // This function returns a function called textToSpeech that we can save to a variable and call when needed.
 // textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" i.e. Closure
-
+let isSpeaking = false;
 function createSpeechFunction() {
     const context = new AudioContext();
 
@@ -16,6 +16,7 @@ function createSpeechFunction() {
 
     function playAudio(audioBuffer) {
         kaldi.listening = false;
+        isSpeaking = true;
         const source = context.createBufferSource();
         source.buffer = audioBuffer;
         source.connect(context.destination);
@@ -23,6 +24,7 @@ function createSpeechFunction() {
         source.start();
         console.log(source);
         source.onended = () => {
+            isSpeaking = false;
             if (currentNode instanceof Question || currentNode instanceof trickQuestion) {
                 setAnswers(currentNode, understood);
                 clearResult();

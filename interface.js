@@ -129,3 +129,9 @@ function setFeedbackContainer(text) {
 function clearResult() {
     document.getElementById("result").innerHTML = ""
 }
+
+// Enable the Start button once Kaldi is ready to listen
+window.addEventListener("onASRStart", (evt) => {
+    document.querySelector("#speak").ariaDisabled = false;
+    document.querySelector("#speak").disabled = false;
+})

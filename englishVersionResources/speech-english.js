@@ -3,9 +3,9 @@
 // This function returns a function called textToSpeech that we can save to a variable and call when needed.
 // textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" i.e. Closure
 
+let isSpeaking = false;
 function createSpeechFunction() {
-
-    let isSpeaking = false;
+    
     const context = new AudioContext();
 
     let textToSpeech = (text) => {
