@@ -197,12 +197,14 @@ input[type=button]:disabled {
 
 /* Sound wave animation */
 
-.loader {
+#microphone-listening {
+    width:100%;
     height: 70px;
-    display: flex;
+    display: none;
     align-items: center;
+    place-content: center;
   }
-  .loader .stroke {
+  .stroke {
     display: block;
     position: relative;
     background: var(--main-button-small-color);

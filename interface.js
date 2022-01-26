@@ -57,6 +57,7 @@ function hideButtons() {
     document.getElementById("node-A").style.display = "none";
     document.getElementById("node-B").style.display = "none";
     document.getElementById("node-C").style.display = "none";
+    document.querySelector("#microphone-listening").style.display = "none";
     document.getElementById("super-image").style.display = "block";
 }
 
@@ -65,6 +66,8 @@ function hideButtons() {
 function showButtons(element, nodeAnswer) {
     // Hide super-image
     document.getElementById("super-image").style.display = "none";
+    // Show microphone listening animation
+    document.querySelector("#microphone-listening").style.display = "flex";
     // Show buttons
     element.style.display = "block";
     element.innerHTML = nodeAnswer;
