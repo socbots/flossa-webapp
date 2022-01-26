@@ -72,25 +72,22 @@ function checkUserInput(result) {
             console.log("Going nodeA");
             setFeedbackContainer(currentNode.nodeAAnswer)
             currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeA
-            nodeStart(understood = true);
-            return;
+            return true;
         } else if (answers[1].split(" ")[0] == r) {
             console.log("Going nodeB");
             setFeedbackContainer(currentNode.nodeBAnswer)
             currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeB
-            nodeStart(understood = true);
-            return;
+            return true;
         } else if (answers[2].split(" ")[0] == r) {
             console.log("Going nodeC");
             setFeedbackContainer(currentNode.nodeCAnswer)
             currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeC
-            nodeStart(understood = true);
-            return;
+            return true;
         }
     }
     //If we didn't find an answer, but still got a response from the STT we just restart the recording again
     kaldi.listening = true;
-    return;
+    return false;
 }
 
 // Test to trigger microphone and audio request from browser
