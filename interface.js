@@ -6,11 +6,14 @@ var answerContainer = document.getElementById("answer-container");
 var speakContainer = document.getElementById("speak-container");
 var superImage = document.getElementById("super-image");
 speakButton.onclick = function() {
+    changeInterfaceIntoInteraction(); // Splitted into function to be reused in audio.js
+}
+
+function changeInterfaceIntoInteraction() {
     speakContainer.style.display = "none";
     answerContainer.style.display = "flex";
     superImage.style.display = "block";
 }
-
 
 /* Sets text/explanation before container that holds stt result */
 document.getElementById("feedback-container-before").innerHTML = feedback_container_before
