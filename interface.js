@@ -5,7 +5,7 @@ var speakButton = document.getElementById("speak");
 var answerContainer = document.getElementById("answer-container");
 var speakContainer = document.getElementById("speak-container");
 var superImage = document.getElementById("super-image");
-speakButton.onclick = function() {
+speakButton.onclick = function () {
     changeInterfaceIntoInteraction(); // Splitted into function to be reused in audio.js
 }
 
@@ -23,7 +23,7 @@ document.getElementById("feedback-container-before").innerHTML = feedback_contai
  * Make the whole app fullscreen in order to hide the URL bar
  * Click/tap on "vad jag hörde" to run
  */
-const toggleFullscreen = async(target) => {
+const toggleFullscreen = async (target) => {
     console.log("toggleFullscreen");
     if (!document.fullscreenElement &&
         !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
@@ -49,7 +49,7 @@ const toggleFullscreen = async(target) => {
     }
 }
 
-document.querySelector("#fullscreen-request").addEventListener("click", async(ev) => {
+document.querySelector("#fullscreen-request").addEventListener("click", async (ev) => {
     await toggleFullscreen(document.documentElement);
 });
 
@@ -94,7 +94,7 @@ function setAnswers(node) {
     const nodeAAnswer = document.getElementById("node-A");
     const nodeBAnswer = document.getElementById("node-B");
     const nodeCAnswer = document.getElementById("node-C")
-        // Show hide buttons
+    // Show hide buttons
     showButtons(nodeAAnswer, node.nodeAAnswer);
     showButtons(nodeBAnswer, node.nodeBAnswer);
     showButtons(nodeCAnswer, node.nodeCAnswer);
@@ -105,9 +105,18 @@ function setButtonListeners() {
     const nodeBbtn = document.getElementById("node-B");
     const nodeCbtn = document.getElementById("node-C");
 
-    nodeAbtn.addEventListener("click", () => { checkUserInput(nodeAbtn.innerHTML, true) })
-    nodeBbtn.addEventListener("click", () => { checkUserInput(nodeBbtn.innerHTML, true) })
-    nodeCbtn.addEventListener("click", () => { checkUserInput(nodeCbtn.innerHTML, true) })
+    nodeAbtn.addEventListener("click", () => {
+        checkUserInput(nodeAbtn.innerHTML, true);
+        nodeStart(true);
+    })
+    nodeBbtn.addEventListener("click", () => {
+        checkUserInput(nodeBbtn.innerHTML, true);
+        nodeStart(true);
+    })
+    nodeCbtn.addEventListener("click", () => {
+        checkUserInput(nodeCbtn.innerHTML, true);
+        nodeStart(true);
+    })
 }
 
 // Modal for video
@@ -116,7 +125,7 @@ function setIframeModal() {
     var span = document.getElementById("iframeClose");
     iframeModal.style.display = "block";
     // When the user clicks on <span> (x) close the modal
-    span.addEventListener('click', function() {
+    span.addEventListener('click', function () {
         iframeModal.style.display = "none";
     });
 }
