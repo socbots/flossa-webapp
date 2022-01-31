@@ -22,16 +22,17 @@ function setGesture(movement) {
     let test = true
 
     // Available targets with urls for gesture stream
-    targets = {
+    const targets = {
         'raspberry': "http://192.168.1.34",
-        'herokuapp': "http://alfsse.herokuapp.com/move" //Currently down?
+        'herokuapp': "http://alfsse.herokuapp.com/move", //Currently down?
+        'aws': 'https://sse.johan.onl/move',
     }
 
     // Delay to customize timings of gesture
     // default = 0ms
     setTimeout(() => {
         // select target and set url
-        target = 'raspberry'
+        target = 'aws'
         url = targets[target]
         fetch(url, {
                 method: 'POST',
