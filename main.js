@@ -17,7 +17,7 @@ function nodeStart(understood = true) {
 function setVideo(node) {
     video = document.getElementById("video");
     setVideoProperties(video, node.video)
-        // Check if we have tts and then mute video
+    // Check if we have tts and then mute video
     if (node.tts == undefined) {
         video.muted = false;
     } else {
@@ -101,8 +101,13 @@ let understood = true;
 // Call and create functions from the speech.js file
 let textToSpeech = createSpeechFunction();
 
+// Enable answer buttons
+setButtonListeners();
+
 // Initialization
 document.getElementById("speak").addEventListener("click", () => {
     currentNode = rootNode;
+    // Disable kaldi voice activation
+    idle = false;
     nodeStart(currentNode)
 })
