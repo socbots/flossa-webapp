@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Alf App</title>
+    <link rel="import" href="wave-footer.html" id="wave-footer">
+    <title>Snow Optimization with Kaldi</title>
 </head>
 
 <body>
@@ -18,13 +19,14 @@
             <span class="stroke"></span>
             <span class="stroke"></span>
             <span class="stroke"></span>
-          </div>
+        </div>
     </div>
     <div class="interface">
-        <div class="button-container" id="speak-container">
-            <span style="font-size: small;"><i>ps. say 'hello' or 'computer' to start</i></span>
-            <br />
-            <input type="button" id="speak" value="Start" disabled=true aria-disabled="true">
+        <div id="start-wrapper">
+            <div class="hint">Say 'hello' or 'computer' to start</div>
+            <div class="button-container" id="speak-container">
+                <input type="button" id="speak" value="Start" disabled=true aria-disabled="true">
+            </div>
         </div>
         <div>
             <img src="media/super_image.png" id="super-image">
@@ -40,8 +42,11 @@
             <div class="button-container">
                 <button id="node-C" class="answer-button"></button>
             </div>
+            <div id="button-backdrop">
+            </div>
         </div>
     </div>
+
 
 
 
@@ -53,6 +58,11 @@
         </div>
 
     </div>
+
+    <!-- Imports -->
+    <!--
+        
+    -->
     <script src="kaldi/kaldi.main.js" defer></script>
     <script src="text.js" defer></script>
     <script src="interface.js" defer></script>
@@ -61,9 +71,30 @@
     <script src="tree.js" defer></script>
     <script src="main.js" defer></script>
     <script src="webRTC/audio.js" defer></script>
-    <!---
-        <script src="webRTC/soundmeter.js" defer></script>
+
+    <!-- https://getwaves.io/
+        Extract the d from path
+        Scale and transform as needed
     -->
+    <footer style="bottom: -50%;"> <!-- Adjust for Snow when possible -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <g transform="translate(0, 0)">
+                <path transform="scale(1, 1)" class="footer-bot"
+                    d="M0,96L17.1,90.7C34.3,85,69,75,103,101.3C137.1,128,171,192,206,197.3C240,203,274,149,309,144C342.9,139,377,181,411,181.3C445.7,181,480,139,514,106.7C548.6,75,583,53,617,85.3C651.4,117,686,203,720,224C754.3,245,789,203,823,170.7C857.1,139,891,117,926,122.7C960,128,994,160,1029,154.7C1062.9,149,1097,107,1131,85.3C1165.7,64,1200,64,1234,69.3C1268.6,75,1303,85,1337,117.3C1371.4,149,1406,203,1423,229.3L1440,256L1440,320L1422.9,320C1405.7,320,1371,320,1337,320C1302.9,320,1269,320,1234,320C1200,320,1166,320,1131,320C1097.1,320,1063,320,1029,320C994.3,320,960,320,926,320C891.4,320,857,320,823,320C788.6,320,754,320,720,320C685.7,320,651,320,617,320C582.9,320,549,320,514,320C480,320,446,320,411,320C377.1,320,343,320,309,320C274.3,320,240,320,206,320C171.4,320,137,320,103,320C68.6,320,34,320,17,320L0,320Z">
+                </path>
+            </g>
+            <g transform="translate(0, 40)">
+                <path transform="scale(1, 1)" class="footer-mid"
+                    d="M0,96L34.3,90.7C68.6,85,137,75,206,85.3C274.3,96,343,128,411,160C480,192,549,224,617,218.7C685.7,213,754,171,823,170.7C891.4,171,960,213,1029,197.3C1097.1,181,1166,107,1234,80C1302.9,53,1371,75,1406,85.3L1440,96L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z">
+                </path>
+            </g>
+            <g transform="translate(0, 80)">
+                <path transform="scale(1, 1)" class="footer-top"
+                    d="M0,224L24,197.3C48,171,96,117,144,101.3C192,85,240,107,288,128C336,149,384,171,432,170.7C480,171,528,149,576,128C624,107,672,85,720,112C768,139,816,213,864,224C912,235,960,181,1008,165.3C1056,149,1104,171,1152,154.7C1200,139,1248,85,1296,64C1344,43,1392,53,1416,58.7L1440,64L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z">
+                </path>
+            </g>
+        </svg>
+    </footer>
 </body>
 
 </html>

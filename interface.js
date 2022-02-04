@@ -3,14 +3,14 @@
 // rewrite to proper functions!
 var speakButton = document.getElementById("speak");
 var answerContainer = document.getElementById("answer-container");
-var speakContainer = document.getElementById("speak-container");
+var startWrapper = document.getElementById("start-wrapper");
 var superImage = document.getElementById("super-image");
 speakButton.onclick = function () {
     changeInterfaceIntoInteraction(); // Splitted into function to be reused in audio.js
 }
 
 function changeInterfaceIntoInteraction() {
-    speakContainer.style.display = "none";
+    startWrapper.style.display = "none";
     answerContainer.style.display = "flex";
     superImage.style.display = "block";
 }
@@ -54,12 +54,12 @@ document.querySelector("#fullscreen-request").addEventListener("click", async (e
 });
 
 
-// Quick test to hide buttons after answer
 // Also now shows "super-image"
 function hideButtons() {
     document.getElementById("node-A").style.display = "none";
     document.getElementById("node-B").style.display = "none";
     document.getElementById("node-C").style.display = "none";
+    document.getElementById("button-backdrop").style.display = "none";
     document.querySelector("#microphone-listening").style.display = "none";
     document.getElementById("super-image").style.display = "block";
 }
@@ -77,6 +77,8 @@ function showButtons(element, nodeAnswer) {
     if (nodeAnswer == undefined) {
         element.style.display = "none";
     }
+    // Show button backdrop
+    document.getElementById("button-backdrop").style.display = "block";
 }
 
 // returns a list of the node Answers in lower case
