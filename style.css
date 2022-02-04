@@ -287,9 +287,10 @@ button:hover{
 
 /* Footer style */
 footer {
-    position: absolute;
+    position: fixed;
+    /*bottom: 0; some body margin???? */
+    bottom: -5px;
     width: 100%;
-    height: 100%;
     overflow: hidden;
     z-index: -99;
   }
