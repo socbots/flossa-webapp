@@ -107,21 +107,18 @@ function createTree() {
     startNode.setMovement(emoteList.wave_left); //Make Alf wave
 
     //video tutorial node
-    /*
     const videoTutorialNode = new Video(tts = sentence_video.sentence);
     videoTutorialNode.setVideo(
         "./media/tutorial540p.mp4#t=12",
         videoDelayStart = 13000, videoDuration = 16000
     );
     videoTutorialNode.setMovement(emoteList.look_down, 12000); //Make Alf look down (on the screen, delayed until video starts)
-    */
+    startNode.setNodes(new EndTree(cancel, ), videoTutorialNode);
 
     //question 01
     const questionNode01 = new trickQuestion(question_01.sentence, question_01.answerA, question_01.answerB, question_01.answerC);
-    //videoTutorialNode.setNextNode(nextNode = questionNode01);
-    //questionNode01.setMovement(emoteList.look_up); //Make Alf look back up for question
-    
-    startNode.setNodes(new EndTree(cancel, ), questionNode01);
+    videoTutorialNode.setNextNode(nextNode = questionNode01);
+    questionNode01.setMovement(emoteList.look_up); //Make Alf look back up for question
 
     //monologue 01
     const monologueNode01 = new Monologue(

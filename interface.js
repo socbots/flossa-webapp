@@ -4,7 +4,7 @@
 var speakButton = document.getElementById("speak");
 var answerContainer = document.getElementById("answer-container");
 var startWrapper = document.getElementById("start-wrapper");
-var superImage = document.getElementById("super-image");
+var superImage = document.getElementById("filler-image");
 speakButton.onclick = function () {
     changeInterfaceIntoInteraction(); // Splitted into function to be reused in audio.js
 }
@@ -54,21 +54,21 @@ document.querySelector("#fullscreen-request").addEventListener("click", async (e
 });
 
 
-// Also now shows "super-image"
+// Also now shows "filler-image"
 function hideButtons() {
     document.getElementById("node-A").style.display = "none";
     document.getElementById("node-B").style.display = "none";
     document.getElementById("node-C").style.display = "none";
     document.getElementById("button-backdrop").style.display = "none";
     document.querySelector("#microphone-listening").style.display = "none";
-    document.getElementById("super-image").style.display = "block";
+    document.getElementById("filler-image").style.display = "block";
 }
 
 
 // Shows/hides answer buttons with CSS
 function showButtons(element, nodeAnswer) {
-    // Hide super-image
-    document.getElementById("super-image").style.display = "none";
+    // Hide filler-image
+    document.getElementById("filler-image").style.display = "none";
     // Show microphone listening animation
     document.querySelector("#microphone-listening").style.display = "flex";
     // Show buttons
