@@ -24,15 +24,13 @@
     <div class="interface">
         <div id="start-wrapper">
             <div class="hint">Say 'hello' or 'computer' to start</div>
-            <div class="button-container" id="speak-container">
-                <input type="button" id="speak" value="Start" disabled=true aria-disabled="true">
-            </div>
-        </div>
-        <div>
-            <img src="media/filler-image.png" id="filler-image">
+            <input type="button" id="speak" value="Start" disabled=true aria-disabled="true">
         </div>
         <!-- Interactive buttons -->
         <div id="answer-container">
+            <div class="button-container">
+                <div id="speak-container"></div>
+            </div>
             <div class="button-container">
                 <button id="node-A" class="answer-button"></button>
             </div>
@@ -59,10 +57,10 @@
 
     </div>
 
+    <!-- Filler image, moved to be behind waves -->
+    <img src="media/filler-image.png" id="filler-image">
+
     <!-- Imports -->
-    <!--
-        
-    -->
     <script src="kaldi/kaldi.main.js" defer></script>
     <script src="text.js" defer></script>
     <script src="interface.js" defer></script>

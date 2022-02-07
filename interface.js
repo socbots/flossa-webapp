@@ -56,10 +56,7 @@ document.querySelector("#fullscreen-request").addEventListener("click", async (e
 
 // Also now shows "filler-image"
 function hideButtons() {
-    document.getElementById("node-A").style.display = "none";
-    document.getElementById("node-B").style.display = "none";
-    document.getElementById("node-C").style.display = "none";
-    document.getElementById("button-backdrop").style.display = "none";
+    document.getElementById("answer-container").style.display = "none"
     document.querySelector("#microphone-listening").style.display = "none";
     document.getElementById("filler-image").style.display = "block";
 }
@@ -67,6 +64,7 @@ function hideButtons() {
 
 // Shows/hides answer buttons with CSS
 function showButtons(element, nodeAnswer) {
+    document.getElementById("answer-container").style.display = "flex"
     // Hide filler-image
     document.getElementById("filler-image").style.display = "none";
     // Show microphone listening animation

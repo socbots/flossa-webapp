@@ -49,6 +49,10 @@ function setTTS(node, understood = true) {
     const point = text.search("<break");
     const textNewline = text.slice(0, point) + "<br>" + text.slice(point)
 
+
+    container = document.getElementById("speak-container");
+    container.innerHTML = text;
+
     textToSpeech(text);
 }
 

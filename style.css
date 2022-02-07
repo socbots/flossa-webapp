@@ -37,7 +37,6 @@ body {
 
 
 /* Container for "Vad jag hörde:" transform for centering*/
-
 #fullscreen-request {
     position: absolute;
     margin: 1em;
@@ -74,17 +73,14 @@ body {
 
 
 /* Holds answering buttons and text */
-
 .interface {
     width: 40em;
     position: absolute;
-    top: 15em;
+    top: 16em;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     padding: 5em, 5em, 0em, 5em;
-    /*border: rgb(13, 80, 124) solid 10px;
-    border-radius: 2em;*/
 }
 
 
@@ -98,6 +94,10 @@ body {
 
 .button-container {
     width: 70%;
+}
+
+#speak-container{
+    padding-bottom:1em;
 }
 
 #canvasBtn {
@@ -150,12 +150,6 @@ button:hover{
 }
 
 /* The initial speak button */
-
-#speak-container {
-    width: 100%;
-    text-align: center;
-}
-
 #speak {
     width: 70%;
     outline: var(--shade-button-outline) solid 1em;
@@ -163,11 +157,10 @@ button:hover{
 
 
 /* Position the image under everything and somewhat in the middle  */
-
 #filler-image {
     display: none;
     position: absolute;
-    z-index: -1;
+    z-index: -100;
     top: 50%;
     left: 50%;
     width: 600px;
@@ -175,20 +168,6 @@ button:hover{
     margin-top: -200px;
     margin-left: -300px;
 }
-
-
-/* Styling for the question */
-
-.speak-container {
-    display: none;
-    padding: 0.8em 1.8em;
-    margin: 0 0.4em 0.4em 0;
-    border: 0.16em solid rgb(0, 0, 0);
-    border-radius: 2em;
-    background-color: transparent;
-    text-align: center;
-}
-
 
 /* https://www.w3schools.com/howto/howto_css_modals.asp
  * The Modal (background) */
