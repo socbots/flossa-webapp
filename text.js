@@ -44,3 +44,10 @@ const outro = "Please discuss with your dentist or dental hygienist about what d
 const sorry_repeat = '<speak> Sorry, I did not understand you? <break time="1s"/></speak>'
 
 const feedback_container_before = "What I heard: "
+
+// Words that are listened to for starting the interaction
+const activationWords = [
+    "hello",
+    "computer",
+    "hey google",
+];
