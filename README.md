@@ -1,11 +1,12 @@
-# alf_frontend - Kaldi branch
-Interaction app for alf robot using Kaldi ASR
+# Flossa V2 Concept - Kaldi branch
+Interaction app for Flossa V2, using Kaldi and Snow
 
-<span style="font-size:2em; color:#FF6666"> App must be run in Firefox </span>
+<span style="font-size:2em; color:#FF6666"> App must be run in Firefox on Snow</span>
 
 ## Preview
 
-![preview](./media/super_image.png)
+![preview](./media/readme/question.png)
+![preview](./media/readme/talking.png)
 
 
 ## Files
@@ -57,7 +58,6 @@ Interaction app for alf robot using Kaldi ASR
       - Mutes video and talks
     - Else video plays with sound
     - Forwards to next node in main.js -> setVideo()
-
   - EndTree
     - Class that ends the interaction
     - Forwards/Ends in speech.js
@@ -71,49 +71,17 @@ Interaction app for alf robot using Kaldi ASR
 ### interface.js
 - Interface scripts
   - For example: toggle full screen, hide buttons or video modal
-### gesture.js
-- List of emotes and gesures
-- Function for sending gestures to SSE backend
+### ~~gesture.js~~
+- ~~List of emotes and gesures~~
+- ~~Function for sending gestures to SSE backend~~
+- Remove? soon&trade;
 ### webRTC/
 - Audio recording using webRTC files
 - Soundmeter to gauge sound volume
 - audio.js calls checkUserInput for Question and trickQuestion node classes to forward next node
-
 ### media/
 - video tutorial and images
-
-### englishVersionResources/
-- modified files to build an English version of the app
-  - mainly url changes
-
 ## Flow diagram
 Shows how the application and its surrounding systems work in conjunction.
-![flow](./media/readme/alf-flow-long.png)
+- Coming soon&trade;
 
-## 3rd party services
-The following services and applications are used to make the whole system work.
-
-### TTS & STT
-[Github](https://github.com/socbots/ALFTTSNuggPy)
-
-Available on [heroku](https://alf-tts-api.herokuapp.com/)
-
-- Uses google services for text-to-speech and speech-to-text
-- Different ports for Swedish and English
-
-Can also be run on local Raspberry
-
-### SSE Backend
-[Github](https://github.com/socbots/sse_backend)
-
-Run on local Raspberry
-
-- Stream to post movement commands for Mobile SDK
-
-### Mobile SDK
-[Github](https://github.com/socbots/MobileSDK)
-
-Run from phone in virtualwing @Arcada
-
-- Grants access to movements
-- Listens to SSE stream for movement instructions
