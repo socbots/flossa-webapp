@@ -23,11 +23,15 @@ Interaction app for Flossa V2, using Kaldi and Snow
 -   Child-nodes are set on parent-node to progress interaction
 -   Each dialogue goes through textToSpeech() in *speech.js* to query for audio files.
 -   Recording is controlled with `isRec()` variable.
-    - Audio user input is handled with **webRTC**
+    - Audio user input is handled with **webRTC && Kaldi**
     - User input outside scope of childnodes gets passed through `nodeStart()` with `currentNode` and attribute `understood` set to false
 -   Depending on class and user input, childnode is set to `currentNode`.
 -   New `currentNode` is activated with `nodeStart()`
 -   Tree ends with node class `EndTree`
+
+When node has been passed through tts it goes to
+- interaction()
+  - interaction handles node based on class and forwards to appropirate functionality
 
 
 ### text.js
@@ -41,15 +45,12 @@ Interaction app for Flossa V2, using Kaldi and Snow
   - Question
     - Takes between 2-3 answers for a question
     - Set child nodes with setNodes
-    - Forwards new node in main.js -> checkUserInput()
   - trickQuestion
     - Takes between 2-3 answers for a question
     - Set child node with setNextNode
-    - Forwards to next node in main.js -> checkUserInput()
   - Monologue
     - Only tts
     - Set child node with setNextNode
-    - Forwards in speech.js
   - Video
     - Plays a video in a Modal
     - Can start and stop video on custom timers
@@ -57,11 +58,8 @@ Interaction app for Flossa V2, using Kaldi and Snow
     - If give tts
       - Mutes video and talks
     - Else video plays with sound
-    - Forwards to next node in main.js -> setVideo()
   - EndTree
     - Class that ends the interaction
-    - Forwards/Ends in speech.js
-
 - Current node tree layout
 
 ![tree](./media/readme/tree-flow.png)
