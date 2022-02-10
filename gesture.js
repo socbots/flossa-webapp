@@ -19,18 +19,14 @@ const emoteList = {
 
 // Sends gesture commands to SSE backend
 function setGesture(movement) {
-    let test = true
-
     // Available targets with urls for gesture stream
     targets = {
         'raspberry': "http://192.168.1.34",
         'herokuapp': "http://alfsse.herokuapp.com/move" //Currently down?
     }
-
     // Delay to customize timings of gesture
     // default = 0ms
-    if (!test){
-
+    if (!development_testing){
         setTimeout(() => {
             // select target and set url
             target = 'raspberry'

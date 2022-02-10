@@ -27,17 +27,15 @@ function setVideo(node) {
     setTimeout(() => {
         video.play(); //start video
         setIframeModal();
-
         // Scroll page to top to orient user for video
         window.scrollTo(0, 1);
 
         setTimeout(() => {
             document.getElementById("iframeModal").style.display = "none";
             video.pause(); //stop video
-            currentNode = currentNode.nextNode;
-            nodeStart();
         }, currentNode.videoDuration);
     }, currentNode.videoDelayStart);
+
 }
 
 function setTTS(node, understood = true) {
@@ -60,6 +58,46 @@ function setTTS(node, understood = true) {
 function repeat_question(node) {
     s = '<speak>' + sorry_repeat + node.tts + '</speak>';
     return s
+}
+
+function interaction() {
+    console.log("Interaction called")
+    if (currentNode instanceof Question || currentNode instanceof trickQuestion) {
+        initiateQuestion();
+    } else if (currentNode instanceof Monologue) {
+        startNextNode();
+    } else if (currentNode instanceof Video) {
+        trackVideo()
+    } else {
+        setTimeout(function () {
+            window.location.reload(1); // reload page on end
+        }, 3500);
+    }
+}
+
+function initiateQuestion() {
+    setAnswers(currentNode, understood);
+    clearResult();
+    startRecording();
+}
+
+// tracks if video is play or not
+function trackVideo() {
+    video = document.getElementById("video");
+    if (video.paused) {
+        startNextNode();
+    } else {
+        video.addEventListener('pause', (event) => { startNextNode(); }, { once: true });
+    }
+}
+
+function startNextNode() {
+    currentNode = currentNode.nextNode;
+    nodeStart();
+}
+
+function startRecording() {
+    kaldi.listening = true;
 }
 
 function checkUserInput(result) {
