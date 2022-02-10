@@ -3,12 +3,12 @@
 /************* SVENSKA *************/
 
 const intro = {
-    "sentence": "Hej! Jag heter Alf och hjälper till här i tandvården. Vill du lära dig hur du använder tandtråd på bästa sätt? Du kan svara genom tal eller med att trycka på min skärm.",
+    "sentence": "Hej! Jag heter Snow och hjälper till här i tandvården. Vill du lära dig hur du använder tandtråd på bästa sätt? Du kan svara genom tal eller med att trycka på min skärm.",
     "continue_no": "Nej",
     "continue_yes": "Ja"
 };
 
-const cancel = "Ha en trevlig dag!"
+const cancel = "Okej. <break time='0.5s'/> Ha en trevlig dag!"
 
 const sentence_video = {
     "sentence": "Fint. Det är omöjligt att göra rent mellan tänderna med en vanlig tandborste. Tandköttsinflammationer och kariesangrepp \

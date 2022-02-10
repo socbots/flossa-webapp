@@ -7,7 +7,7 @@ function createSpeechFunction() {
     const context = new AudioContext();
 
     let textToSpeech = (text) => {
-        let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE&rate=1.4"
+        let url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE&gender=FEMALE-A&rate=1.3&pitch=1.2"
         fetch(url)
             .then(response => response.arrayBuffer())
             .then(buffer => context.decodeAudioData(buffer)) // Being called on startup, needs more logic?
