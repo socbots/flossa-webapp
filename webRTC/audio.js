@@ -7,11 +7,11 @@ let idle = true;
 
 async function kaldiMain() {
     // Initializes the kaldiweb class. The 2nd param is the name of the model to download/use.
-    kaldi = new KaldiWeb.KaldiASR("https://johan.onl/models", "swedish_v2");
+    kaldi = new KaldiWeb.KaldiASR("https://socbots-flask-production-socbots-flask.rahtiapp.fi/models", "swedish_v2");
     // getUserMedia
     await kaldi.askForMicrophone();
     // Download the model and start listening.
-    console.log("Initiating kaldi");
+    console.log("[kaldiMain] Initiating kaldi");
     await kaldi.init();
     // Set kaldi to not listen until other parts of the app are ready.
     //kaldi.listening = false;
@@ -21,18 +21,14 @@ kaldiMain();
 
 
 function handleSpeech(transcription, isFinal) {
-    const sorryThreshold = 1;
+    const sorryThreshold = 2;
 
-    console.log("Transcription:", transcription);
+    console.log("[handleSpeech] Transcription:", transcription);
     document.getElementById("result").textContent = transcription;
     answerFound = checkUserInput(transcription, isFinal);
     kaldi.listening = false;
-    console.log("kaldi.listening=", kaldi.listening);
-    console.log("answerFound state=", answerFound);
-    console.log("isFinal=", isFinal);
-    console.log("notUnderstoodCount=", notUnderstoodCount);
     if (answerFound) {
-        console.log("answerFound, going to next node");
+        console.log("[handleSpeech] answerFound, going to next node");
         notUnderstoodCount = 0;
         nodeStart(understood = true);
     } else if (isFinal && notUnderstoodCount >= sorryThreshold) {
@@ -63,13 +59,11 @@ function handleVoiceActivation(transcription, isFinal) {
     const sentence = transcription.toLowerCase();
     // Loop through the words, start interaction tree if a word is found
     for (const w of activationWords) {
-        console.log("w=", w);
-        console.log("sentence=", sentence);
         if (sentence.includes(w)) {
             idle = false;
             changeInterfaceIntoInteraction();
             nodeStart();
-            console.log("activate");
+            console.log("[handleVoiceActivation] Activation word found");
             break;
         }
     }
@@ -87,7 +81,7 @@ window.addEventListener("onTranscription", (msg) => {
     if (idle && transcription) {
         handleVoiceActivation(transcription, isFinal);
     }
-    else if (transcription && !isSpeaking) {
+    else if (transcription) {
         handleSpeech(transcription, isFinal);
     }
 });
