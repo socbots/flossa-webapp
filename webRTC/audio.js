@@ -97,12 +97,6 @@ function handleSuccess(stream) {
         }, refreshInterval);
 
 
-        mediaRecorder.onresult = (e) => {
-            console.log(e);
-            result.innerHTML = e.results[0][0].transcript;
-            checkUserInput(e.results[0][0].transcript)
-        };
-
 
         mediaRecorder.onstop = () => {
             isRec = false;
@@ -130,7 +124,7 @@ function handleSuccess(stream) {
                         checkUserInput(result);
                     } else {
                         console.log("No result from success")
-                        nodeStart(understood = true);
+                        nodeStart(false);
                     }
                 })
                 .catch((error) => {
