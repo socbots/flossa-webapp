@@ -25,14 +25,14 @@ function setGesture(movement) {
     const targets = {
         'raspberry': "http://192.168.1.34",
         'herokuapp': "http://alfsse.herokuapp.com/move", //Currently down?
-        'aws': 'https://sse.johan.onl/move',
+        'rahti': 'https://socbots-flask-production-socbots-flask.rahtiapp.fi/move',
     }
 
     // Delay to customize timings of gesture
     // default = 0ms
     setTimeout(() => {
         // select target and set url
-        target = 'aws'
+        target = 'rahti'
         url = targets[target]
         fetch(url, {
                 method: 'POST',
