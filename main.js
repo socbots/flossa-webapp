@@ -30,13 +30,6 @@ function setVideo(node) {
 
         // Scroll page to top to orient user for video
         window.scrollTo(0, 1);
-
-        setTimeout(() => {
-            document.getElementById("iframeModal").style.display = "none";
-            video.pause(); //stop video
-            currentNode = currentNode.nextNode;
-            nodeStart();
-        }, currentNode.videoDuration);
     }, currentNode.videoDelayStart);
 }
 
