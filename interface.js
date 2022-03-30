@@ -12,7 +12,6 @@ speakButton.onclick = function () {
 function changeInterfaceIntoInteraction() {
     startWrapper.style.display = "none";
     answerContainer.style.display = "flex";
-    superImage.style.display = "block";
 }
 
 /* Sets text/explanation before container that holds stt result */
@@ -56,17 +55,17 @@ document.querySelector("#fullscreen-request").addEventListener("click", async (e
 
 // Also now shows "filler-image"
 function hideButtons() {
-    document.getElementById("answer-container").style.display = "none"
+    document.querySelector("#node-A").style.display = "none";
+    document.querySelector("#node-B").style.display = "none";
+    document.querySelector("#node-C").style.display = "none";
+    document.getElementById("answer-container").style.display = "flex"
     document.querySelector("#microphone-listening").style.display = "none";
-    document.getElementById("filler-image").style.display = "block";
 }
 
 
 // Shows/hides answer buttons with CSS
 function showButtons(element, nodeAnswer) {
     document.getElementById("answer-container").style.display = "flex"
-    // Hide filler-image
-    document.getElementById("filler-image").style.display = "none";
     // Show microphone listening animation
     document.querySelector("#microphone-listening").style.display = "flex";
     // Show buttons
@@ -75,8 +74,6 @@ function showButtons(element, nodeAnswer) {
     if (nodeAnswer == undefined) {
         element.style.display = "none";
     }
-    // Show button backdrop
-    document.getElementById("button-backdrop").style.display = "block";
 }
 
 // returns a list of the node Answers in lower case

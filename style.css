@@ -13,7 +13,7 @@
     --shade-d: rgba(0, 53, 158, 1);
     --shade-e: rgba(0, 31, 128, 1);
 
-    
+
     /* Extracted using gimp, apperently not the same as above */
     --footer-shade-top: rgba(103, 144, 247, 1);
     --footer-shade-mid: rgba(76, 94, 214, 1);
@@ -26,22 +26,30 @@ html {
     font-family: Arial, Helvetica, sans-serif;
     font-size: x-large;
     color: var(--main-text-color);
-    margin:0; padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     background-color: var(--main-bg-color);
     overflow: hidden;
-    margin:0; padding: 0; /* Bug? */
+    margin: 0;
+    padding: 0;
 }
 
+/* Main grid container for positioning the layout */
+#main-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 10vh);
+    place-items: center;
+}
 
-/* Container for "Vad jag hörde:" transform for centering*/
 #fullscreen-request {
-    position: absolute;
+    /* grid-area = start-row / start-column / How many rows right / How many cols down */
+    grid-area: 1 / 1 / span 1 / span 1;
     margin: 1em;
     text-align: center;
-    position: absolute;
     cursor: zoom-in;
     width: 30px;
     height: 30px;
@@ -51,21 +59,21 @@ body {
     font-size: medium;
     border-radius: 6px;
     outline: var(--shade-button-outline) solid 10px;
-
 }
 
+/* Container for "Vad jag hörde:"*/
 .feedback-container {
+    grid-area: 1 / 4 / span 2 / span 4;
+    text-align: center;
+    height: 100%;
+    width: 100%;
     pointer-events: none;
     background-color: var(--main-bg-color);
     font-size: xx-large;
     min-height: 3em;
-    position: absolute;
-    top: 1em;
-    left: 50%;
-    transform: translate(-50%, 0);
 }
 
-.hint{
+.hint {
     font-size: small;
     font-style: italic;
     padding-bottom: 2em;
@@ -74,14 +82,13 @@ body {
 
 /* Holds answering buttons and text */
 .interface {
-    width: 40em;
-    position: absolute;
-    top: 16em;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    grid-area: 5 / 1 / span 2 / span 10;
+    width: 100%;
     text-align: center;
-    padding: 5em, 5em, 0em, 5em;
+    display: grid;
+    place-items: center;
 }
+
 
 
 /* Hides some buttons on start */
@@ -90,29 +97,28 @@ body {
     display: none;
     place-items: center;
     flex-direction: column;
+    padding: 1em;
+    border-radius: 0.5em;
+    width: 70%;
+    min-width: 20rem;
+    max-width: 30rem;
+    background-color: var(--shade-button-outline);
 }
 
-.button-container {
+.width-70 {
     width: 70%;
 }
 
-#speak-container{
-    padding-bottom:1em;
+.width-100 {
+    width: 100%;
+}
+
+#speak-container {
+    padding-bottom: 1em;
 }
 
 #canvasBtn {
     display: none;
-}
-
-#button-backdrop{
-    padding: 1em;
-    border-radius: 0.5em;
-    position: absolute;
-    z-index: -100;
-    width: 70%;
-    height: 100%;
-    bottom: -0.6em;
-    background-color: var(--shade-button-outline);
 }
 
 
@@ -144,25 +150,28 @@ input[type=button]:disabled {
     color: var(--button-disabled-text-color);
 }
 
-button:hover{
+button:hover {
     background-color: var(--shade-a);
     cursor: pointer;
 }
 
 /* The initial speak button */
+#start-wrapper {
+    width: 100%;
+    min-width: 15rem;
+}
+
 #speak {
     width: 70%;
-    outline: var(--shade-button-outline) solid 1em;
+    min-width: 20rem;
+    max-width: 30rem;
+    outline: var(--shade-button-outline) solid 1rem;
 }
 
 
 /* Position the image under everything and somewhat in the middle  */
 #filler-image {
     display: none;
-    position: absolute;
-    z-index: -100;
-    top: 50%;
-    left: 50%;
     width: 600px;
     height: 400px;
     margin-top: -200px;
@@ -245,6 +254,7 @@ button:hover{
         height: 20%;
         background: var(--shade-e)
     }
+
     50% {
         height: 100%;
         background: var(--shade-a)
@@ -277,16 +287,16 @@ footer {
     width: 100%;
     overflow: hidden;
     z-index: -99;
-  }
+}
 
-  .footer-bot{
+.footer-bot {
     fill: var(--footer-shade-bot);
 }
 
-.footer-mid{
+.footer-mid {
     fill: var(--footer-shade-mid);
 }
 
-.footer-top{
+.footer-top {
     fill: var(--footer-shade-top);
 }
