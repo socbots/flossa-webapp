@@ -38,7 +38,7 @@ class trickQuestion {
         this.nodeCAnswer = nodeCAnswer;
         this.movement = movement;
     }
-    setNextNode(node) {
+    setNodes(node) {
         this.nextNode = node;
     }
     setMovement(gesture, time = 0) {
@@ -54,7 +54,7 @@ class Monologue {
         this.nextNode = nextNode;
         this.movement = movement;
     }
-    setNextNode(node) {
+    setNodes(node) {
         this.nextNode = node;
     }
     setMovement(gesture, time = 0) {
@@ -72,7 +72,7 @@ class Video {
         this.video = video;
         this.movement = movement;
     }
-    setNextNode(node) {
+    setNodes(node) {
         this.nextNode = node;
     }
     setVideo(video, videoDelayStart = 0, videoDuration = 10000) {
@@ -97,56 +97,74 @@ class EndTree {
     }
 }
 
-/************* Interaction Tree *************/
-// dialog found in text.js
-// emote list for gestures found in gesture.js
-// We create the children and then the next line before an empty line we set the children to their parent node.
+/** Interaction Tree */
 function createTree() {
-    // startNode == Root Node
-    let startNode = new Question(intro.sentence, intro.continue_no, intro.continue_yes);
-    startNode.setMovement(emoteList.wave_left); //Make Alf wave
+    /** Make all nodes */
+    let startNode = new Monologue(welcome.sentence);
+    const presentNode = new Monologue(present_purpose.sentence);
+    const questionNode_01 = new Question(question_01.sentence, question_01.flossa, question_01.brush, question_01.stop);
+    const questionNode_01_alternative = new Question(question_01_alternative.sentence, question_01_alternative.flossa, question_01_alternative.brush, question_01_alternative.stop);
 
-    //video tutorial node
-    const videoTutorialNode = new Video(tts = sentence_video.sentence);
-    videoTutorialNode.setVideo(
+    /** Make Flossa Nodes*/
+    const flossa_startNode = new Monologue(flossa_start.sentence);
+    const flossa_videoNode_01 = new Video(tts = flossa_video_01.sentence);
+    const flossa_monologueNode_01 = new Monologue(flossa_monologue_01.sentence);
+    const flossa_questionNode_01 = new trickQuestion(flossa_question_01.sentence, flossa_question_01.answerA, flossa_question_01.answerB, flossa_question_01.answerC);
+    const flossa_questionNode_01_monologueResponse = new Monologue(flossa_question_01_response.sentence);
+    const flossa_questionNode_02 = new Question(flossa_question_02.sentence, flossa_question_02.answerA, flossa_question_02.answerB, flossa_question_02.answerC);
+    const flossa_questionNode_02_correctAnswer = new Monologue(flossa_question_02.correct);
+    const flossa_questionNode_02_wrongAnswer = new Monologue(flossa_question_02.wrong);
+    const flossa_endNode = new Monologue(flossa_end.sentence);
+
+    /** Make Brushing nodes*/
+    const brushing_startNode = new Monologue(brushing_start.sentence);
+    const brushing_monologueNode_01 = new Monologue(brushing_monologue_01.point_01);
+    const brushing_monologueNode_02 = new Monologue(brushing_monologue_01.point_02);
+    const brushing_monologueNode_03 = new Monologue(brushing_monologue_01.point_03);
+    const brushing_monologueNode_04 = new Monologue(brushing_monologue_01.point_04);
+    const brushing_monologueNode_05 = new Monologue(brushing_monologue_01.point_05);
+    const brushing_monologueNode_06 = new Monologue(brushing_monologue_02.sentence);
+    const brushing_questionNode_01 = new Question(brushing_question_01.sentence, brushing_question_01.answerA, brushing_question_01.answerB);
+    const brushing_questionNode_01_correctAnswer = new Monologue(brushing_question_01.correct)
+    const brushing_questionNode_01_wrongAnswer = new Monologue(brushing_question_01.wrong);
+    const brushing_endNode = new Monologue(brushing_end.sentence);
+
+    /** Make endTree/stopNode */
+    const stopNode = new EndTree(outro.sentence, );
+
+    /** Set all child nodes to correct parent */
+    startNode.setNodes(presentNode);
+    presentNode.setNodes(questionNode_01);
+    questionNode_01.setNodes(flossa_startNode, brushing_startNode, stopNode);
+    questionNode_01_alternative.setNodes(flossa_startNode, brushing_startNode, stopNode);
+    /** Flossa */
+    flossa_startNode.setNodes(flossa_videoNode_01);
+    flossa_videoNode_01.setNodes(flossa_monologueNode_01);
+    flossa_monologueNode_01.setNodes(flossa_questionNode_01);
+    flossa_questionNode_01.setNodes(flossa_questionNode_01_monologueResponse);
+    flossa_questionNode_01_monologueResponse.setNodes(flossa_questionNode_02);
+    flossa_questionNode_02.setNodes(flossa_questionNode_02_correctAnswer, flossa_questionNode_02_wrongAnswer, flossa_questionNode_02_wrongAnswer);
+    flossa_questionNode_02_correctAnswer.setNodes(flossa_endNode);
+    flossa_questionNode_02_wrongAnswer.setNodes(flossa_endNode);
+    flossa_endNode.setNodes(questionNode_01_alternative);
+    /** Brushing */
+    brushing_startNode.setNodes(brushing_monologueNode_01);
+    brushing_monologueNode_01.setNodes(brushing_monologueNode_02);
+    brushing_monologueNode_02.setNodes(brushing_monologueNode_03);
+    brushing_monologueNode_03.setNodes(brushing_monologueNode_04);
+    brushing_monologueNode_04.setNodes(brushing_monologueNode_05);
+    brushing_monologueNode_05.setNodes(brushing_monologueNode_06);
+    brushing_monologueNode_06.setNodes(brushing_questionNode_01);
+    brushing_questionNode_01.setNodes(brushing_questionNode_01_correctAnswer, brushing_questionNode_01_wrongAnswer)
+    brushing_questionNode_01_correctAnswer.setNodes(brushing_endNode);
+    brushing_questionNode_01_wrongAnswer.setNodes(brushing_endNode);
+    brushing_endNode.setNodes(questionNode_01_alternative);
+
+    /** Set flossa video on flossa video node */
+    flossa_videoNode_01.setVideo(
         "./media/tutorial540p.mp4#t=12",
-        videoDelayStart = 13000, videoDuration = 16000
-    );
-    videoTutorialNode.setMovement(emoteList.look_down, 12000); //Make Alf look down (on the screen, delayed until video starts)
-    startNode.setNodes(new EndTree(cancel, ), videoTutorialNode);
-
-    //question 01
-    const questionNode01 = new trickQuestion(question_01.sentence, question_01.answerA, question_01.answerB, question_01.answerC);
-    videoTutorialNode.setNextNode(nextNode = questionNode01);
-    questionNode01.setMovement(emoteList.look_up); //Make Alf look back up for question
-
-    //monologue 01
-    const monologueNode01 = new Monologue(
-        monologue_01.sentence
+        videoDelayStart = 12000, videoDuration = 20000
     );
 
-    // Set monologue on question 01
-    questionNode01.setNextNode(monologueNode01);
-
-    //question 02
-    const questionNode02 = new Question(question_02.sentence, question_02.answerA, question_02.answerB, question_02.answerC);
-    monologueNode01.setNextNode(nextNode = questionNode02);
-
-    //question 02 correct answer
-    const questionNode02Correct = new Monologue(
-        question_02.correct,
-    );
-    //question 02 wrong answer
-    const questionNode02Wrong = new Monologue(
-        question_02.wrong,
-    );
-    questionNode02.setNodes(questionNode02Correct, questionNode02Wrong, questionNode02Wrong);
-
-    questionNode02Correct.setNextNode(new EndTree(outro));
-    questionNode02Wrong.setNextNode(new EndTree(outro));
     return startNode;
-}
-
-function getAbortNode() {
-    return new EndTree(cancel)
 }
