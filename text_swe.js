@@ -31,7 +31,7 @@ const welcome = {
 }
 
 const present_purpose = {
-    "sentence": "Jag brukar informera gäster och personal här i huset om olika saker <break time='0.5s'/> och just idag informera jag om tandvård."
+    "sentence": "Jag brukar informera gäster och personal här i huset om olika saker <break time='0.5s'/> och just idag informerar jag om tandvård."
 }
 
 const question_01 = {
