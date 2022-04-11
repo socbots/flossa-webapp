@@ -13,7 +13,7 @@ function createSpeechFunction() {
     }
 
     function playAudio(audioBuffer) {
-        kaldi.listening = false;
+        STT.recording = false;
         const source = context.createBufferSource();
         source.buffer = audioBuffer;
         source.connect(context.destination);
