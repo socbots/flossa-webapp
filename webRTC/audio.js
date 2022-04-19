@@ -4,10 +4,10 @@ let answerFound = false;
 let kaldi;
 let notUnderstoodCount = 0;
 let idle = true;
-
+let activationWords = appLanguage === "swe" ? activationWordsSwe : activationWordsEng;
 async function kaldiMain() {
     // Initializes the kaldiweb class. The 2nd param is the name of the model to download/use.
-    kaldi = new KaldiWeb.KaldiASR("https://socbots-flask-production-socbots-flask.rahtiapp.fi/models", "swedish_v2");
+    kaldi = new KaldiWeb.KaldiASR("https://socbots-flask-production-socbots-flask.rahtiapp.fi/models", "english");//"swedish_v2");
     // getUserMedia
     await kaldi.askForMicrophone();
     // Download the model and start listening.

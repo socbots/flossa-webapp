@@ -40,8 +40,9 @@ function setVideo(node) {
 
 function setTTS(node, understood = true) {
     // TTS API uses SSML so the text should be within <speak> tags
-    // Formats SSML or sends sorry_repeat if not understood
-    const text = understood ? '<speak>' + node.tts + '</speak>' : sorry_repeat;
+    // Formats SSML or sends sorryRepeat if not understood
+    const sorryRepeat = appLanguage === "swe" ? sorryRepeatSwe : sorryRepeatEng;
+    const text = understood ? '<speak>' + node.tts + '</speak>' : sorryRepeat;
 
     // SSML format for breaks
     const point = text.search("<break");
@@ -56,7 +57,8 @@ function setTTS(node, understood = true) {
 
 // Legacy function for building SSML repetition of full node dialoge
 function repeat_question(node) {
-    s = '<speak>' + sorry_repeat + node.tts + '</speak>';
+    const sorryRepeat = appLanguage === "swe" ? sorryRepeatSwe : sorryRepeatEng;
+    s = '<speak>' + sorryRepeat + node.tts + '</speak>';
     return s
 }
 
