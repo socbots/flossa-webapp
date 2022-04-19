@@ -1,5 +1,5 @@
 //application initiazation
-appLanguage = "swe"
+const appLanguage = "eng"
 let development_testing = true
 let currentdate = new Date();
 console.log("Welcome to Flossa V2")

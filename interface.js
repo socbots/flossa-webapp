@@ -5,6 +5,7 @@ var speakButton = document.getElementById("speak");
 var answerContainer = document.getElementById("answer-container");
 var startWrapper = document.getElementById("start-wrapper");
 var superImage = document.getElementById("filler-image");
+const feedBackContainerBefore = appLanguage === "swe" ? feedBackContainerBeforeSwe : feedBackContainerBeforeEng;
 speakButton.onclick = function () {
     changeInterfaceIntoInteraction(); // Splitted into function to be reused in audio.js
 }
@@ -15,7 +16,7 @@ function changeInterfaceIntoInteraction() {
 }
 
 /* Sets text/explanation before container that holds stt result */
-document.getElementById("feedback-container-before").innerHTML = feedback_container_before
+document.getElementById("feedback-container-before").innerHTML = feedBackContainerBefore
 
 
 /**
