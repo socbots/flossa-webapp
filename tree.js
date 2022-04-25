@@ -58,7 +58,7 @@ class Monologue {
         this.nextNode = node;
     }
     setMovement(gesture, time = 0) {
-        this._movement = { gesture, time }
+        this.movement = { gesture, time }
     }
 }
 
@@ -104,11 +104,11 @@ class EndTree {
 function createTree() {
     // startNode == Root Node
     let startNode = new Question(intro.sentence, intro.present, intro.say, intro.deaf);
+    startNode.setMovement(emoteList.look_up)
 
     const presentNode = new Monologue(
         present_txt
     );
-    presentNode.setMovement(emoteList.wave_left, 3500);
 
     const presentContinueNode = new Monologue(
         present_continue_txt
@@ -117,13 +117,12 @@ function createTree() {
     const sayNode = new Monologue(
         say_txt
     );
-    sayNode.setMovement(emoteList.look_up, 3500);
 
     const deafNode = new Monologue(
         deaf_txt
     );
 
-    const slut = new EndTree("", );
+    const slut = new EndTree("",);
 
     startNode.setNodes(presentNode, sayNode, deafNode)
     presentNode.setNextNode(presentContinueNode)
@@ -131,6 +130,8 @@ function createTree() {
     deafNode.setNextNode(slut)
     presentContinueNode.setNextNode(slut)
 
+    presentNode.setMovement(emoteList.wave_left, 3500);
+    sayNode.setMovement(emoteList.look_up, 3500);
     return startNode;
 }
 
