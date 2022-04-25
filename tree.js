@@ -127,9 +127,9 @@ function createTree() {
 
     startNode.setNodes(presentNode, sayNode, deafNode)
     presentNode.setNextNode(presentContinueNode)
-    presentContinueNode.setNextNode(slut)
     sayNode.setNextNode(slut)
     deafNode.setNextNode(slut)
+    presentContinueNode.setNextNode(slut)
 
     return startNode;
 }

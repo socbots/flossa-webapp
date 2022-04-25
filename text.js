@@ -6,7 +6,7 @@ const intro = {
     "sentence": "Hej! Vänligen välj scen",
     "present": "Presentera",
     "say":"VAD man vill NÄR man vill",
-    "deaf": "vad sa du?"
+    "deaf": "Förstod inte vad du menade?"
 
 };
 
