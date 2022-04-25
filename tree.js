@@ -103,47 +103,34 @@ class EndTree {
 // We create the children and then the next line before an empty line we set the children to their parent node.
 function createTree() {
     // startNode == Root Node
-    let startNode = new Question(intro.sentence, intro.continue_no, intro.continue_yes);
-    startNode.setMovement(emoteList.wave_left); //Make Alf wave
+    let startNode = new Question(intro.sentence, intro.present, intro.say, intro.deaf);
 
-    //video tutorial node
-    const videoTutorialNode = new Video(tts = sentence_video.sentence);
-    videoTutorialNode.setVideo(
-        "./media/tutorial540p.mp4#t=12",
-        videoDelayStart = 13000, videoDuration = 16000
+    const presentNode = new Monologue(
+        present_txt
     );
-    videoTutorialNode.setMovement(emoteList.look_down, 12000); //Make Alf look down (on the screen, delayed until video starts)
-    startNode.setNodes(new EndTree(cancel, ), videoTutorialNode);
+    presentNode.setMovement(emoteList.wave_left, 3500);
 
-    //question 01
-    const questionNode01 = new trickQuestion(question_01.sentence, question_01.answerA, question_01.answerB, question_01.answerC);
-    videoTutorialNode.setNextNode(nextNode = questionNode01);
-    questionNode01.setMovement(emoteList.look_up); //Make Alf look back up for question
-
-    //monologue 01
-    const monologueNode01 = new Monologue(
-        monologue_01.sentence
+    const presentContinueNode = new Monologue(
+        present_continue_txt
     );
 
-    // Set monologue on question 01
-    questionNode01.setNextNode(monologueNode01);
-
-    //question 02
-    const questionNode02 = new Question(question_02.sentence, question_02.answerA, question_02.answerB, question_02.answerC);
-    monologueNode01.setNextNode(nextNode = questionNode02);
-
-    //question 02 correct answer
-    const questionNode02Correct = new Monologue(
-        question_02.correct,
+    const sayNode = new Monologue(
+        say_txt
     );
-    //question 02 wrong answer
-    const questionNode02Wrong = new Monologue(
-        question_02.wrong,
-    );
-    questionNode02.setNodes(questionNode02Correct, questionNode02Wrong, questionNode02Wrong);
+    sayNode.setMovement(emoteList.look_up, 3500);
 
-    questionNode02Correct.setNextNode(new EndTree(outro));
-    questionNode02Wrong.setNextNode(new EndTree(outro));
+    const deafNode = new Monologue(
+        deaf_txt
+    );
+
+    const slut = new EndTree("", );
+
+    startNode.setNodes(presentNode, sayNode, deafNode)
+    presentNode.setNextNode(presentContinueNode)
+    presentContinueNode.setNextNode(slut)
+    sayNode.setNextNode(slut)
+    deafNode.setNextNode(slut)
+
     return startNode;
 }
 

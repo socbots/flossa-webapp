@@ -1,11 +1,11 @@
 html {
     font-family: Arial, Helvetica, sans-serif;
     font-size: x-large;
-    color: #FFFFFF;
+    color: #000000;
 }
 
 body {
-    background-color: #000000;
+    background-color: #ffffff;
 }
 
 
@@ -20,13 +20,13 @@ body {
     height: 30px;
     line-height: 30px;
     border-radius: 50%;
-    background-color: rgb(48, 49, 48);
+    background-color: rgb(102, 166, 226);
     font-size: medium;
 }
 
 .feedback-container {
     pointer-events: none;
-    background-color: rgb(0, 0, 0);
+    background-color: var(background-color);
     font-size: xx-large;
     min-height: 3em;
     position: absolute;
@@ -77,10 +77,11 @@ input[type=button] {
     padding: 0.8em 1.8em;
     margin: 0 0.4em 0.4em 0;
     border: 0.16em solid rgba(255, 255, 255, 0);
-    font-size: x-large;
+    border-radius: 1em;
+    font-size: xx-large;
     color: #FFFFFF;
     font-weight: bolder;
-    background-color: rgb(8, 125, 8);
+    background-color: rgb(73, 139, 201);
     text-align: center;
 }
 
@@ -105,10 +106,9 @@ input[type=button] {
     z-index: -1;
     top: 50%;
     left: 50%;
-    width: 600px;
-    height: 400px;
-    margin-top: -200px;
-    margin-left: -300px;
+    width: 1200px;
+    margin-top: -300px;
+    margin-left: -600px;
 }
 
 

@@ -44,9 +44,7 @@ function createSpeechFunction() {
                 currentNode = currentNode.nextNode;
                 nodeStart();
             } else {
-                setTimeout(function () {
-                    window.location.reload(1); // reload page on end
-                }, 3500);
+                console.log("reload me!");
             }
         }
     }

@@ -13,6 +13,18 @@ const emoteList = {
         bodyPart: "head",
         direction: "up",
         distance: 8
+    },
+    look_right: {
+        bodyPart: "head",
+        direction: "right",
+        distance: 8
+
+    },
+    look_left: {
+        bodyPart: "head",
+        direction: "left",
+        distance: 8
+
     }
 }
 
@@ -35,12 +47,12 @@ function setGesture(movement) {
         target = 'rahti'
         url = targets[target]
         fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(movement.gesture),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8'
-                }
-            })
+            method: 'POST',
+            body: JSON.stringify(movement.gesture),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
             .then(res => res.json())
             .then((res2) => {
                 console.log("gesture response from ", target, ": ", res2);

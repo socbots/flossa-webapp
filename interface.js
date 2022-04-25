@@ -14,6 +14,7 @@ speakButton.onclick = function() {
 
 /* Sets text/explanation before container that holds stt result */
 document.getElementById("feedback-container-before").innerHTML = feedback_container_before
+document.getElementById("result").style.display = "none"
 
 
 /**
