@@ -58,7 +58,7 @@ class Monologue {
         this.nextNode = node;
     }
     setMovement(gesture, time = 0) {
-        this._movement = { gesture, time }
+        this.movement = { gesture, time }
     }
 }
 
