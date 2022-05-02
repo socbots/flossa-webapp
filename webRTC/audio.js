@@ -2,7 +2,6 @@
 
 let answerFound = false;
 let kaldi;
-let notUnderstoodCount = 0;
 let idle = true;
 
 async function kaldiMain() {
@@ -29,21 +28,9 @@ function handleSpeech(transcription, isFinal) {
     kaldi.listening = false;
     if (answerFound) {
         console.log("[handleSpeech] answerFound, going to next node");
-        notUnderstoodCount = 0;
-        nodeStart(understood = true);
-    } else if (isFinal && notUnderstoodCount >= sorryThreshold) {
-        // Person has stopped speaking and gotten the wrong answer too many times
-        notUnderstoodCount++;
-        nodeStart(understood = false);
-    }
-    else if (isFinal) {
-        // Person has stopped speaking, no answer was found
-        // Increment wrong answer count and continue listening
-        notUnderstoodCount++;
-        kaldi.listening = true;
+        nodeStart();
     } else {
         // Answer was not found but the speaker is in the middle of a sentence
-        // So not triggering 'not understood' audio
         // Only listening for new answers again
         kaldi.listening = true;
     }

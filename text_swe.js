@@ -2,9 +2,6 @@
 
 /************* SVENSKA *************/
 
-// used when user responds in a way the stt can't compute
-const sorry_repeat = '<speak> Jag förstod inte vad du menade? <break time="1s"/></speak>'
-
 // used for user feedback
 const feedback_container_before = "Vad jag hörde: "
 

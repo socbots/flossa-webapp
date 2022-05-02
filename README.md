@@ -24,7 +24,7 @@ Interaction app for Flossa V2, using Kaldi and Snow
 -   Each dialogue goes through textToSpeech() in *speech.js* to query for audio files.
 -   Recording is controlled with `isRec()` variable.
     - Audio user input is handled with **webRTC && Kaldi**
-    - User input outside scope of childnodes gets passed through `nodeStart()` with `currentNode` and attribute `understood` set to false
+    - User input outside scope of childnodes gets passed through `nodeStart()` with `currentNode`
 -   Depending on class and user input, childnode is set to `currentNode`.
 -   New `currentNode` is activated with `nodeStart()`
 -   Tree ends with node class `EndTree`

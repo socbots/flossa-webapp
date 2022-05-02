@@ -1,5 +1,5 @@
 // This function starts and moves the dialog onwards 
-function nodeStart(understood = true) {
+function nodeStart() {
     // Hide buttons and show background
     hideButtons();
     // If we have movement, set it
@@ -10,7 +10,7 @@ function nodeStart(understood = true) {
     if (currentNode instanceof Video) {
         setVideo(currentNode);
     } else {
-        setTTS(currentNode, understood);
+        setTTS(currentNode);
     }
 }
 
@@ -38,10 +38,10 @@ function setVideo(node) {
 
 }
 
-function setTTS(node, understood = true) {
+function setTTS(node) {
     // TTS API uses SSML so the text should be within <speak> tags
-    // Formats SSML or sends sorry_repeat if not understood
-    const text = understood ? '<speak>' + node.tts + '</speak>' : sorry_repeat;
+    // Formats SSML
+    const text = '<speak>' + node.tts + '</speak>';
 
     // SSML format for breaks
     const point = text.search("<break");
@@ -52,12 +52,6 @@ function setTTS(node, understood = true) {
     container.innerHTML = text;
 
     textToSpeech(text);
-}
-
-// Legacy function for building SSML repetition of full node dialoge
-function repeat_question(node) {
-    s = '<speak>' + sorry_repeat + node.tts + '</speak>';
-    return s
 }
 
 function interaction() {
@@ -76,7 +70,7 @@ function interaction() {
 }
 
 function initiateQuestion() {
-    setAnswers(currentNode, understood);
+    setAnswers(currentNode);
     clearResult();
     startRecording();
 }
@@ -106,8 +100,7 @@ function checkUserInput(result) {
 
     result = result.toLowerCase(); //set to lower case
     let results = result.split(" ");
-    // If we cant find a match for the input our user gives we startDialog with the current node and set the understood parameter to true
-    for (const r of results) {
+    // If we cant find a match for the input our user gives we startDialog with the current node
         // Test the user input against nodes if answers in our nodes.
         // We only check the first word
         if (answers[0].split(" ")[0] == r) {
@@ -126,7 +119,6 @@ function checkUserInput(result) {
             currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeC
             return true;
         }
-    }
     //If we didn't find an answer, but still got a response from the STT we just restart the recording again
     kaldi.listening = true;
     return false;
@@ -138,7 +130,6 @@ function checkUserInput(result) {
 // Create node tree from tree.js, save rootNode incase of reset
 const rootNode = createTree();
 let currentNode = rootNode;
-let understood = true;
 
 // Call and create functions from the speech.js file
 let textToSpeech = createSpeechFunction();
