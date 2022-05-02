@@ -91,7 +91,7 @@ function startNextNode() {
 }
 
 function startRecording() {
-    kaldi.listening = true;
+    STT.recording = true;
 }
 
 function checkUserInput(result) {
@@ -120,12 +120,10 @@ function checkUserInput(result) {
             return true;
         }
     //If we didn't find an answer, but still got a response from the STT we just restart the recording again
-    kaldi.listening = true;
+    STT.recording = true;
     return false;
 }
 
-// Test to trigger microphone and audio request from browser
-// kaldi.listening = false; // Kaldi hasn't been initialized yet.
 
 // Create node tree from tree.js, save rootNode incase of reset
 const rootNode = createTree();
@@ -140,7 +138,7 @@ setButtonListeners();
 // Initialization
 document.getElementById("speak").addEventListener("click", () => {
     currentNode = rootNode;
-    // Disable kaldi voice activation
+    // Disable voice activation
     idle = false;
     nodeStart(currentNode)
 })

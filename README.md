@@ -83,3 +83,80 @@ When node has been passed through tts it goes to
 Shows how the application and its surrounding systems work in conjunction.
 - Coming soon&trade;
 
+## GenerateTree Node types
+**monologue**
+```
+{
+	type: "monologue",
+	sentence: "foobar",
+	nextNode: {
+		...
+	},
+}
+```
+**question**
+answer and node C optional
+```
+{
+	type: "question",
+	sentence: "foobar",
+	answerA: "ansA",
+	nodeA: {
+		...
+	},
+	answerB: "ansB",
+	nodeB: {
+		...
+	},
+	answerC: "ansC",
+	nodeC: {
+		...
+	},
+}
+```
+**trickQuestion**
+answer C optional
+```
+{
+	type: "trickQuestion",
+	sentence: "foobar",
+	answerA: "ansA",
+	answerB: "ansB",
+	answerC: "ansC",
+	nextNode: {
+		...
+	},
+}
+```
+**monologue**
+```
+{
+	type: "monologue",
+	sentence: "foobar",
+	nextNode: {
+		...
+	},
+}
+```
+**video**
+```
+{
+	type: "video",
+	sentence: "foobar",
+	videoUrl: "url",
+	videoDelayStart: 123,
+	videoDuration: 123,
+	nextNode: {
+		...
+	},
+}
+```
+**reset**
+```
+{
+	type: "reset",
+	sentence: "foobar"
+	nextNode? Name of node that was saved as a variable,
+	or just first node in the tree?
+}
+```

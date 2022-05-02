@@ -13,7 +13,7 @@ function createSpeechFunction() {
     }
 
     function playAudio(audioBuffer) {
-        kaldi.listening = false;
+        STT.recording = false;
         const source = context.createBufferSource();
         source.buffer = audioBuffer;
         source.connect(context.destination);
@@ -30,9 +30,9 @@ function createSpeechFunction() {
 
 function makeUrl(lang, text){
     let url = ""
-    if (lang = "swe"){
+    if (lang === "swe"){
         url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE&gender=FEMALE-A&rate=1.3&pitch=1.2"  //swedish
-    } else if (lang = "eng"){
+    } else if (lang === "eng"){
         url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=en-US&gender=FEMALE&rate=1.2&pitch=1.5"    //english
     } else {
         url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=en-US&gender=FEMALE&rate=1.2&pitch=1.5"    //default --english
