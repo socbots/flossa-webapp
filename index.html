@@ -7,12 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="import" href="wave-footer.html" id="wave-footer">
-    <title>Flossa English V2 with Coqui</title>
+    <title>Flossa V2 with Coqui</title>
 </head>
 
 <body>
     <div id="main-grid">
         <div id="fullscreen-request">&#x26F6;</div>
+        <div class="app-language-container">
+            <label class="toggle">
+                <input id="app-language" type="checkbox">
+                <span  class="labels" data-on="eng" data-off="swe"></span>
+            </label>
+        </div>
         <div class="feedback-container">
             <div id="feedback-container-before"></div>
             <div id="microphone-listening">
@@ -24,8 +30,8 @@
         </div>
         <div class="interface">
             <div id="start-wrapper">
-                <div class="hint">Say 'hello' or 'computer' to start</div>
-                <input type="button" id="speak" value="Hej!" disabled=true aria-disabled="true">
+                <div id="hint">...</div>
+                <input type="button" id="speak" value="Hi" disabled=true aria-disabled="true">
             </div>
             <!-- Interactive buttons -->
             <div id="answer-container">
@@ -50,7 +56,6 @@
         <!-- The Modal -->
         <div id="iframeModal" class="modal">
             <div class="modal-content">
-                <span class="close" id="iframeClose">&times;</span>
                 <video id="video" width="0" height="0" frameborder="0" src=""></video>
             </div>
 
@@ -86,7 +91,7 @@
         </footer>
     </div>
     <!-- Imports -->
-    <!-- <script src="app_parameters.js" defer></script> -->
+    <script src="app_parameters.js" defer></script>
     <!-- Language -->
     <script src="text_swe.js" defer></script>
     <script src="text_eng.js" defer></script>

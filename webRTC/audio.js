@@ -187,7 +187,7 @@ function handleSpeech(transcription) {
     } else {
         // Answer was not found but the speaker is in the middle of a sentence
         // Only listening for new answers again
-        kaldi.listening = true;
+        //kaldi.listening = true;
     }
 }
 

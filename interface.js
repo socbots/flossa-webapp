@@ -1,11 +1,11 @@
 // Hides/shows buttons on initialization (by pressing "speak" button)
 
 // rewrite to proper functions!
-var speakButton = document.getElementById("speak");
-var answerContainer = document.getElementById("answer-container");
-var startWrapper = document.getElementById("start-wrapper");
-var superImage = document.getElementById("filler-image");
-const feedBackContainerBefore = appLanguage === "swe" ? feedBackContainerBeforeSwe : feedBackContainerBeforeEng;
+const speakButton = document.getElementById("speak");
+const answerContainer = document.getElementById("answer-container");
+const startWrapper = document.getElementById("start-wrapper");
+const superImage = document.getElementById("filler-image");
+
 speakButton.onclick = function () {
     changeInterfaceIntoInteraction(); // Splitted into function to be reused in audio.js
 }
@@ -16,8 +16,11 @@ function changeInterfaceIntoInteraction() {
 }
 
 /* Sets text/explanation before container that holds stt result */
-document.getElementById("feedback-container-before").innerHTML = feedBackContainerBefore
-
+document.getElementById("feedback-container-before").innerHTML = appLanguage === "swe" ? swe_feedback_container_before : eng_feedback_container_before;
+// sets button
+document.getElementById("speak").value = appLanguage === "swe" ? "Hej" : "Hello";
+// sets hint
+document.getElementById("hint").innerHTML = appLanguage === "swe" ? 'Säg "Hej", "Hejsan" eller "Börja" för att starta' : 'Say "Hello", "Start" or "Computer" to start';
 
 /**
  * Make the whole app fullscreen in order to hide the URL bar
@@ -120,12 +123,7 @@ function setButtonListeners() {
 // Modal for video
 function setIframeModal() {
     var iframeModal = document.getElementById("iframeModal");
-    var span = document.getElementById("iframeClose");
     iframeModal.style.display = "block";
-    // When the user clicks on <span> (x) close the modal
-    span.addEventListener('click', function () {
-        iframeModal.style.display = "none";
-    });
 }
 
 // Video properties, adjusted for Alf robot (2021)
@@ -148,3 +146,22 @@ window.addEventListener("onASRStart", (evt) => {
     document.querySelector("#speak").ariaDisabled = false;
     document.querySelector("#speak").disabled = false;
 })
+
+// Language toggle
+function toggleLanguage() {
+    if (idle == true) {
+        appLanguage = document.getElementById("app-language").checked == true ? "eng" : "swe";
+        const e1 = document.getElementById("feedback-container-before");
+        const e2 = document.getElementById("speak");
+        const e3 = document.getElementById("hint");
+        e1.innerHTML = appLanguage === "swe" ? swe_feedback_container_before : eng_feedback_container_before;
+        e2.value = appLanguage === "swe" ? "Hej" : "Hello";
+        e3.innerHTML = appLanguage === "swe" ? 'Säg "Hej", "Hejsan" eller "Börja" för att starta' : 'Say "Hello", "Start" or "Computer" to start';
+        currentNode = appLanguage === "swe" ? rootNodeSwe : rootNodeEng;
+        console.log("toggleLanguage: " + appLanguage);
+    }
+}
+
+document.getElementById("app-language").addEventListener("click", () => {
+    toggleLanguage();
+});

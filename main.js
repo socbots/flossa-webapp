@@ -101,6 +101,7 @@ function checkUserInput(result) {
     result = result.toLowerCase(); //set to lower case
     let results = result.split(" ");
     // If we cant find a match for the input our user gives we startDialog with the current node
+    for (const r of results) {
         // Test the user input against nodes if answers in our nodes.
         // We only check the first word
         if (answers[0].split(" ")[0] == r) {
@@ -119,26 +120,29 @@ function checkUserInput(result) {
             currentNode instanceof trickQuestion ? currentNode = currentNode.nextNode : currentNode = currentNode.nodeC
             return true;
         }
-    //If we didn't find an answer, but still got a response from the STT we just restart the recording again
-    STT.recording = true;
-    return false;
+        //If we didn't find an answer, but still got a response from the STT we just restart the recording again
+        STT.recording = true;
+        return false;
+    }
+
 }
+    // Create node tree from tree.js, save rootNode incase of reset
+    const rootNodeSwe = createTreeSwe();
+    const rootNodeEng = createTreeEng();
+    let currentNode = appLanguage === "swe" ? rootNodeSwe : rootNodeEng;
 
+    // Call and create functions from the speech.js file
+    let textToSpeech = createSpeechFunction();
 
-// Create node tree from tree.js, save rootNode incase of reset
-const rootNode = createTree();
-let currentNode = rootNode;
+    // Enable answer buttons
+    setButtonListeners();
 
-// Call and create functions from the speech.js file
-let textToSpeech = createSpeechFunction();
-
-// Enable answer buttons
-setButtonListeners();
-
-// Initialization
-document.getElementById("speak").addEventListener("click", () => {
-    currentNode = rootNode;
-    // Disable voice activation
-    idle = false;
-    nodeStart(currentNode)
-})
+    // Initialization
+    document.getElementById("speak").addEventListener("click", () => {
+        currentNode = appLanguage === "swe" ? rootNodeSwe : rootNodeEng;
+        // Disable voice activation
+        idle = false;
+        // Disable language toggle
+        document.getElementById("app-language").disabled = true;
+        nodeStart(currentNode)
+    })

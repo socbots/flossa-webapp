@@ -73,11 +73,12 @@ body {
     min-height: 3em;
 }
 
-.hint {
+#hint {
     font-size: small;
     font-style: italic;
     padding-bottom: 2em;
 }
+
 
 
 /* Holds answering buttons and text */
@@ -300,3 +301,79 @@ footer {
 .footer-top {
     fill: var(--footer-shade-top);
 }
+
+.app-language-container {
+        /* grid-area = start-row / start-column / How many rows right / How many cols down */
+        grid-area: 1 / 10 / span 1 / span 1;
+}
+
+/** Language toogle switch from: https://www.tutorialstonight.com/css-toggle-switch-with-text.php */
+.toggle {
+    --width: 80px;
+    --height: calc(var(--width) / 2);
+    position: relative;
+    display: inline-block;
+    width: var(--width);
+    height: var(--height);
+    cursor: pointer;
+  }
+
+  .toggle input {
+    display: none;
+  }
+
+  /*I hid them, muhaha*/
+  .toggle .labels {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 0px;
+    font-family: sans-serif;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+  }
+
+  .toggle .labels::after {
+    content: attr(data-off);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    color: #000000;
+    background-image: url("media/Flag_of_Sweden.svg.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: all 0.4s ease-in-out;
+  }
+
+  .toggle .labels::before {
+    content: attr(data-on);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: calc(var(--width) * -1);
+    height: 100%;
+    width: 100%;
+    color: #000000;
+    background-image: url("media/Flag_of_the_United_Kingdom.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-align: center;
+    transition: all 0.4s ease-in-out;
+  }
+
+  .toggle input:checked~.labels::after {
+    transform: translateX(var(--width));
+  }
+
+  .toggle input:checked~.labels::before {
+    transform: translateX(var(--width));
+  }
