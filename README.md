@@ -1,7 +1,7 @@
-# Flossa V2 Concept - Kaldi branch
-Interaction app for Flossa V2, using Kaldi and Snow
+# Flossa V2 Webinar Snaphot
 
-<span style="font-size:2em; color:#FF6666"> App must be run in Firefox on Snow</span>
+Dual language interaction app for Flossa V2, using Coqui-ai STT on Snow
+
 
 ## Preview
 
@@ -22,8 +22,8 @@ Interaction app for Flossa V2, using Kaldi and Snow
 -   `currentNode` keeps track of active node
 -   Child-nodes are set on parent-node to progress interaction
 -   Each dialogue goes through textToSpeech() in *speech.js* to query for audio files.
--   Recording is controlled with `isRec()` variable.
-    - Audio user input is handled with **webRTC && Kaldi**
+-   ~~Recording is controlled with `isRec()` variable.~~
+    - Audio user input is handled with **webRTC && Coqui-ai**
     - User input outside scope of childnodes gets passed through `nodeStart()` with `currentNode`
 -   Depending on class and user input, childnode is set to `currentNode`.
 -   New `currentNode` is activated with `nodeStart()`
@@ -31,17 +31,16 @@ Interaction app for Flossa V2, using Kaldi and Snow
 
 When node has been passed through tts it goes to
 - interaction()
-  - interaction handles node based on class and forwards to appropirate functionality
+  - interaction handles node based on class and forwards to appropriate functionality
 
 
-### text.js
+### text_swe.js & text_eng.js
 - Holds all text as dictionaries that are used in tree.js
 ### tree.js
 - Code for the interaction tree with 5 node classes
 - All nodes but Video class requires a string for tts
 - Make a parent node, then create the child node
-  - Then set the child node on the parent node
-
+- Then set the child node on the parent node
   - Question
     - Takes between 2-3 answers for a question
     - Set child nodes with setNodes
