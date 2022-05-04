@@ -125,6 +125,16 @@ function setButtonListeners() {
     })
 }
 
+function startRecording() {
+    STT.recording = true;
+    document.querySelector("#mute-button").innerHTML = "&#128266;"
+}
+
+function stopRecording() {
+    STT.recording = false
+    document.querySelector("#mute-button").innerHTML = "&#128263;"
+}
+
 // Modal for video
 function setIframeModal() {
     var iframeModal = document.getElementById("iframeModal");
@@ -170,11 +180,9 @@ function toggleLanguage() {
 function toggleMute() {
     if (idle == true) {
         if (STT.recording == true) {
-            document.querySelector("#mute-button").innerHTML = "&#128263;"
-            STT.recording = false
+            stopRecording()
         } else {
-            document.querySelector("#mute-button").innerHTML = "&#128266;"
-            STT.recording = true
+            startRecording()
         }
     }
 }

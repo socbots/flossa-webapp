@@ -178,7 +178,7 @@ function handleSpeech(transcription) {
     console.log("[handleSpeech] Transcription:", transcription);
     document.getElementById("result").textContent = transcription;
     answerFound = checkUserInput(transcription);
-    STT.recording = false;
+    stopRecording();
     if (answerFound) {
         console.log("[handleSpeech] answerFound, going to next node");
         nodeStart();

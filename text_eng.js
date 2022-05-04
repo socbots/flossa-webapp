@@ -54,10 +54,11 @@ const eng_flossa_start = {
 }
 
 const eng_flossa_video_01 = {
-    "sentence": "It is impossible to completely clean between your teeth with a standard toothbrush. <break time='0.5s'/> Gingivitis and caries attacks \
-    usually start from there. <break time='0.5s'/> That is why it is recommended that you use dental floss at least once a day before you brush your teeth. <break time='0.5s'/>  Take a long enough string \
+    "pre_sentence":"It is impossible to completely clean between your teeth with a standard toothbrush. <break time='0.5s'/> Gingivitis and caries attacks \
+    usually start from there. <break time='0.5s'/> That is why it is recommended that you use dental floss at least once a day before you brush your teeth. <break time='0.5s'/>", 
+    "sentence": " Take a long enough string \
     of dental floss and spin it around your fingers. <break time='0.5s'/>  Let the dental floss carefully follow the outline of your tooth and down into the gum. <break time='0.5s'/> \
-    Pull the dental floss carefully up again and down on the other side of your tooth. <break time='1.0s'/> Repeat this stage for each tooth, also for the ones in the back for best result."
+    Pull the dental floss carefully up again and down on the other side of your tooth. <break time='1.0s'/> Repeat this stage for each tooth, also for the ones in the back for best result. <break time='2.5s'/>"
 }
 
 const eng_flossa_monologue_01 = {

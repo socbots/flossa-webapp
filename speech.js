@@ -13,7 +13,7 @@ function createSpeechFunction() {
     }
 
     function playAudio(audioBuffer) {
-        STT.recording = false;
+        stopRecording();
         const source = context.createBufferSource();
         source.buffer = audioBuffer;
         source.connect(context.destination);

@@ -56,11 +56,12 @@ const swe_flossa_start = {
 }
 
 const swe_flossa_video_01 = {
-    "sentence": "Det är omöjligt att göra rent mellan tänderna med en vanlig tandborste. <break time='0.5s'/> Tandköttsinflammationer och kariesangrepp \
-    startar ofta där. <break time='0.5s'/> Därför rekommenderas ni att använda tandtråden en gång varje dag innan ni borstar tänderna. <break time='0.5s'/>  Se till att ta en rejäl \
+    "pre_sentence":"Det är omöjligt att göra rent mellan tänderna med en vanlig tandborste. <break time='0.5s'/> Tandköttsinflammationer och kariesangrepp \
+    startar ofta där. <break time='0.5s'/> Därför rekommenderas ni att använda tandtråden en gång varje dag innan ni borstar tänderna. <break time='0.5s'/>", 
+    "sentence": " Se till att ta en rejäl \
     bit tandtråd och linda den runt fingrarna. <break time='0.5s'/>  Låt tandtråden sedan försiktigt följa den ena tandytan ner i tandköttsfickan. <break time='0.5s'/>  Dra \
     tandtråden sedan sakta uppåt igen och för den ner tråden längs med den andra tandens yta och sedan upp igen. <break time='1.0s'/>  Gör så mellan alla tänder, också \
-    de längst bak för bästa resultat."
+    de längst bak för bästa resultat. <break time='2.5s'/>"
 }
 
 const swe_flossa_monologue_01 = {

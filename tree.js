@@ -107,6 +107,7 @@ function createTreeEng() {
 
     /** Make Flossa Nodes*/
     const flossa_startNode = new Monologue(eng_flossa_start.sentence);
+    const flossa_video_monologueNode = new Monologue(eng_flossa_video_01.pre_sentence);
     const flossa_videoNode_01 = new Video(tts = eng_flossa_video_01.sentence);
     const flossa_monologueNode_01 = new Monologue(eng_flossa_monologue_01.sentence);
     const flossa_questionNode_01 = new trickQuestion(eng_flossa_question_01.sentence, eng_flossa_question_01.answerA, eng_flossa_question_01.answerB, eng_flossa_question_01.answerC);
@@ -138,7 +139,8 @@ function createTreeEng() {
     questionNode_01.setNodes(flossa_startNode, brushing_startNode, stopNode);
     questionNode_01_alternative.setNodes(flossa_startNode, brushing_startNode, stopNode);
     /** Flossa */
-    flossa_startNode.setNodes(flossa_videoNode_01);
+    flossa_startNode.setNodes(flossa_video_monologueNode);
+    flossa_video_monologueNode.setNodes(flossa_videoNode_01);
     flossa_videoNode_01.setNodes(flossa_monologueNode_01);
     flossa_monologueNode_01.setNodes(flossa_questionNode_01);
     flossa_questionNode_01.setNodes(flossa_questionNode_01_monologueResponse);
@@ -163,7 +165,7 @@ function createTreeEng() {
     /** Set flossa video on flossa video node */
     flossa_videoNode_01.setVideo(
         "./media/tutorial540p.mp4#t=12",
-        videoDelayStart = 12000, videoDuration = 20000
+        videoDelayStart = 0, videoDuration = 19500
     );
 
     return startNode;
@@ -181,6 +183,7 @@ function createTreeSwe() {
 
     /** Make Flossa Nodes*/
     const flossa_startNode = new Monologue(swe_flossa_start.sentence);
+    const flossa_video_monologueNode = new Monologue(swe_flossa_video_01.pre_sentence);
     const flossa_videoNode_01 = new Video(tts = swe_flossa_video_01.sentence);
     const flossa_monologueNode_01 = new Monologue(swe_flossa_monologue_01.sentence);
     const flossa_questionNode_01 = new trickQuestion(swe_flossa_question_01.sentence, swe_flossa_question_01.answerA, swe_flossa_question_01.answerB, swe_flossa_question_01.answerC);
@@ -211,8 +214,10 @@ function createTreeSwe() {
     questionNode_01.setNodes(flossa_startNode, brushing_startNode, stopNode);
     questionNode_01_alternative.setNodes(flossa_startNode, brushing_startNode, stopNode);
     /** Flossa */
-    flossa_startNode.setNodes(flossa_videoNode_01);
+    flossa_startNode.setNodes(flossa_video_monologueNode);
+    flossa_video_monologueNode.setNodes(flossa_videoNode_01);
     flossa_videoNode_01.setNodes(flossa_monologueNode_01);
+    flossa_monologueNode_01.setNodes(flossa_questionNode_01);
     flossa_monologueNode_01.setNodes(flossa_questionNode_01);
     flossa_questionNode_01.setNodes(flossa_questionNode_01_monologueResponse);
     flossa_questionNode_01_monologueResponse.setNodes(flossa_questionNode_02);
@@ -236,7 +241,7 @@ function createTreeSwe() {
     /** Set flossa video on flossa video node */
     flossa_videoNode_01.setVideo(
         "./media/tutorial540p.mp4#t=12",
-        videoDelayStart = 12000, videoDuration = 20000
+        videoDelayStart = 0, videoDuration = 19500
     );
 
     return startNode;

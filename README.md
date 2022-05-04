@@ -59,28 +59,18 @@ When node has been passed through tts it goes to
     - Else video plays with sound
   - EndTree
     - Class that ends the interaction
-- Current node tree layout
-
-![tree](./media/readme/tree-flow.png)
 ### speech.js
 - Contains code for tts & stt
 - Forwards all classes but Video to next node and calls for recording
 ### interface.js
 - Interface scripts
   - For example: toggle full screen, hide buttons or video modal
-### ~~gesture.js~~
-- ~~List of emotes and gesures~~
-- ~~Function for sending gestures to SSE backend~~
-- Remove? soon&trade;
 ### webRTC/
 - Audio recording using webRTC files
 - Soundmeter to gauge sound volume
 - audio.js calls checkUserInput for Question and trickQuestion node classes to forward next node
 ### media/
 - video tutorial and images
-## Flow diagram
-Shows how the application and its surrounding systems work in conjunction.
-- Coming soon&trade;
 
 ## GenerateTree Node types
 **monologue**

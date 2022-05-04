@@ -186,28 +186,23 @@ input[type=button]:disabled {
  * The Modal (background) */
 
 .modal {
-    display: none;
     /* Hidden by default */
-    position: fixed;
+    display: none;
     /* Stay in place */
-    z-index: 1;
+    position: fixed;
     /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
+    z-index: 3;
+    top: 10vh;
     /* Full width */
-    height: 100vh;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: var(--main-bg-color);
-    /* Fallback color */
-    background-color: var(--main-bg-color);
-    /* Black w/ opacity */
+    width: 80%;
+    padding: 2em;
+    border-radius: 1em;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255);
+    
 }
 
 .modal-content {
-    background-color: var(--main-bg-color);
     margin: auto;
     height: 100%;
     /* 15% from the top and centered */
@@ -215,6 +210,7 @@ input[type=button]:disabled {
     place-content: center;
     padding: 20px;
     width: fit-content;
+    overflow: hidden;
     /* Could be more or less, depending on screen size */
 }
 

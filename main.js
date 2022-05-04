@@ -90,10 +90,6 @@ function startNextNode() {
     nodeStart();
 }
 
-function startRecording() {
-    STT.recording = true;
-}
-
 function checkUserInput(result) {
     // Get answers
     const answers = getAnswers()
@@ -121,7 +117,7 @@ function checkUserInput(result) {
             return true;
         }
         //If we didn't find an answer, but still got a response from the STT we just restart the recording again
-        STT.recording = true;
+        startRecording();
         return false;
     }
 
