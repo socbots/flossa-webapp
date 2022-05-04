@@ -175,8 +175,6 @@ const STT = new CoquiSTT("https://socket.johan.onl", "./webRTC/downsampling_work
 
 
 function handleSpeech(transcription) {
-    const sorryThreshold = 2;
-
     console.log("[handleSpeech] Transcription:", transcription);
     document.getElementById("result").textContent = transcription;
     answerFound = checkUserInput(transcription);
@@ -184,10 +182,6 @@ function handleSpeech(transcription) {
     if (answerFound) {
         console.log("[handleSpeech] answerFound, going to next node");
         nodeStart();
-    } else {
-        // Answer was not found but the speaker is in the middle of a sentence
-        // Only listening for new answers again
-        //kaldi.listening = true;
     }
 }
 
@@ -197,11 +191,13 @@ function handleSpeech(transcription) {
  */
 function handleVoiceActivation(transcription) {
     console.log("[handleVoiceActivation] transcription=", transcription);
+    setFeedbackContainer(transcription);
     const sentence = transcription.toLowerCase();
     // Loop through the words, start interaction tree if a word is found
     for (const w of activationWords) {
         if (sentence.includes(w)) {
             idle = false;
+            document.getElementById("app-language").disabled = true;
             changeInterfaceIntoInteraction();
             nodeStart();
             console.log("[handleVoiceActivation] Activation word found");

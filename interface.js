@@ -27,9 +27,10 @@ document.getElementById("hint").innerHTML = appLanguage === "swe" ? 'Säg "Hej",
  * Click/tap on "vad jag hörde" to run
  */
 const toggleFullscreen = async (target) => {
-    console.log("toggleFullscreen");
     if (!document.fullscreenElement &&
         !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
+        document.querySelector("#fullscreen-request").classList.remove("zoom-in");
+        document.querySelector("#fullscreen-request").classList.add("zoom-out");
         if (document.documentElement.requestFullscreen) {
             document.documentElement.requestFullscreen();
         } else if (document.documentElement.msRequestFullscreen) {
@@ -40,6 +41,8 @@ const toggleFullscreen = async (target) => {
             document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
         }
     } else {
+        document.querySelector("#fullscreen-request").classList.remove("zoom-out");
+        document.querySelector("#fullscreen-request").classList.add("zoom-in");
         if (document.exitFullscreen) {
             document.exitFullscreen();
         } else if (document.msExitFullscreen) {
@@ -55,6 +58,8 @@ const toggleFullscreen = async (target) => {
 document.querySelector("#fullscreen-request").addEventListener("click", async (ev) => {
     await toggleFullscreen(document.documentElement);
 });
+
+document.querySelector("#fullscreen-request").classList.add("zoom-in");
 
 
 // Also now shows "filler-image"
@@ -162,6 +167,22 @@ function toggleLanguage() {
     }
 }
 
+function toggleMute() {
+    if (idle == true) {
+        if (STT.recording == true) {
+            document.querySelector("#mute-button").innerHTML = "&#128263;"
+            STT.recording = false
+        } else {
+            document.querySelector("#mute-button").innerHTML = "&#128266;"
+            STT.recording = true
+        }
+    }
+}
+
 document.getElementById("app-language").addEventListener("click", () => {
     toggleLanguage();
+});
+
+document.getElementById("mute-button").addEventListener("click", () => {
+    toggleMute();
 });

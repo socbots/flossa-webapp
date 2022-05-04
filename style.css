@@ -6,6 +6,8 @@
     --button-disabled-bg-color: rgba(21, 101, 192, 0.3);
     --button-disabled-text-color: rgba(255, 255, 255, 0.3);
 
+    --font-size: 54px;
+
     /* Blue shades from techlab website */
     --shade-a: rgba(64, 132, 255, 1);
     --shade-b: rgba(0, 104, 222, 1);
@@ -24,7 +26,7 @@
 
 html {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: x-large;
+    font-size: var(--font-size);
     color: var(--main-text-color);
     margin: 0;
     padding: 0;
@@ -45,36 +47,47 @@ body {
     place-items: center;
 }
 
+.extra-button-container{
+    margin: 1em;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    width: calc(var(--font-size)*1.4);
+    background-color: var(--main-button-bg-color);
+    font-size: var(--font-size);
+    border-radius: 6px;
+    outline: var(--shade-button-outline) solid 10px;
+    }
+
 #fullscreen-request {
     /* grid-area = start-row / start-column / How many rows right / How many cols down */
     grid-area: 1 / 1 / span 1 / span 1;
-    margin: 1em;
-    text-align: center;
+}
+
+.zoom-in{
     cursor: zoom-in;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50%;
-    background-color: var(--main-button-bg-color);
-    font-size: medium;
-    border-radius: 6px;
-    outline: var(--shade-button-outline) solid 10px;
+}
+
+.zoom-out{
+    cursor: zoom-out;
+
 }
 
 /* Container for "Vad jag hörde:"*/
 .feedback-container {
-    grid-area: 1 / 4 / span 2 / span 4;
+    grid-area: 1 / 3 / span 2 / span 6;
     text-align: center;
     height: 100%;
     width: 100%;
     pointer-events: none;
     background-color: var(--main-bg-color);
-    font-size: xx-large;
+    font-size: var(--font-size);
     min-height: 3em;
+    padding-top: 1em;
 }
 
 #hint {
-    font-size: small;
+    font-size: calc(var(--font-size)/2);
     font-style: italic;
     padding-bottom: 2em;
 }
@@ -83,7 +96,7 @@ body {
 
 /* Holds answering buttons and text */
 .interface {
-    grid-area: 5 / 1 / span 2 / span 10;
+    grid-area: 3 / 1 / span 6 / span 10;
     width: 100%;
     text-align: center;
     display: grid;
@@ -101,8 +114,6 @@ body {
     padding: 1em;
     border-radius: 0.5em;
     width: 70%;
-    min-width: 20rem;
-    max-width: 30rem;
     background-color: var(--shade-button-outline);
 }
 
@@ -133,7 +144,7 @@ input[type=button] {
     margin: 0 0.8em 0.8em 0;
     border: 0.16em solid rgba(255, 255, 255, 0);
     border-radius: 0.5em;
-    font-size: x-large;
+    font-size: var(--font-size);
     font-weight: bolder;
     color: var(--main-button-text-color);
     background-color: var(--main-button-bg-color);
@@ -151,21 +162,13 @@ input[type=button]:disabled {
     color: var(--button-disabled-text-color);
 }
 
-button:hover {
-    background-color: var(--shade-a);
-    cursor: pointer;
-}
-
 /* The initial speak button */
 #start-wrapper {
     width: 100%;
-    min-width: 15rem;
 }
 
 #speak {
     width: 70%;
-    min-width: 20rem;
-    max-width: 30rem;
     outline: var(--shade-button-outline) solid 1rem;
 }
 
@@ -213,18 +216,6 @@ button:hover {
     padding: 20px;
     width: fit-content;
     /* Could be more or less, depending on screen size */
-}
-
-
-/* Video modal close button */
-
-.close {
-    color: var(--main-text-color);
-    float: right;
-    font-size: 32px;
-    font-weight: bolder;
-    padding-left: 0.3em;
-    margin-top: -0.3em;
 }
 
 /* Sound wave animation
@@ -303,8 +294,8 @@ footer {
 }
 
 .app-language-container {
-        /* grid-area = start-row / start-column / How many rows right / How many cols down */
-        grid-area: 1 / 10 / span 1 / span 1;
+    /* grid-area = start-row / start-column / How many rows right / How many cols down */
+    grid-area: 1 / 10 / span 1 / span 1;
 }
 
 /** Language toogle switch from: https://www.tutorialstonight.com/css-toggle-switch-with-text.php */
@@ -316,14 +307,14 @@ footer {
     width: var(--width);
     height: var(--height);
     cursor: pointer;
-  }
+}
 
-  .toggle input {
+.toggle input {
     display: none;
-  }
+}
 
-  /*I hid them, muhaha*/
-  .toggle .labels {
+/*I hid them, muhaha*/
+.toggle .labels {
     position: absolute;
     top: 0;
     left: 0;
@@ -333,9 +324,9 @@ footer {
     font-family: sans-serif;
     transition: all 0.4s ease-in-out;
     overflow: hidden;
-  }
+}
 
-  .toggle .labels::after {
+.toggle .labels::after {
     content: attr(data-off);
     position: absolute;
     display: flex;
@@ -350,9 +341,9 @@ footer {
     background-size: contain;
     background-repeat: no-repeat;
     transition: all 0.4s ease-in-out;
-  }
+}
 
-  .toggle .labels::before {
+.toggle .labels::before {
     content: attr(data-on);
     position: absolute;
     display: flex;
@@ -368,12 +359,25 @@ footer {
     background-repeat: no-repeat;
     text-align: center;
     transition: all 0.4s ease-in-out;
-  }
+}
 
-  .toggle input:checked~.labels::after {
+.toggle input:checked~.labels::after {
     transform: translateX(var(--width));
-  }
+}
 
-  .toggle input:checked~.labels::before {
+.toggle input:checked~.labels::before {
     transform: translateX(var(--width));
-  }
+}
+
+.mute-container {
+    /* grid-area = start-row / start-column / How many rows right / How many cols down */
+    grid-area: 1 / 2 / span 1 / span 1;
+}
+
+.muted{
+    color: red;
+}
+
+.not-muted{
+    color: green;
+}
