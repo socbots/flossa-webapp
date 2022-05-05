@@ -4,8 +4,10 @@
 // Words that are listened to for starting the interaction
 const activationWordsEng = [
     "hello",
+    "hi",
+    "hey",
     "computer",
-    "hey google",
+    "okay google",
 ];
 
 const sorryRepeatEng = '<speak> Sorry, I did not understand you? <break time="1s"/></speak>'
@@ -25,7 +27,7 @@ const treeEng = {
             checkpoint: true,
             sentence: "Now I'm wondering if you'd like to learn about dental flossing<break time='0.5s'/> \
             or brushing techniques? <break time='0.5s'/> You can also choose to stop this dialogue.",
-            answerA: "Flossing",
+            answerA: "Floss",
             nodeA: {
                 type: "monologue",
                 sentence: "Now I am going to show you a video from the Swedish Public Dental Care \
@@ -100,7 +102,7 @@ const treeEng = {
                     }
                 }
             },
-            answerB: "Toothbrushing",
+            answerB: "Brush",
             nodeB: {
                 type: "monologue",
                 sentence: "Jag har fem enkla punkter direkt från folktandvårdens hemsida om hur ni bör borsta tänderna.",

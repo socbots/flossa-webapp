@@ -3,6 +3,7 @@
 let answerFound = false;
 let notUnderstoodCount = 0;
 let idle = true;
+let activationWords = appLanguage === "swe" ? activationWordsSwe : activationWordsEng;
 
 class CoquiSTT {
     constructor(url, workerPath) {
@@ -170,7 +171,10 @@ class CoquiSTT {
 
 
 }
-const STT = new CoquiSTT("https://socket.johan.onl", "./webRTC/downsampling_worker.js");
+const STT = new CoquiSTT(
+    "https://coqui-nodejs-socbots-flask.rahtiapp.fi/",
+    "./webRTC/downsampling_worker.js"
+);
 
 
 
@@ -185,7 +189,7 @@ function handleSpeech(transcription) {
         console.log("[handleSpeech] answerFound, going to next node");
         notUnderstoodCount = 0;
         nodeStart(understood = true);
-    } else if (notUnderstoodCount >= sorryThreshold) {
+    } else if (/*notUnderstoodCount >= sorryThreshold*/ false) {
         // Person has stopped speaking and gotten the wrong answer too many times
         notUnderstoodCount++;
         nodeStart(understood = false);
