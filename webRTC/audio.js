@@ -170,7 +170,10 @@ class CoquiSTT {
 
 
 }
-const STT = new CoquiSTT("https://socket.johan.onl", "./webRTC/downsampling_worker.js");
+const STT = new CoquiSTT(
+    "https://coqui-nodejs-socbots-flask.rahtiapp.fi/",
+    "./webRTC/downsampling_worker.js"
+);
 
 
 
