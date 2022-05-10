@@ -62,7 +62,7 @@ const eng_flossa_video_01 = {
 }
 
 const eng_flossa_monologue_01 = {
-    "sentence": "I hope the video was useful. <break time='0.5s'/> Now to make sure you really listened, I will ask a few questions form you." + eng_instructions.sentence
+    "sentence": "I hope the video was useful. <break time='0.5s'/> Now to make sure you really listened, I will ask a few questions from you." + eng_instructions.sentence
 }
 
 const eng_flossa_question_01 = {
@@ -95,7 +95,7 @@ const eng_flossa_end = {
 * 1 question and monologue */
 
 const eng_brushing_start = {
-    "sentence": "I have few simple facts about brushing your teeth from the public dental care's web page."
+    "sentence": "I have a few simple facts about brushing your teeth from the public dental care's web page."
 }
 
 const eng_brushing_monologue_01 = {
