@@ -1,4 +1,4 @@
-# alf_frontend
+# flossa-webapp
 Interaction app for alf robot
 
 <span style="font-size:2em; color:#FF6666"> App must be run in Firefox </span>
@@ -102,17 +102,17 @@ Available on [heroku](https://alf-tts-api.herokuapp.com/)
 
 Can also be run on local Raspberry
 
-### SSE Backend
-[Github](https://github.com/socbots/sse_backend)
+### see-backend
+[Github](https://github.com/socbots/sse-backend)
 
 Run on local Raspberry
 
 - Stream to post movement commands for Mobile SDK
 
 ### Mobile SDK
-[Github](https://github.com/socbots/MobileSDK)
+http://blue.sanbotcloud.com:98/dev/docs/mobile.html
 
 Run from phone in virtualwing @Arcada
 
 - Grants access to movements
-- Listens to SSE stream for movement instructions
+- Listens to sse stream for movement instructions
