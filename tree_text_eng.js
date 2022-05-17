@@ -50,19 +50,20 @@ const eng_outro = {
 * video and 2 questions */
 
 const eng_flossa_start = {
-    "sentence": "I am going to show a video from the public dental institution in Stockholm <break time='0.5s'/> while I tell you how to best use dental floss."
+    "sentence": "I am going to play a video from the public dental institution in Stockholm <break time='0.5s'/> while I tell you how to best use dental floss."
 }
 
 const eng_flossa_video_01 = {
     "pre_sentence":"It is impossible to completely clean between your teeth with a standard toothbrush. <break time='0.5s'/> Gingivitis and caries attacks \
     usually start from there. <break time='0.5s'/> That is why it is recommended that you use dental floss at least once a day before you brush your teeth. <break time='0.5s'/>", 
-    "sentence": " Take a long enough string \
-    of dental floss and spin it around your fingers. <break time='0.5s'/>  Let the dental floss carefully follow the outline of your tooth and down into the gum. <break time='0.5s'/> \
-    Pull the dental floss carefully up again and down on the other side of your tooth. <break time='1.0s'/> Repeat this stage for each tooth, also for the ones in the back for best result. <break time='2.5s'/>"
+    "sentence": " Take a long enough string of dental floss and spin it around your fingers. <break time='0.5s'/> \
+    Let the dental floss carefully follow the outline of your tooth and down into the gum. <break time='0.5s'/> \
+    Perform a sawing motion up and down the along the tooth before you continue. <break time='1.0'/> \
+    Repeat this stage for each tooth, also for the ones in the back for best result. <break time='3.5s'/>"
 }
 
 const eng_flossa_monologue_01 = {
-    "sentence": "I hope the video was useful. <break time='0.5s'/> Now to make sure you really listened, I will ask a few questions from you." + eng_instructions.sentence
+    "sentence": "I hope the video was useful. <break time='0.5s'/> Now to make sure you really listened, I will ask you a few questions." + eng_instructions.sentence
 }
 
 const eng_flossa_question_01 = {
