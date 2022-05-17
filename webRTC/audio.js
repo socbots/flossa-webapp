@@ -185,6 +185,8 @@ function handleSpeech(transcription) {
     if (answerFound) {
         console.log("[handleSpeech] answerFound, going to next node");
         nodeStart();
+    } else {
+        startRecording();
     }
 }
 
