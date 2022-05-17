@@ -87,12 +87,6 @@ body {
     padding-top: 1em;
 }
 
-#hint {
-    font-size: calc(var(--font-size)/2);
-    font-style: italic;
-    padding-bottom: 2em;
-}
-
 
 
 /* Holds answering buttons and text */
@@ -164,11 +158,18 @@ input[type=button]:disabled {
 
 /* The initial speak button */
 #start-wrapper {
+    grid-area: 3 / 2 / 7 / 10;
     width: 100%;
 }
 
+#hint {
+    font-size: calc(var(--font-size)/2);
+    font-style: italic;
+    padding-bottom: 2em;
+    text-align: center;
+}
+
 #speak {
-    width: 70%;
     outline: var(--shade-button-outline) solid 1rem;
 }
 
