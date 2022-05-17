@@ -6,7 +6,7 @@
     --button-disabled-bg-color: rgba(21, 101, 192, 0.3);
     --button-disabled-text-color: rgba(255, 255, 255, 0.3);
 
-    --font-size: 54px;
+    --font-size: 5vh;
 
     /* Blue shades from techlab website */
     --shade-a: rgba(64, 132, 255, 1);
@@ -97,9 +97,9 @@ body {
 
 /* Holds answering buttons and text */
 .interface {
-    grid-area: 4 / 1 / span 6 / span 10;
+    grid-area: 3 / 2 / 7 / span 8;
+    max-height: 100%;
     text-align: center;
-    width: 100%;
     display: grid;
     place-items: center;
 }
@@ -114,7 +114,6 @@ body {
     flex-direction: column;
     padding: 1em;
     border-radius: 0.5em;
-    width: 70%;
     background-color: var(--shade-button-outline);
 }
 
@@ -310,7 +309,6 @@ footer {
     display: none;
 }
 
-/*I hid them, muhaha*/
 .toggle .labels {
     position: absolute;
     top: 0;
@@ -368,13 +366,5 @@ footer {
 
 .mute-container {
     /* grid-area = start-row / start-column / How many rows right / How many cols down */
-    grid-area: 3 / 1 / span 1 / span 1;
-}
-
-.muted {
-    color: red;
-}
-
-.not-muted {
-    color: green;
+    grid-area: 1 / 2 / span 1 / span 1;
 }
