@@ -156,7 +156,7 @@ function clearResult() {
     document.getElementById("result").innerHTML = ""
 }
 
-// Enable the Start button once Kaldi is ready to listen
+// Enable the Start button once ASR is ready to listen
 window.addEventListener("onASRStart", (evt) => {
     document.querySelector("#speak").ariaDisabled = false;
     document.querySelector("#speak").disabled = false;
@@ -178,13 +178,11 @@ function toggleLanguage() {
 }
 
 function toggleMute() {
-    if (idle == true) {
         if (STT.recording == true) {
             stopRecording()
         } else {
             startRecording()
         }
-    }
 }
 
 document.getElementById("app-language").addEventListener("click", () => {
