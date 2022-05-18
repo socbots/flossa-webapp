@@ -179,7 +179,7 @@ const STT = new CoquiSTT(
 
 function handleSpeech(transcription) {
     console.log("[handleSpeech] Transcription:", transcription);
-    document.getElementById("result").textContent = transcription;
+    document.getElementById("feedback-container-result").textContent = transcription;
     answerFound = checkUserInput(transcription);
     stopRecording();
     if (answerFound) {
