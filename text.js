@@ -30,17 +30,17 @@ const eng_present_purpose = {
 }
 
 const eng_question_01 = {
-    "sentence": "Now I wonder, <break time='0,5s'/> would you like to learn about dental floss <break time='0.5s'/> or how to brush your teeth today? <break time='0.5s'/> You may also end the conversation." + eng_instructions.sentence,
+    "sentence": "Now I wonder, <break time='0,5s'/> would you like to learn about dental floss <break time='0.5s'/> or how to brush your teeth today? <break time='0.5s'/> You may also exit the application." + eng_instructions.sentence,
     "flossa": "Floss",
     "brush": "Brush",
-    "stop": "End"
+    "stop": "Exit"
 };
 
 const eng_question_01_alternative = {
-    "sentence": "Would you like to learn something more or end the conversation?",
+    "sentence": "Would you like to learn something more or exit the application?",
     "flossa": "Floss",
     "brush": "Brush",
-    "stop": "End"
+    "stop": "Exit"
 }
 
 const eng_outro = {

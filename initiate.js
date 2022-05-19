@@ -14,7 +14,9 @@ document.getElementById("speak").addEventListener("click", () => {
     currentNode = appLanguage === "swe" ? rootNodeSwe : rootNodeEng;
     // Disable voice activation
     idle = false;
-    //Disable language toggle
+    // Disable language toggle
     document.getElementById("app-language").disabled = true;
+    // Hide start-wrapper
+    changeInterfaceIntoInteraction();
     nodeStart(currentNode)
 })
