@@ -1,68 +1,38 @@
+// Application parameters and dev "log"
+let appLanguage = document.getElementById("app-language").checked == true ? "eng" : "swe";
+console.log("Welcome to Flossa V2")
+console.log("Time and Date: " + new Date())
+console.log("appLanguage: " + appLanguage)
 
-/**
- * Table of Contents
- * 
- * toggleFullscreen()
- * 
- * hideButtons()
- * showButtons()
- * 
- * getAnswers()
- * setAnswers()
- * setAnswersButtonListeners()
- * 
- * stopRecording()
- * startRecording()
- * 
- * setFeedbackContainer()
- * clearFeedbackContainer()
- * 
- * toggleLanguage()
- * 
- * toggleMute()
- * 
- * nodeStart()
- * nodeNextStart()
- * 
- * setIframeModal()
- * setVideoProperties()
- * setVideo()
- * trackVideo()
- * 
- * setTTS(node)
- * 
- * checkUserInput(result)
- * 
- * interaction()
- * initiateQuestion()
- */
 
-// rewrite to proper functions!
-const speakButton = document.getElementById("speak");
-const answerContainer = document.getElementById("answer-container");
-const startWrapper = document.getElementById("start-wrapper");
-const superImage = document.getElementById("filler-image");
 
-speakButton.onclick = function () {
-    changeInterfaceIntoInteraction(); // Splitted into function to be reused in audio.js
-}
-
+// hides startup GUI and shows interaction GUI
 function changeInterfaceIntoInteraction() {
-    startWrapper.style.display = "none";
-    answerContainer.style.display = "flex";
+    document.getElementById("start-wrapper").style.display = "none";
 }
 
-/* Sets text/explanation before container that holds stt result */
+// enable the Start button once ASR is ready to listen
+window.addEventListener("onASRStart", (evt) => {
+    document.querySelector("#speak").ariaDisabled = false;
+    document.querySelector("#speak").disabled = false;
+})
+
+// sets language dependant GUI elements
 document.getElementById("feedback-container-before").innerHTML = appLanguage === "swe" ? swe_feedback_container_before : eng_feedback_container_before;
-// sets button
 document.getElementById("speak").value = appLanguage === "swe" ? "Hej" : "Hello";
-// sets hint
 document.getElementById("hint").innerHTML = appLanguage === "swe" ? 'Säg "Hej", "Hejsan" eller "Börja" för att starta' : 'Say "Hello", "Start" or "Computer" to start';
 
-/**
- * Make the whole app fullscreen in order to hide the URL bar
- * Click/tap on "vad jag hörde" to run
- */
+// set and clear feedbackcontainer
+function setFeedbackContainer(text) {
+    document.getElementById('feedback-container-result').innerHTML = text;
+}
+
+function clearFeedbackContainer() {
+    document.getElementById("feedback-container-result").innerHTML = ""
+}
+
+
+// make the whole app fullscreen in order to hide the URL bar
 const toggleFullscreen = async (target) => {
     if (!document.fullscreenElement &&
         !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
@@ -99,7 +69,7 @@ document.querySelector("#fullscreen-request").addEventListener("click", async (e
 document.querySelector("#fullscreen-request").classList.add("zoom-in");
 
 
-// Also now shows "filler-image"
+// hide or show answer buttons
 function hideButtons() {
     document.querySelector("#node-A").style.display = "none";
     document.querySelector("#node-B").style.display = "none";
@@ -108,13 +78,9 @@ function hideButtons() {
     document.querySelector("#microphone-listening").style.display = "none";
 }
 
-
-// Shows/hides answer buttons with CSS
 function showButtons(element, nodeAnswer) {
     document.getElementById("answer-container").style.display = "flex"
-    // Show microphone listening animation
     document.querySelector("#microphone-listening").style.display = "flex";
-    // Show buttons
     element.style.display = "block";
     element.innerHTML = nodeAnswer;
     if (nodeAnswer == undefined) {
@@ -122,73 +88,59 @@ function showButtons(element, nodeAnswer) {
     }
 }
 
-// returns a list of the node Answers in lower case
-function getAnswers() {
-    list = []
-    list.push(nodeAAnswer = document.getElementById("node-A").innerHTML.toLowerCase());
-    list.push(nodeBAnswer = document.getElementById("node-B").innerHTML.toLowerCase());
-    list.push(nodeCAnswer = document.getElementById("node-C").innerHTML.toLowerCase());
-
-    return list
-}
-
-// Populates answer-buttons with node answer element
+// populates answer-buttons with node answer element
 function setAnswers(node) {
-    const nodeAAnswer = document.getElementById("node-A");
-    const nodeBAnswer = document.getElementById("node-B");
-    const nodeCAnswer = document.getElementById("node-C")
-    // Show hide buttons
-    showButtons(nodeAAnswer, node.nodeAAnswer);
-    showButtons(nodeBAnswer, node.nodeBAnswer);
-    showButtons(nodeCAnswer, node.nodeCAnswer);
+    const nodeA = document.getElementById("node-A");
+    const nodeB = document.getElementById("node-B");
+    const nodeC = document.getElementById("node-C")
+    showButtons(nodeA, node.nodeAAnswer);
+    showButtons(nodeB, node.nodeBAnswer);
+    showButtons(nodeC, node.nodeCAnswer);
+    setAnswersButtonListeners();
 }
 
 function setAnswersButtonListeners() {
-    const nodeAbtn = document.getElementById("node-A");
-    const nodeBbtn = document.getElementById("node-B");
-    const nodeCbtn = document.getElementById("node-C");
+    const nodeA = document.getElementById("node-A");
+    const nodeB = document.getElementById("node-B");
+    const nodeC = document.getElementById("node-C");
 
-    nodeAbtn.addEventListener("click", () => {
-        checkUserInput(nodeAbtn.innerHTML, true);
-        nodeStart(true);
+    nodeA.addEventListener("click", () => {
+        checkUserInput(nodeA.innerHTML, true);
+        nodeStart();
     })
-    nodeBbtn.addEventListener("click", () => {
-        checkUserInput(nodeBbtn.innerHTML, true);
-        nodeStart(true);
+    nodeB.addEventListener("click", () => {
+        checkUserInput(nodeB.innerHTML, true);
+        nodeStart();
     })
-    nodeCbtn.addEventListener("click", () => {
-        checkUserInput(nodeCbtn.innerHTML, true);
-        nodeStart(true);
+    nodeC.addEventListener("click", () => {
+        checkUserInput(nodeC.innerHTML, true);
+        nodeStart();
     })
 }
 
-// Stop/Start recording
+// stop and start recording
 function stopRecording() {
     STT.recording = false
     document.querySelector("#mute-button").innerHTML = "&#128263;"
 }
-
 function startRecording() {
     STT.recording = true;
     document.querySelector("#mute-button").innerHTML = "&#128266;"
 }
-
-
-function setFeedbackContainer(text) {
-    document.getElementById('result').innerHTML = text;
+// mute toggle
+function toggleMute() {
+    if (STT.recording == true) {
+        stopRecording()
+    } else {
+        startRecording()
+    }
 }
 
-function clearFeedbackContainer() {
-    document.getElementById("feedback-container-result").innerHTML = ""
-}
+document.getElementById("mute-button").addEventListener("click", () => {
+    toggleMute();
+});
 
-// Enable the Start button once ASR is ready to listen
-window.addEventListener("onASRStart", (evt) => {
-    document.querySelector("#speak").ariaDisabled = false;
-    document.querySelector("#speak").disabled = false;
-})
-
-// Language toggle
+// language toggle
 function toggleLanguage() {
     if (idle == true) {
         appLanguage = document.getElementById("app-language").checked == true ? "eng" : "swe";
@@ -203,29 +155,15 @@ function toggleLanguage() {
     }
 }
 
-// Mute toggle
-function toggleMute() {
-    if (STT.recording == true) {
-        stopRecording()
-    } else {
-        startRecording()
-    }
-}
-
 document.getElementById("app-language").addEventListener("click", () => {
     toggleLanguage();
 });
 
-document.getElementById("mute-button").addEventListener("click", () => {
-    toggleMute();
-});
-
-// Starts current node
+// starts current node
 function nodeStart() {
     hideButtons(); // Hide buttons and show background
     if (currentNode.movement) {
-        // If we have movement, set it
-        setGesture(currentNode.movement);
+        setGesture(currentNode.movement); // If we have movement, set it
     }
     if (currentNode instanceof Video) {
         setVideo(currentNode);
@@ -234,41 +172,75 @@ function nodeStart() {
     }
 }
 
-// Sets next node and starts it
+// sets next node and starts it
 function nodeNextStart() {
     currentNode = currentNode.nextNode;
     nodeStart();
 }
 
-function setTTS(node) {
-    // TTS API uses SSML so the text should be within <speak> tags
-    // Formats SSML
-    const text = '<speak>' + node.tts + '</speak>';
+// createSpeechFunction returns a function called textToSpeech that we can save to a variable and call when needed.
+// textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" i.e. Closure
+function createSpeechFunction() {
+    const context = new AudioContext();
+    let textToSpeech = (text) => {
+        url = makeUrl(appLanguage, text)
+        fetch(url)
+            .then(response => response.arrayBuffer())
+            .then(buffer => context.decodeAudioData(buffer))
+            .then(audio => playAudio(audio))
+    }
+    function playAudio(audioBuffer) {
+        stopRecording();
+        const source = context.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(context.destination);
+        source.detune.value = -400;
+        source.start();
+        console.log(source);
+        source.onended = () => {
+            interaction()
+        }
+    }
+    return textToSpeech;
+}
 
-    // SSML format for breaks
+// TTS API uses SSML so the text should be within <speak> tags
+function setTTS(node) {
+    const text = '<speak>' + node.tts + '</speak>';
     const point = text.search("<break");
     const textNewline = text.slice(0, point) + "<br>" + text.slice(point)
-
-
     container = document.getElementById("speak-container");
     container.innerHTML = text;
-
     textToSpeech(text);
 }
 
-// Modal for video
+// url for speech synthesis
+function makeUrl(lang, text) {
+    let url = ""
+    if (lang === "swe") {
+        url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=sv-SE&gender=FEMALE-A&rate=1.3&pitch=1.1"  //swedish
+    } else if (lang === "eng") {
+        url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=en-US&gender=FEMALE&rate=1.2&pitch=1.3"    //english
+    } else {
+        url = "https://alf-tts-api.herokuapp.com/tts?ReqString=" + text + "&lang=en-US&gender=FEMALE&rate=1.2&pitch=1.3"    //default --english
+    }
+    return url
+}
+
+// modal for video node
 function setIframeModal() {
     var iframeModal = document.getElementById("iframeModal");
     iframeModal.style.display = "block";
 }
 
-// Video properties, adjusted for Alf robot (2021)
+// video properties
 function setVideoProperties(video, url) {
     video.src = url;
     video.width = 1000;
     video.height = 700;
 }
 
+// video node & timers
 function setVideo(node) {
     video = document.getElementById("video");
     setVideoProperties(video, node.video)
@@ -303,16 +275,22 @@ function trackVideo() {
     }
 }
 
-function checkUserInput(result) {
-    // Get answers
-    const answers = getAnswers()
+// returns a list of the node answers in lower case
+function getLowerCaseAnswers() {
+    list = []
+    list.push(nodeAAnswer = document.getElementById("node-A").innerHTML.toLowerCase());
+    list.push(nodeBAnswer = document.getElementById("node-B").innerHTML.toLowerCase());
+    list.push(nodeCAnswer = document.getElementById("node-C").innerHTML.toLowerCase());
+    return list
+}
 
+// main logic for user input
+function checkUserInput(result) {
+    const answers = getLowerCaseAnswers();
     result = result.toLowerCase(); //set to lower case
     let results = result.split(" ");
-    // If we cant find a match for the input our user gives we startDialog with the current node
     for (const r of results) {
-        // Test the user input against nodes if answers in our nodes.
-        // We only check the first word
+        // Test result (the users input) against answers, we only check the first word
         if (answers[0].split(" ")[0] == r) {
             console.log("Going nodeA");
             setFeedbackContainer(currentNode.nodeAAnswer)
@@ -336,6 +314,14 @@ function checkUserInput(result) {
 
 }
 
+// cleans up UI for new question
+function initiateQuestion() {
+    setAnswers(currentNode);
+    clearFeedbackContainer();
+    startRecording();
+}
+
+// main logic depending on node class
 function interaction() {
     console.log("Interaction called")
     if (currentNode instanceof Question || currentNode instanceof trickQuestion) {
@@ -347,14 +333,10 @@ function interaction() {
     } else if (currentNode instanceof EndTree) {
         setTimeout(function () {
             window.location.reload(1); // reload page on end
-        }, 3500);
+        }, 1500);
     } else {
         console.log("Undefined Node")
     }
 }
 
-function initiateQuestion() {
-    setAnswers(currentNode);
-    clearFeedbackContainer();
-    startRecording();
-}
+

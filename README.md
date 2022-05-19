@@ -13,7 +13,6 @@ summary stuff
 # Preview
 
 ![preview](./media/readme/question.png)
-![preview](./media/readme/talking.png)
 
 
 # Technologies
@@ -25,17 +24,7 @@ summary stuff
 - [Socket.IO](https://socket.io/)
 
 # Scope of functionalities
-
-# Examples of use
-
-# Project status
-
-# Sources
-
-# Other information
-
-
-
+asdasdasd
 
 # Files
 
@@ -46,8 +35,16 @@ summary stuff
 - Objects for text to the application, used primarily in *tree.js*
 
 ## functions.js
-`nodeStart()`, loops nodes from *tree.js*, starting with `rootNode`
+- Stores all main functions, outside of [STT](#webrtc "see webRTC/audio.js")
 
+Functions of note:
+
+### createSpeechFunction()
+- TTS API uses SSML so the text should be within \<speak> tags
+- textToSpeech uses the variable context and calls on the function playAudio which the function "remembers" i.e. Closure
+- Returns a function called textToSpeech that we can save to a variable and call when needed.
+
+### nodeStart(), loops nodes from *tree.js*, starting with `rootNode`
 -   `currentNode` keeps track of active node
 -   Child-nodes are set on parent-node to progress interaction
 -   Each dialogue goes through textToSpeech() in *speech.js* to query for audio files.
@@ -58,13 +55,12 @@ summary stuff
 -   Tree ends with node class `EndTree`
 	- `EndTree` refreshes page with reload.
 
-When node has been passed through tts it goes to
-- interaction()
-  - interaction handles node based on class and forwards to appropriate functionality
 
-## speech.js
-- Contains code for tts & stt
-- Forwards all classes but Video to next node and calls for recording
+### interaction()
+  - When a node has been passed through TTS it goes to interaction that handles node based on class and forwards to appropriate functionality
+
+### checkUserInput()
+  - Gets result from [STT](#webrtc "see webRTC/audio.js") or user touch input and sets next node depending on answer
 
 ## tree.js
 Code for the interaction tree with 5 node classes.
@@ -104,16 +100,27 @@ classDiagram
 
 
 ## initiate.js
-- Initiates the app and sets the application
-- import after other scripts but before webRTC module
+- Initiates the app and sets up the application
+- **import after** other scripts but before webRTC module
 
 
 ## webRTC/
-- Audio recording using webRTC files
-- Soundmeter to gauge sound volume
-- audio.js calls checkUserInput for Question and trickQuestion node classes to forward next node
+- soundmeter.js to gauge sound volume
+- audio.js for handling mic and TTS
+- socket.io implementation to stream audio to interpreting server
 
 ## media/
-- video tutorial and images
+- video tutorial
+- images
+
+## style.css
+- Styling and animations
 
 
+# Examples of use
+
+# Project status
+
+# Sources
+
+# Other information
