@@ -1,19 +1,31 @@
 # Flossa V2
+
+[<img alt="Project MäRI" width="100px" src="./media/readme/kflogo.png" />](https://www.kulturfonden.fi/)
+[<img alt="Arcada University of Applied Sciences Logo" width="400px" src="./media/readme/arcada_logo.svg" />](https://www.arcada.fi/sv)
+[<img alt="Project MäRI" width="300px" src="./media/readme/mari_logo.png" />](https://www.arcada.fi/sv/forskning/projekt/mari-manniska-robot-interaktion-den-sociala-roboten)
+
+
 **Webapp using node-tree structure to interact and teach users how to use floss with Coqui-ai STT and Google TTS**
-**Build for the [MäRI project](https://www.arcada.fi/sv/forskning/projekt/mari-manniska-robot-interaktion-den-sociala-roboten) at Arcada 2022**
+**Build for the MäRI project at Arcada 2022**
 
 # Table of Contents
 
-
-
-Write a goal
-Dual language interaction app for Flossa V2, using Coqui-ai STT on the robot Snow
-summary stuff
-
-# Preview
-
-![preview](./media/readme/question.png)
-
+1. [Technologies](#technologies)
+2. [Application function](#application-function)
+    1. [Preview](#preview)
+    2. [Interaction flowchart](#interaction-flowchart)
+3. [Files](#files)
+    1. [index.html](#indexhtml)
+    2. [text.js](#textjs)
+    3. [functions.js](#functionsjs)
+    4. [tree.js](#treejs)
+    5. [initiate.js](#initiatejs)
+    6. [webRTC folder](#webrtc)
+    7. [media folder](#media)
+    8. [style.css](#stylecss)
+4. [Project status](#project-status)
+5. [Sources](#sources)
+6. [Linked projects](#linked-projects)
 
 # Technologies
 
@@ -22,17 +34,76 @@ summary stuff
 - [JS](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [WebRTC](https://webrtc.org/)
 - [Socket.IO](https://socket.io/)
+- [Google-TTS](https://cloud.google.com/text-to-speech)
+- [WebRTC](https://webrtc.org/)
+- [Coqui-ai/STT](https://coqui.ai/)
 
-# Scope of functionalities
-asdasdasd
+# Application function
+The application runs on Arcada robot Snow. The purpose is to instruct users about dental hygiene through flossing and brushing techniques with both text and speech. The speech is generated using [Google-TTS](https://cloud.google.com/text-to-speech) and for flossing a video is also showing for clarity.
+
+The user may select which techniques to learn about using touch inputs or speech. The speech input is handled with [WebRTC](https://webrtc.org/) and is converted to plain text using [Coqui-ai](https://coqui.ai/).
+
+After instructions the users is prompted with questions that should be answered using touch or speech. Finally the user may choose to learn more or exit the application.
+
+## Preview
+
+<img src="./media/readme/preview.gif" alt="preview" style="width:800px;"/>
+
+## Interaction flowchart
+
+```mermaid
+flowchart
+direction LR
+  subgraph Flossing
+  direction LR
+  f1[Monologue] --> f2[Video]
+  f2 --> f3[Monologue]
+  f3 --> f4{trickQuestion}
+  f4 -->|A| f5
+  f4 -->|B| f5
+  f4 -->|C| f5
+  f5[Monologue] --> f6
+  f6{Question}
+  f6 -->|A| f7[Monologue]
+  f6 -->|B| f7[Monologue]
+  f6 -->|C| f8[Monologue]
+  f9[Monologue]
+  f7 --> f9
+  f8 --> f9
+  end
+  subgraph Brushing
+  direction LR
+  b1[monologue] --> b2[Monologue]
+  b2 --> b3[Monologue]
+  b3 --> b4[Monologue]
+  b4 --> b5[Monologue]
+  b5 --> b6[Monologue]
+  b6 --> b7[Question]
+  b7 -->|A| b9[Monologue]
+  b7 -->|B| b10[Monologue]
+  b9 --> b11
+  b10 --> b11
+  b11[Monologue] --> b12[Monologue]
+  end
+  a[Start] --> b[Presentation]
+  b --> c{Question}
+  c --> Flossing --> c
+  c --> Brushing --> c
+  c --> exit[EndTree]
+
+```
 
 # Files
 
 ## index.html
-- index.html 
+- Framework for holding application
+- Holds "wavey" design in footer
+- imports all scripts
+
 
 ## text.js
 - Objects for text to the application, used primarily in *tree.js*
+- Available manuscripts are in english and swedish
 
 ## functions.js
 - Stores all main functions, outside of [STT](#webrtc "see webRTC/audio.js")
@@ -66,7 +137,8 @@ Functions of note:
 Code for the interaction tree with 5 node classes.
 
 ```mermaid
-classDiagram
+classDiagram 
+direction LR
   class Question {
     2-3 answers
     2-3 child nodes
@@ -117,10 +189,20 @@ classDiagram
 - Styling and animations
 
 
-# Examples of use
-
 # Project status
 
-# Sources
+Finalized
+- [V1](https://github.com/socbots/flossa-webapp/tree/version-1) for robot Alf with gestures
+- V2 for robot Snow (current)
 
-# Other information
+# Linked projects
+
+[socbots/tts-stt-api](https://github.com/socbots/tts-stt-api)
+
+[socbots/coqui-websocket](https://github.com/socbots/coqui-websocket)
+
+[socbots/sse-backend](https://github.com/socbots/sse-backend)
+
+[socbots/kaldi-web](https://github.com/socbots/kaldi-web)
+
+[Blog@Amy&Alf.fi](https://amyandalf.fi/)
