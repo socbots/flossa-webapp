@@ -69,28 +69,31 @@ When node has been passed through tts it goes to
 ## tree.js
 Code for the interaction tree with 5 node classes.
 
-`Question`<br>
-Takes between 2-3 answers for a question<br>
-Set child nodes with setNodes
-
-`trickQuestion`<br>
-Takes between 2-3 answers for a question<br>
-Set child node with setNextNode
-
-`Monologue`<br>
-Only tts<br>
-Set child node with setNextNode
-
-`Video`<br>
-Plays a video in a Modal<br>
-Can start and stop video on custom timers<br>
-Set child node with setNextNode<br>
-If given text for tts:<br>
-&ensp;&ensp;&ensp; Mutes video and lets the robot talk or lets the video play with sound.
-
-`EndTree`<br>
-Class that ends the interaction
-
+```mermaid
+classDiagram
+  class Question {
+    2-3 answers
+    2-3 child nodes
+  }
+  class trickQuestion{
+    2-3 answer
+  }
+  class Monologue{
+    Only TTS
+  }
+  class Video{
+    Plays a video in modal
+    Start & stop video with timers
+    Mutes video if given TTS
+  }
+  class EndTree{
+    Ends interaction
+  }
+  Question .. trickQuestion
+  trickQuestion .. Monologue
+  Monologue .. Video
+  Video .. EndTree
+```
 
 ### To build a tree:
 - First make a parent node
