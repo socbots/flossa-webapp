@@ -178,7 +178,7 @@ direction LR
 
 ## webRTC/
 - soundmeter.js to gauge sound volume
-- audio.js for handling mic and TTS
+- audio.js for handling mic and STT
 - socket.io implementation to stream audio to interpreting server
 
 ## media/
