@@ -78,7 +78,7 @@ function hideButtons() {
     document.querySelector("#microphone-listening").style.display = "none";
 }
 
-function showButtons(element, nodeAnswer) {
+function showAnswerButtons(element, nodeAnswer) {
     document.getElementById("answer-container").style.display = "flex"
     document.querySelector("#microphone-listening").style.display = "flex";
     element.style.display = "block";
@@ -88,35 +88,58 @@ function showButtons(element, nodeAnswer) {
     }
 }
 
+// handles click for correct next node in question
+function handleA(){
+    if (currentNode instanceof Question) {
+        currentNode = currentNode.nodeA
+    } else if (currentNode instanceof trickQuestion){
+        currentNode = currentNode.nextNode;
+    }
+    nodeStart();
+}
+function handleB(){
+    if (currentNode instanceof Question) {
+        currentNode = currentNode.nodeB
+    } else if (currentNode instanceof trickQuestion){
+        currentNode = currentNode.nextNode;
+    }
+    nodeStart();
+}
+function handleC(){
+    if (currentNode instanceof Question) {
+        currentNode = currentNode.nodeC
+    } else if (currentNode instanceof trickQuestion){
+        currentNode = currentNode.nextNode;
+    }
+    nodeStart();
+}
+
+// sets click events
+function setAnswerButtonsListeners() {
+    const nodeA = document.getElementById("node-A");
+    const nodeB = document.getElementById("node-B");
+    const nodeC = document.getElementById("node-C");
+
+    nodeA.removeEventListener("click", handleA)
+    nodeB.removeEventListener("click", handleB)
+    nodeC.removeEventListener("click", handleC)
+
+    nodeA.addEventListener("click", handleA)
+    nodeB.addEventListener("click", handleB)
+    nodeC.addEventListener("click", handleC)
+}
+
 // populates answer-buttons with node answer element
 function setAnswers(node) {
     const nodeA = document.getElementById("node-A");
     const nodeB = document.getElementById("node-B");
     const nodeC = document.getElementById("node-C")
-    showButtons(nodeA, node.nodeAAnswer);
-    showButtons(nodeB, node.nodeBAnswer);
-    showButtons(nodeC, node.nodeCAnswer);
-    setAnswersButtonListeners();
+    showAnswerButtons(nodeA, node.nodeAAnswer);
+    showAnswerButtons(nodeB, node.nodeBAnswer);
+    showAnswerButtons(nodeC, node.nodeCAnswer);
+    setAnswerButtonsListeners();
 }
 
-function setAnswersButtonListeners() {
-    const nodeA = document.getElementById("node-A");
-    const nodeB = document.getElementById("node-B");
-    const nodeC = document.getElementById("node-C");
-
-    nodeA.addEventListener("click", () => {
-        checkUserInput(nodeA.innerHTML, true);
-        nodeStart();
-    })
-    nodeB.addEventListener("click", () => {
-        checkUserInput(nodeB.innerHTML, true);
-        nodeStart();
-    })
-    nodeC.addEventListener("click", () => {
-        checkUserInput(nodeC.innerHTML, true);
-        nodeStart();
-    })
-}
 
 // stop and start recording
 function stopRecording() {
